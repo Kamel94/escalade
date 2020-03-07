@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Informations</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br> <br>
+			<h3>Informations sur les sites</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr th:each="t:${listeSites}">
+						<td scope="row" class="text-primary">Description</td>
+						<td scope="col" th:text="${t.description}"></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="t:${listeSites}">
+						<td scope="row" class="text-primary">Commentaire</td>
+						<td th:text="${t.commentaire}"></td>
+					</tr>
+				</tbody>
+				<tfoot>
+				<tr th:each="t:${listeSites}">
+				<td scope="row" class="text-primary">Commentaire</td>
+						<td th:text="${t.tag}"></td>
+				</tr>
+				</tfoot>		
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>

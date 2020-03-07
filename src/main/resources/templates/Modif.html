@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Modif</title>
+	<link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+	<div layout:fragment="content">
+	<div class="col-8 spacer">
+		<div class="card">
+			<div class="card-header">Modification d'un topo</div>
+			<div class="card-body">
+				<form th:action="@{/admin/enregistrer}" method="post">
+				<div class="form-group">
+						<label class="col-form-label">ID : </label>
+						<input class="form-control-xs" type="text" name="id" th:value="${topo.id}">
+						<span class="red" th:errors="${topo.id}"></span>
+					</div>
+				<div class="form-group">
+						<label class="col-form-label">Nom : </label>
+						<input class="form-control-xs" type="text" name="nom" th:value="${topo.nom}">
+						<span class="red" th:errors="${topo.nom}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Description : </label>
+						<input class="form-control-xs" type="text" name="description" th:value="${topo.description}">
+						<span class="red" th:errors="${topo.description}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Lieu : </label>
+						<input class="form-control-xs" type="text" name="lieu" th:value="${topo.lieu}">
+						<span class="red" th:errors="${topo.lieu}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Parution : </label>
+						<input class="form-control-xs" type="text" name="parution" th:value="${topo.parution}">
+						<span class="red" th:errors="${topo.parution}"></span>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
