@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Modifier site</title>
+	<link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+	<div layout:fragment="content">
+	<div class="col-8 spacer">
+		<div class="card">
+			<div class="card-header">Modification d'un site</div>
+			<div class="card-body">
+				<form th:action="@{/user/enregistrerSite}" method="post">
+				<div class="form-group">
+						<label class="col-form-label">Nom : </label>
+						<input class="form-control-xs" type="text" name="nom" th:value="${site.nom}">
+						<span class="red" th:errors="${site.nom}"></span>
+					</div>
+				<div class="form-group">
+						<label class="col-form-label">Pays : </label>
+						<input class="form-control-xs" type="text" name="pays" th:value="${site.pays}">
+						<span class="red" th:errors="${site.pays}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Région : </label>
+						<input class="form-control-xs" type="text" name="region" th:value="${site.region}">
+						<span class="red" th:errors="${site.region}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Ville : </label>
+						<input class="form-control-xs" type="text" name="ville" th:value="${site.ville}">
+						<span class="red" th:errors="${site.ville}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Nombre de secteur : </label>
+						<input class="form-control-xs" type="text" name="nombreSecteur" th:value="${site.nombreSecteur}">
+						<span class="red" th:errors="${site.nombreSecteur}"></span>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

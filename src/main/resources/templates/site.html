@@ -4,40 +4,38 @@
 	layout:decorator="layout">
 <head>
 <meta charset="UTF-8">
-<title>Topos</title>
+<title>Sites</title>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<br> <br>
-			<h3>Liste des topos
-			<a class="btn btn-success btn-topo"
-				th:href="@{/user/ajout}">Ajouter un topo</a></h3>
+			<h3>Liste des sites</h3>
 			<br>
 			<table class="table">
 				<thead>
 					<tr class="text-primary">
 						<th>Nom</th>
-						<th>Description</th>
-						<th>Lieu</th>
-						<th>Parution</th>
-						<th>Disponibilité</th>
+						<th>Pays</th>
+						<th>Région</th>
+						<th>Ville</th>
+						<th>Nombre de secteur</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="t:${listeTopos}">
-						<td th:text="${t.nom}"></td>
-						<td th:text="${t.description}"></td>
-						<td th:text="${t.lieu}"></td>
-						<td th:text="${t.parution}"></td>
-						<td th:text="${t.disponibilite}"></td>
+					<tr th:each="s:${listeSites}">
+						<td th:text="${s.nom}"></td>
+						<td th:text="${s.pays}"></td>
+						<td th:text="${s.region}"></td>
+						<td th:text="${s.ville}"></td>
+						<td th:text="${s.nombreSecteur}"></td>
 						<td><a class="btn btn-primary"
-							th:href="@{/informations(id=${t.id})}">Informations</a></td>
+							th:href="@{/informations(id=${s.id})}">Informations</a></td>
 						<td><a class="btn btn-primary"
-							th:href="@{/admin/modifier(id=${t.id})}">Modifier</a></td>
+							th:href="@{/admin/modifierSite(id=${s.id})}">Modifier</a></td>
 						<td><a class="btn btn-danger"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/admin/supprimer(id=${t.id}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+							th:href="@{/admin/supprimerSite(id=${s.id}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -47,7 +45,7 @@
 				<li class="nav-item"
 					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
 					th:each="pa,status:${pages}"><a class="nav-link active"
-					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
+					th:href="@{/site(page=${status.index}, size=${size}, motCle=${motCle})}"
 					th:text="${status.index}"></a></li>
 			</ul>
 		</div>

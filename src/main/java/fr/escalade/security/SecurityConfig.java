@@ -27,15 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
 		BCryptPasswordEncoder bc = getBC();
-		auth.inMemoryAuthentication().withUser("admin").password(bc.encode("Projet6")).roles("ADMIN","USER");
-		auth.inMemoryAuthentication().passwordEncoder(bc);
+		/*auth.inMemoryAuthentication().withUser("admin").password(bc.encode("Projet6")).roles("ADMIN","USER");
+		auth.inMemoryAuthentication().passwordEncoder(bc);*/
 		
-		/*auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select utilisateur as principal, password as credentials, active from utilisateur where pseudo=?")
+		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select pseudo as principal, password as credentials, active from utilisateur where pseudo=?")
 		.authoritiesByUsernameQuery("select pseudo as principal, statut as role from utilisateur where pseudo=?")
 		.rolePrefix("ROLE_")
 		.passwordEncoder(getBC());
 		
-		auth.jdbcAuthentication().dataSource(dataSource)
+		/*auth.jdbcAuthentication().dataSource(dataSource)
 		.usersByUsernameQuery("select nom, password, active from utilisateur where nom=?")
 		.authoritiesByUsernameQuery("select nom, statut from utilisateur where nom=?")
 		;*/
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.formLogin();
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
-		http.authorizeRequests().antMatchers("/user/*").hasRole("USER");
+		http.authorizeRequests().antMatchers("/user/*").hasAnyRole("ADMIN", "USER");
 		http.exceptionHandling().accessDeniedPage("/403");
 	}
 	

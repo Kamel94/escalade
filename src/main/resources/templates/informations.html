@@ -10,13 +10,14 @@
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<br> <br>
-			<h3>Informations sur les sites</h3>
+			<h3>Informations</h3>
 			<br>
 			<table class="table">
 				<thead>
 					<tr th:each="t:${listeSites}">
 						<td scope="row" class="text-primary">Description</td>
-						<td scope="col" th:text="${t.description}"></td>
+						<td scope="col" th:text="${t.description}">
+						</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -27,7 +28,7 @@
 				</tbody>
 				<tfoot>
 				<tr th:each="t:${listeSites}">
-				<td scope="row" class="text-primary">Commentaire</td>
+				<td scope="row" class="text-primary">Tag</td>
 						<td th:text="${t.tag}"></td>
 				</tr>
 				</tfoot>		

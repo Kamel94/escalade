@@ -10,7 +10,7 @@ import fr.escalade.entities.Site;
 
 public interface SiteRepository extends JpaRepository<Site, Integer> {
 	
-	@Query("select p from Topo p where p.nom like :x")
+	@Query("select s from Site s where s.nom like :x")
 	Page<Site> chercher(@Param("x")String mc, Pageable pageable);
 
 }

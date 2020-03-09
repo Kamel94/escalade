@@ -26,80 +26,75 @@ import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
 
 @Controller
-public class TopoController {
-	
+public class SiteController {
+
 	@Autowired
 	private TopoRepository topoRepository;
-	
+
 	@Autowired
 	private SiteRepository siteRepository;
-	
+
 	@Autowired
 	private InfoSiteRepository infoSiteRepository;
-	
+
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
-	
-	@GetMapping(value = "/accueil")
-	public String accueil(Model model, 
+
+	@GetMapping(value = "/site")
+	public String site(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
-		
-		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-		
-		model.addAttribute("listeTopos", pageTopos.getContent());
-		int[] pages = new int[pageTopos.getTotalPages()];
+
+		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
+
+		model.addAttribute("listeSites", pageSites.getContent());
+		int[] pages = new int[pageSites.getTotalPages()];
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
-		
-		return "Accueil";
+
+		return "site";
 	}
-	
-	@GetMapping(value="/user/ajout")
-	public String ajout(Model model, Integer id) {
-		model.addAttribute("topo", new Topo());
-		return "Ajout";
+
+	@GetMapping(value="/user/ajoutSite")
+	public String ajoutSite(Model model, Integer id) {
+		model.addAttribute("site", new Site());
+		return "ajoutSite"; // créer la page html
 	}
-	
-	@RequestMapping(value="/admin/modifier", method=RequestMethod.GET)
-	public String modifier(Model model, Integer id) {
-		Topo t = topoRepository.findById(id).orElse(null);
-		model.addAttribute("topo", t);
-		return "Modif";
+
+	@RequestMapping(value="/admin/modifierSite", method=RequestMethod.GET)
+	public String modifierSite(Model model, Integer id) {
+		Site site = siteRepository.findById(id).orElse(null);
+		model.addAttribute("site", site);
+		return "modifSite"; // créer la page html
 	}
-	
-	@GetMapping(value="/admin/supprimer")
-	public String supprimer(Integer id, String motCle, int page, int size) {
-		topoRepository.deleteById(id);
-		return "redirect:/accueil?page=" + page + "&size=" + size + "&motCle=" + motCle ;
+
+	@GetMapping(value="/admin/supprimerSite")
+	public String supprimerSite(Integer id, String motCle, int page, int size) {
+		siteRepository.deleteById(id);
+		return "redirect:/site?page=" + page + "&size=" + size + "&motCle=" + motCle ;
 	}
-	
-	@RequestMapping(value="/admin/enregistrer", method=RequestMethod.POST)
-	public String enregistrer(Model model, @Valid Topo topo, BindingResult bindingResult) {
+
+	@RequestMapping(value="/user/enregistrerSite", method=RequestMethod.POST)
+	public String enregistrerSite(Model model, @Valid Site site, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "Ajout";
+			return "ajoutSite";
 		}
-		topoRepository.save(topo);
-		return "Confirmation";
+		siteRepository.save(site);
+		return "confirmationSite";
 	}
-	
-	@GetMapping(value = "/user/reserver")
-	public String reserver() {
-		return "reservation";
-	}
-	
+
 	/*@GetMapping(value = "/informations")
-	public String informations(Model model, 
+	public String informationsSites(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc, 
 			@RequestParam int id) {
-		
-		Page<InfoSite> pageSites = infoSiteRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-		
+
+		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
+
 		model.addAttribute("listeSites", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
 		model.addAttribute("pages", pages);
@@ -109,15 +104,5 @@ public class TopoController {
 		model.addAttribute("id", id);
 		return "informations";
 	}*/
-	
-	@GetMapping("/")
-	public String defaut() {
-		return "redirect:/accueil";
-	}
-	
-	@GetMapping("/403")
-	public String nonAutorise() {
-		return "403";
-	}
 
 }

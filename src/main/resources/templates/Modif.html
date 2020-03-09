@@ -16,9 +16,9 @@ layout:decorator="layout">
 			<div class="card-body">
 				<form th:action="@{/admin/enregistrer}" method="post">
 				<div class="form-group">
-						<label class="col-form-label">ID : </label>
-						<input class="form-control-xs" type="text" name="id" th:value="${topo.id}">
-						<span class="red" th:errors="${topo.id}"></span>
+						<label class="col-form-label">Proprietaire : </label>
+						<input class="form-control-xs" type="text" name="proprietaire" th:value="${topo.proprietaire}">
+						<span class="red" th:errors="${topo.proprietaire}"></span>
 					</div>
 				<div class="form-group">
 						<label class="col-form-label">Nom : </label>
@@ -39,6 +39,11 @@ layout:decorator="layout">
 						<label class="col-form-label">Parution : </label>
 						<input class="form-control-xs" type="text" name="parution" th:value="${topo.parution}">
 						<span class="red" th:errors="${topo.parution}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Disponibilité : </label>
+						<input class="form-control-xs" type="text" name="disponibilite" th:value="${topo.disponibilite}">
+						<span class="red" th:errors="${topo.disponibilite}"></span>
 					</div>
 					<div>
 						<button type="submit" class="btn btn-primary">Enregistrer</button>

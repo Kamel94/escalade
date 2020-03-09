@@ -14,9 +14,13 @@ import com.sun.istack.NotNull;
 public class InfoSite implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue
+	@Column(name = "site_id")
+	private Integer siteId;
 	
+	@Column(name = "utilisateur_id")
+	private Integer utilisateurId;
+
 	@Column(length = 1000)
 	private String description;
 	
@@ -37,13 +41,21 @@ public class InfoSite implements Serializable {
 		this.commentaire = commentaire;
 		this.tag = tag;
 	}
-
-	public Integer getId() {
-		return id;
+	
+	public Integer getSiteId() {
+		return siteId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
+	}
+
+	public Integer getUtilisateurId() {
+		return utilisateurId;
+	}
+
+	public void setUtilisateurId(Integer utilisateurId) {
+		this.utilisateurId = utilisateurId;
 	}
 
 	public String getDescription() {

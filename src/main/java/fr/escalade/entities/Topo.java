@@ -1,13 +1,19 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Min;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.sun.istack.NotNull;
 
@@ -17,6 +23,11 @@ public class Topo implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	/*@ManyToOne
+	@JoinColumn(name="utilisateur_id")*/
+	@Column(length = 30)
+	private String proprietaire;
+
 	@Column(length = 70)
 	@NotNull
 	@Size(min = 1, max = 70)
@@ -30,21 +41,33 @@ public class Topo implements Serializable {
 	@Size(min = 1, max = 100)
 	private String lieu;
 	
-	@Column(length = 70)
-	@Size(min = 1, max = 70)
+	@Column(name = "date_parution")
+	/*@Size(min = 1, max = 70)*/
+	@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd", style = "dd-MM-yyyy")
 	private String parution;
 	
 	@Column(length = 70)
 	@Size(min = 1, max = 70)
 	private String disponibilite;
+	
+	private Utilisateur utilisateur;
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 
 	public Topo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(String nom, String description, String lieu, String parution, String disponibilite) {
+	public Topo(String proprietaire, String nom, String description, String lieu, String parution, String disponibilite) {
 		super();
+		this.proprietaire = proprietaire;
 		this.nom = nom;
 		this.description = description;
 		this.lieu = lieu;
@@ -98,6 +121,14 @@ public class Topo implements Serializable {
 
 	public void setDisponibilite(String disponibilite) {
 		this.disponibilite = disponibilite;
+	}
+	
+	public String getProprietaire() {
+		return proprietaire;
+	}
+
+	public void setProprietaire(String proprietaire) {
+		this.proprietaire = proprietaire;
 	}
 
 }

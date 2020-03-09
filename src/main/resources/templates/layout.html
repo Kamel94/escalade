@@ -10,19 +10,21 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
 <body>
-	<nav class="navbar navbar-light bg-primary">
-		<div class="container-fluid">
+	<div class="card-fluid">
+		<nav class="navbar navbar-light bg-primary">
 			<div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/accueil}">Accueil</a> 
-				<a class="navbar-brand" th:href="@{/admin/ajout}">Ajouter un topo</a>
+				<a class="navbar-brand" th:href="@{/accueil}">Accueil</a>
+				<a class="navbar-brand" th:href="@{/site}">Voir la liste des sites</a> 
+				<a class="navbar-brand" th:href="@{/user/ajoutSite}">Ajouter un site</a> 
+					<a class="navbar-brand" th:href="@{/login?logout}" th:inline="text"> Se déconecter</a>
 			</div>
-			<form class=" form-inline" th:action="@{accueil}" method="get">
-				<label>Mot Clé :</label> <input class="form-control mr-sm-2"
-					type="text" name="motCle" th:value="${motCle}" />
+			<form class="form-inline" th:action="@{accueil}" method="get">
+				<label>Mot Clé :</label> <input type="text" name="motCle"
+					th:value="${motCle}" />
 				<button class="btn btn-success">Chercher</button>
 			</form>
-		</div>
-	</nav>
+		</nav>
+	</div>
 	<section layout:fragment="content"></section>
 	<footer class="navbar-fixed-bottom">
 		<hr />

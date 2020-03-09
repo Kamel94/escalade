@@ -1,12 +1,15 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.sun.istack.NotNull;
 
@@ -16,6 +19,17 @@ public class Utilisateur implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	/*@OneToMany(mappedBy="utilisateur", fetch=FetchType.LAZY)
+	private Collection<Topo> topos;
+
+	public Collection<Topo> getTopos() {
+		return topos;
+	}
+
+	public void setTopos(Collection<Topo> topos) {
+		this.topos = topos;
+	}*/
 
 	@Column(length = 30)
 	private String nom;
@@ -37,15 +51,12 @@ public class Utilisateur implements Serializable {
 
 	private String dateAdhesion;
 
-	@Column(length = 20)
-	private String niveau;
-	
-	@Column
-	@NotNull
-	private int nombreTopo;
-
 	@Column(length = 15)
 	private String telephone;
+	
+	@Column(name = "active")
+	@javax.validation.constraints.NotNull
+	private boolean compteActif;
 
 	public Utilisateur() {
 		super();
@@ -53,7 +64,7 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String pseudo, String email, String password, String statut,
-			String dateAdhesion, String niveau, int nombreTopo, String telephone) {
+			String dateAdhesion, String niveau, String telephone, boolean compteActif) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -62,8 +73,7 @@ public class Utilisateur implements Serializable {
 		this.password = password;
 		this.statut = statut;
 		this.dateAdhesion = dateAdhesion;
-		this.niveau = niveau;
-		this.nombreTopo = nombreTopo;
+		this.compteActif = compteActif;
 		this.telephone = telephone;
 	}
 
@@ -131,20 +141,12 @@ public class Utilisateur implements Serializable {
 		this.dateAdhesion = dateAdhesion;
 	}
 
-	public String getNiveau() {
-		return niveau;
+	public boolean isCompteActif() {
+		return compteActif;
 	}
 
-	public void setNiveau(String niveau) {
-		this.niveau = niveau;
-	}
-
-	public int getNombreTopo() {
-		return nombreTopo;
-	}
-
-	public void setNombreTopo(int nombreTopo) {
-		this.nombreTopo = nombreTopo;
+	public void setCompteActif(boolean compteActif) {
+		this.compteActif = compteActif;
 	}
 
 	public String getTelephone() {

@@ -13,31 +13,31 @@
 			<div class="card-header">Confirmation</div>
 			<div class="card-body">
 				<div class="form-group">
-					<label>Proprietaire : </label>
-					<label th:text="${topo.proprietaire}"></label>
+					<label>Utilisateur : </label>
+					<label>[[${#httpServletRequest.remoteUser}]]</label>
 				</div>
 				<div class="form-group">
 					<label>Nom : </label>
-					<label th:text="${topo.nom}"></label>
+					<label th:text="${site.nom}"></label>
 				</div>
 				<div class="form-group">
-					<label>Description : </label>
-					<label th:text="${topo.description}"></label>
+					<label>Pays : </label>
+					<label th:text="${site.pays}"></label>
 				</div>
 				<div class="form-group">
-					<label>Lieu : </label>
-					<label th:text="${topo.lieu}"></label>
+					<label>Region : </label>
+					<label th:text="${site.region}"></label>
 				</div>
 				<div class="form-group">
-					<label>Parution : </label>
-					<label th:text="${topo.parution}"></label>
+					<label>Ville : </label>
+					<label th:text="${site.ville}"></label>
 				</div>
 				<div class="form-group">
-					<label>Disponibilité : </label>
-					<label th:text="${topo.disponibilite}"></label>
+					<label>Nombre de secteur : </label>
+					<label th:text="${site.nombreSecteur}"></label>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-primary droite" th:href="@{/accueil}">Retour à l'accueil</a>
+					<a class="btn btn-primary droite" th:href="@{/site}">Retour à la liste</a>
 				</div>
 			</div>
 		</div>
