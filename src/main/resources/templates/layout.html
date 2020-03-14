@@ -15,10 +15,10 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" th:href="@{/accueil}">Accueil</a>
 				<a class="navbar-brand" th:href="@{/site}">Voir la liste des sites</a> 
-				<a class="navbar-brand" th:href="@{/user/ajoutSite}">Ajouter un site</a> 
+				<a class="navbar-brand" th:href="@{/secteur}">Voir la liste des secteurs</a> 
 					<a class="navbar-brand" th:href="@{/login?logout}" th:inline="text"> Se déconecter</a>
 			</div>
-			<form class="form-inline" th:action="@{accueil}" method="get">
+			<form class="form-inline" th:action="@{/accueil}" method="get">
 				<label>Mot Clé :</label> <input type="text" name="motCle"
 					th:value="${motCle}" />
 				<button class="btn btn-success">Chercher</button>

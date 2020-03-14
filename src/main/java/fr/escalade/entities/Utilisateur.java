@@ -17,8 +17,8 @@ import com.sun.istack.NotNull;
 public class Utilisateur implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(length = 50)
+	private String email;
 	
 	/*@OneToMany(mappedBy="utilisateur", fetch=FetchType.LAZY)
 	private Collection<Topo> topos;
@@ -39,10 +39,7 @@ public class Utilisateur implements Serializable {
 
 	@Column(length = 15)
 	private String pseudo;
-
-	@Column(length = 50)
-	private String email;
-
+	
 	@Column(length = 50)
 	private String password;
 	
@@ -63,26 +60,17 @@ public class Utilisateur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(String nom, String prenom, String pseudo, String email, String password, String statut,
+	public Utilisateur(String nom, String prenom, String pseudo, String password, String statut,
 			String dateAdhesion, String niveau, String telephone, boolean compteActif) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.pseudo = pseudo;
-		this.email = email;
 		this.password = password;
 		this.statut = statut;
 		this.dateAdhesion = dateAdhesion;
 		this.compteActif = compteActif;
 		this.telephone = telephone;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNom() {

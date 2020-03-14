@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.escalade.entities.ReservationTopo;
 
-public interface ReservationTopoRepository extends JpaRepository<ReservationTopo, Integer> {
+public interface ReservationTopoRepository extends JpaRepository<ReservationTopo, String> {
 
 }

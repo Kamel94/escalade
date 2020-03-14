@@ -1,7 +1,5 @@
 package fr.escalade.web;
 
-import java.text.SimpleDateFormat;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import antlr.collections.List;
-import fr.escalade.dao.InfoSiteRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
-import fr.escalade.entities.InfoSite;
-import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
-import fr.escalade.entities.Utilisateur;
 
 @Controller
 public class TopoController {
@@ -34,8 +27,6 @@ public class TopoController {
 	@Autowired
 	private SiteRepository siteRepository;
 	
-	@Autowired
-	private InfoSiteRepository infoSiteRepository;
 	
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
@@ -43,7 +34,7 @@ public class TopoController {
 	@GetMapping(value = "/accueil")
 	public String accueil(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "6") int s,
+			@RequestParam(name="size", defaultValue = "2") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
 		
 		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
@@ -59,25 +50,32 @@ public class TopoController {
 	}
 	
 	@GetMapping(value="/user/ajout")
-	public String ajout(Model model, Integer id) {
+	public String ajout(Model model, String nom) {
 		model.addAttribute("topo", new Topo());
 		return "Ajout";
 	}
 	
-	@RequestMapping(value="/admin/modifier", method=RequestMethod.GET)
-	public String modifier(Model model, Integer id) {
+	@RequestMapping(value="/user/modifier", method=RequestMethod.GET)
+	public String modifier(Model model, String id) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		model.addAttribute("topo", t);
 		return "Modif";
 	}
 	
+	@RequestMapping(value="/user/commentaire", method=RequestMethod.GET)
+	public String commentaire(Model model, String id) {
+		Topo t = topoRepository.findById(id).orElse(null);
+		model.addAttribute("topo", t);
+		return "commentaire";
+	}
+	
 	@GetMapping(value="/admin/supprimer")
-	public String supprimer(Integer id, String motCle, int page, int size) {
+	public String supprimer(String id, String motCle, int page, int size) {
 		topoRepository.deleteById(id);
 		return "redirect:/accueil?page=" + page + "&size=" + size + "&motCle=" + motCle ;
 	}
 	
-	@RequestMapping(value="/admin/enregistrer", method=RequestMethod.POST)
+	@RequestMapping(value="/user/enregistrer", method=RequestMethod.POST)
 	public String enregistrer(Model model, @Valid Topo topo, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "Ajout";
@@ -90,25 +88,6 @@ public class TopoController {
 	public String reserver() {
 		return "reservation";
 	}
-	
-	/*@GetMapping(value = "/informations")
-	public String informations(Model model, 
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc, 
-			@RequestParam int id) {
-		
-		Page<InfoSite> pageSites = infoSiteRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-		
-		model.addAttribute("listeSites", pageSites.getContent());
-		int[] pages = new int[pageSites.getTotalPages()];
-		model.addAttribute("pages", pages);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-		model.addAttribute("id", id);
-		return "informations";
-	}*/
 	
 	@GetMapping("/")
 	public String defaut() {

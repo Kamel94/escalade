@@ -17,7 +17,7 @@
 					<form th:action="@{/user/enregistrer}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Propriétaire : </label> 
-							<input class="form-control-xs" type="text" name="nom"
+							<input class="form-control-xs" type="text" name="proprietaire"
 								th:value="${topo.proprietaire}">
 								<span class="red" th:errors="${topo.proprietaire}" th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
 						</div>

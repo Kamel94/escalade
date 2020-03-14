@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Voies</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br> <br>
+			<h3>
+				Liste des voies <a class="btn btn-success btn-titre"
+					th:href="@{/user/ajoutVoie}">Ajouter une voie</a>
+			</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Numéro de voie</th>
+						<th>Nom du secteur</th>
+						<th>Nombre de longueur</th>
+						<th>Nombre de point</th>
+						<th>Cotation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="v:${listeVoie}">
+						<td th:text="${v.id}"></td>
+						<td th:text="${v.secteurNom}"></td>
+						<td th:text="${v.nombreLongueur}"></td>
+						<td th:text="${v.nombrePoint}"></td>
+						<td th:text="${v.cotation}"></td>
+						<td><a class="btn btn-primary"
+							th:href="@{/longueur(id=${v.id})}">Informations</a></td>
+						<td><a class="btn btn-primary"
+							th:href="@{/user/modifierVoie(id=${v.id})}">Modifier</a></td>
+						<td><a class="btn btn-danger"
+							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+							th:href="@{/admin/supprimerVoie(id=${v.id}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Niveau</th>
+						<th>Numéro de la voie</th>
+						<th>Nombre de relais</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="l:${listeLongueur}">
+						<td th:text="${l.niveau}"></td>
+						<td th:text="${l.voieNumero}"></td>
+						<td th:text="${l.nombreRelais}"></td>
+						<td><a class="btn btn-primary"
+							th:href="@{/informations(id=${l.niveau})}">Informations</a></td>
+						<td><a class="btn btn-primary"
+							th:href="@{/user/modifierLongueur(id=${l.niveau})}">Modifier</a></td>
+						<td><a class="btn btn-danger"
+							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+							th:href="@{/admin/supprimerLongueur(id=${l.niveau}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</div>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
+					th:each="pa,status:${pages}"><a class="nav-link active"
+					th:href="@{/voie(page=${status.index}, size=${size}, motCle=${motCle})}"
+					th:text="${status.index}"></a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

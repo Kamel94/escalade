@@ -14,12 +14,13 @@ import com.sun.istack.NotNull;
 public class InfoSite implements Serializable {
 	
 	@Id
-	@GeneratedValue
-	@Column(name = "site_id")
-	private Integer siteId;
+	@Column(name = "site_nom")
+	private String siteNom;
 	
-	@Column(name = "utilisateur_id")
-	private Integer utilisateurId;
+	Site site;
+	
+	@Column(name = "utilisateur_email")
+	private String utilisateur;
 
 	@Column(length = 1000)
 	private String description;
@@ -42,20 +43,20 @@ public class InfoSite implements Serializable {
 		this.tag = tag;
 	}
 	
-	public Integer getSiteId() {
-		return siteId;
+	public String getSiteNom() {
+		return siteNom;
 	}
 
-	public void setSiteId(Integer siteId) {
-		this.siteId = siteId;
+	public void setSiteNom(String siteNom) {
+		this.siteNom = siteNom;
 	}
 
-	public Integer getUtilisateurId() {
-		return utilisateurId;
+	public String getUtilisateur() {
+		return utilisateur;
 	}
 
-	public void setUtilisateurId(Integer utilisateurId) {
-		this.utilisateurId = utilisateurId;
+	public void setUtilisateurId(String utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	public String getDescription() {

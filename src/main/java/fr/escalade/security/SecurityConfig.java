@@ -30,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		/*auth.inMemoryAuthentication().withUser("admin").password(bc.encode("Projet6")).roles("ADMIN","USER");
 		auth.inMemoryAuthentication().passwordEncoder(bc);*/
 		
-		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select pseudo as principal, password as credentials, active from utilisateur where pseudo=?")
-		.authoritiesByUsernameQuery("select pseudo as principal, statut as role from utilisateur where pseudo=?")
+		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select identifiant as principal, password as credentials, active from utilisateur where identifiant=?")
+		.authoritiesByUsernameQuery("select identifiant as principal, statut as role from utilisateur where identifiant=?")
 		.rolePrefix("ROLE_")
 		.passwordEncoder(getBC());
 		

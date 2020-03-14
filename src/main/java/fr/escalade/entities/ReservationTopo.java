@@ -2,17 +2,19 @@ package fr.escalade.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class ReservationTopo implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "topo_nom")
+	private String topoNom;
+	
+	@Column(name = "utilisateur_email")
+	private String Proprietaire;
 	
 	private String reponseDemande;
 
@@ -26,20 +28,28 @@ public class ReservationTopo implements Serializable {
 		this.reponseDemande = reponseDemande;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getReponseDemande() {
 		return reponseDemande;
 	}
 
 	public void setReponseDemande(String reponseDemande) {
 		this.reponseDemande = reponseDemande;
+	}
+
+	public String getTopoNom() {
+		return topoNom;
+	}
+
+	public void setTopoNom(String topoNom) {
+		this.topoNom = topoNom;
+	}
+
+	public String getProprietaire() {
+		return Proprietaire;
+	}
+
+	public void setProprietaire(String proprietaire) {
+		Proprietaire = proprietaire;
 	}
 
 }

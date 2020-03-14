@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Commentaire</title>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+
+					<form class="form-inline" th:action="@{/user/enregistrerCom}" method="post">
+						<label>Commentaire :</label> <input type="text" name="commentaire"
+							th:value="${commentaire}" />
+						<button type="submit" class="btn btn-primary" >Poster</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

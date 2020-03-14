@@ -20,18 +20,16 @@ import com.sun.istack.NotNull;
 @Entity
 public class Topo implements Serializable {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	/*@ManyToOne
-	@JoinColumn(name="utilisateur_id")*/
-	@Column(length = 30)
-	private String proprietaire;
-
+	@Id
 	@Column(length = 70)
 	@NotNull
 	@Size(min = 1, max = 70)
 	private String nom;
+	
+	/*@ManyToOne
+	@JoinColumn(name="utilisateur_id")*/
+	@Column(length = 30, name = "utilisateur_identifiant")
+	private String proprietaire;
 	
 	@Column(length = 500)
 	@Size(min = 1, max = 500)
@@ -65,22 +63,13 @@ public class Topo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(String proprietaire, String nom, String description, String lieu, String parution, String disponibilite) {
+	public Topo(String proprietaire, String description, String lieu, String parution, String disponibilite) {
 		super();
 		this.proprietaire = proprietaire;
-		this.nom = nom;
 		this.description = description;
 		this.lieu = lieu;
 		this.parution = parution;
 		this.disponibilite = disponibilite;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNom() {

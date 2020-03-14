@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Confirmation</title>
+	<link rel="stylesheet" type="text/css"  href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+</head>
+<body>
+	<br>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">Confirmation</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label>Numéro de voie : </label>
+					<label th:text="${voie.id}"></label>
+				</div>
+				<div class="form-group">
+					<label>Nom du secteur : </label>
+					<label th:text="${voie.secteurNom}"></label>
+				</div>
+				<div class="form-group">
+					<label>Nombre de longueur : </label>
+					<label th:text="${voie.nombreLongueur}"></label>
+				</div>
+				<div class="form-group">
+					<label>Nombre de point : </label>
+					<label th:text="${voie.nombrePoint}"></label>
+				</div>
+				<div class="form-group">
+					<label>Cotation : </label>
+					<label th:text="${voie.cotation}"></label>
+				</div>
+				<div class="form-group">
+					<a class="btn btn-primary droite" th:href="@{/voie}">Retour à la liste</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

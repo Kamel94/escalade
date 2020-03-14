@@ -7,18 +7,40 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Voie implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "numero_voie")
+	@NotNull
 	private Integer id;
 	
+	@Column(name = "secteur_nom")
+	private String secteurNom;
+	
+	@Column(name = "nombre_longueur")
 	private int nombreLongueur;
 	
+	@Column(name = "nombre_point")
 	private int nombrePoint;
 	
+	public String lien(int numeroVoie, int numeroLongueur) {
+		if(numeroVoie == numeroLongueur) {
+			return "information";
+		}
+		return "voie";
+	}
+	
+	public String getSecteurNom() {
+		return secteurNom;
+	}
+
+	public void setSecteurNom(String secteurNom) {
+		this.secteurNom = secteurNom;
+	}
+
 	@Column(length = 2)
 	private String cotation;
 

@@ -14,7 +14,7 @@ layout:decorator="layout">
 		<div class="card">
 			<div class="card-header">Modification d'un topo</div>
 			<div class="card-body">
-				<form th:action="@{/admin/enregistrer}" method="post">
+				<form th:action="@{/user/enregistrer}" method="post">
 				<div class="form-group">
 						<label class="col-form-label">Proprietaire : </label>
 						<input class="form-control-xs" type="text" name="proprietaire" th:value="${topo.proprietaire}">

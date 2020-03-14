@@ -27,7 +27,7 @@ import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
 
 @Controller
-public class SiteController {
+public class SecteurController {
 
 	@Autowired
 	private TopoRepository topoRepository;
@@ -44,50 +44,49 @@ public class SiteController {
 	@Autowired
 	private SecteurRepository secteurRepository;
 
-	@GetMapping(value = "/site")
-	public String site(Model model, 
+	@GetMapping(value = "/secteur")
+	public String secteur(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
-
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-
-		model.addAttribute("listeSites", pageSites.getContent());
-		int[] pages = new int[pageSites.getTotalPages()];
-		model.addAttribute("pages", pages);
+		
+		Page<Secteur> listeSecteur = secteurRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
+		model.addAttribute("listeSecteurs", listeSecteur.getContent());
+		int[] listes = new int[listeSecteur.getTotalPages()];
+		model.addAttribute("secteur", listes);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
 
-		return "site";
+		return "secteur";
 	}
 
-	@GetMapping(value="/user/ajoutSite")
+	@GetMapping(value="/user/ajoutSecteur")
 	public String ajoutSite(Model model, String id) {
-		model.addAttribute("site", new Site());
-		return "ajoutSite"; 
+		model.addAttribute("secteur", new Secteur());
+		return "ajoutSecteur";
 	}
 
-	@RequestMapping(value="/admin/modifierSite", method=RequestMethod.GET)
-	public String modifierSite(Model model, String id) {
-		Site site = siteRepository.findById(id).orElse(null);
-		model.addAttribute("site", site);
-		return "modifSite"; 
+	@RequestMapping(value="/user/modifierSecteur", method=RequestMethod.GET)
+	public String modifierSecteur(Model model, String id) {
+		Secteur secteur = secteurRepository.findById(id).orElse(null);
+		model.addAttribute("secteur", secteur);
+		return "modifSecteur";
 	}
 
-	@GetMapping(value="/admin/supprimerSite")
-	public String supprimerSite(String id, String motCle, int page, int size) {
-		siteRepository.deleteById(id);
-		return "redirect:/site?page=" + page + "&size=" + size + "&motCle=" + motCle ;
+	@GetMapping(value="/admin/supprimerSecteur")
+	public String supprimerSecteur(String id, String motCle, int page, int size) {
+		secteurRepository.deleteById(id);
+		return "redirect:/secteur?page=" + page + "&size=" + size + "&motCle=" + motCle ;
 	}
 
-	@RequestMapping(value="/user/enregistrerSite", method=RequestMethod.POST)
-	public String enregistrerSite(Model model, @Valid Site site, BindingResult bindingResult) {
+	@RequestMapping(value="/user/enregistrerSecteur", method=RequestMethod.POST)
+	public String enregistrerSecteur(Model model, @Valid Secteur secteur, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "ajoutSite";
+			return "ajoutSecteur";
 		}
-		siteRepository.save(site);
-		return "confirmationSite";
+		secteurRepository.save(secteur);
+		return "confirmationSecteur";
 	}
 
 	/*@GetMapping(value = "/informations")

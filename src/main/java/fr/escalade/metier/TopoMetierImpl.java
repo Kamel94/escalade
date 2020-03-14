@@ -13,29 +13,29 @@ public class TopoMetierImpl implements ITopoMetier {
 
 	private TopoRepository topoRepository;
 	@Override
-	public Topo consulterTopo(Integer id) {
+	public Topo consulterTopo(String nom) {
 		
-		Topo topo = topoRepository.findById(id).orElse(null);
+		Topo topo = topoRepository.findById(nom).orElse(null);
 		
 		if(topo == null) throw new RuntimeException("Topo introuvable");
 		return topo;
 	}
 
 	@Override
-	public void ajouterTopo(Model model, Integer id) {
-		Topo topo = consulterTopo(id);
+	public void ajouterTopo(Model model, String nom) {
+		Topo topo = consulterTopo(nom);
 		  model.addAttribute("ajout", new Topo());
 		
 	}
 
 	@Override
-	public void supprimerTopo(Integer id) {
+	public void supprimerTopo(String nom) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void proprietaire(Integer id, String proprietaire) {
+	public void proprietaire(String nom, String proprietaire) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -23,7 +23,10 @@
 				<tbody>
 					<tr th:each="t:${listeSites}">
 						<td scope="row" class="text-primary">Commentaire</td>
-						<td th:text="${t.commentaire}"></td>
+						<td    th:text="${t.commentaire}">
+						<!--	<span th:if="${t.siteNom == site.nom}">Female</span>
+   						 	<span th:unless="${t.siteNom == site.nom}">Male</span> --> 
+						</td>
 					</tr>
 				</tbody>
 				<tfoot>

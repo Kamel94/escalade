@@ -1,21 +1,41 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.springframework.ui.Model;
 
 import com.sun.istack.NotNull;
+
+import fr.escalade.dao.SecteurRepository;
 
 @Entity
 public class Site implements Serializable {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	
+	
+	/*@OneToMany(mappedBy="site", fetch=FetchType.LAZY)
+	private Collection<Secteur> secteurs;
+
+	public Collection<Secteur> getTopos() {
+		return secteurs;
+	}
+
+	public void setTopos(Collection<Secteur> secteurs) {
+		this.secteurs = secteurs;
+	}*/
+	
+	@Id
 	@Column(length = 40)
 	@NotNull
 	private String nom;
@@ -41,21 +61,12 @@ public class Site implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Site(String nom, String pays, String region, String ville, int nombreSecteur) {
+	public Site( String pays, String region, String ville, int nombreSecteur) {
 		super();
-		this.nom = nom;
 		this.pays = pays;
 		this.region = region;
 		this.ville = ville;
 		this.nombreSecteur = nombreSecteur;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNom() {

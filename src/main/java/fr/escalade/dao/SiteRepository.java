@@ -8,9 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 import fr.escalade.entities.Site;
 
-public interface SiteRepository extends JpaRepository<Site, Integer> {
+public interface SiteRepository extends JpaRepository<Site, String> {
 	
 	@Query("select s from Site s where s.nom like :x")
 	Page<Site> chercher(@Param("x")String mc, Pageable pageable);
+	
+	Site findByNom(String nom);
 
 }

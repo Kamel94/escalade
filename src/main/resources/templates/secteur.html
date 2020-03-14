@@ -4,40 +4,37 @@
 	layout:decorator="layout">
 <head>
 <meta charset="UTF-8">
-<title>Topos</title>
+<title>Secteurs</title>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<br> <br>
-			<h3>Liste des topos
+			<h3>Liste des secteurs 
 			<a class="btn btn-success btn-titre"
-				th:href="@{/user/ajout}">Ajouter un topo</a></h3>
+					th:href="@{/user/ajoutSecteur}">Ajouter secteur</a>
+			<a class="btn btn-success btn-titre"
+					th:href="@{/voie}">Liste des voies</a>
+			</h3>
 			<br>
 			<table class="table">
 				<thead>
 					<tr class="text-primary">
+						<th>Site</th>
 						<th>Nom</th>
-						<th>Description</th>
-						<th>Lieu</th>
-						<th>Parution</th>
-						<th>Disponibilité</th>
+						<th>Nombre de voie</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="t:${listeTopos}">
-						<td th:text="${t.nom}"></td>
-						<td th:text="${t.description}"></td>
-						<td th:text="${t.lieu}"></td>
-						<td th:text="${t.parution}"></td>
-						<td th:text="${t.disponibilite}"></td>
+					<tr th:each="s:${listeSecteurs}">
+						<td th:text="${s.siteNom}"></td>
+						<td th:text="${s.nom}"></td>
+						<td th:text="${s.nombreVoie}"></td>
 						<td><a class="btn btn-primary"
-							th:href="@{/user/commentaire(id=${t.nom})}">Commentaire</a></td>
-						<td><a class="btn btn-primary"
-							th:href="@{/user/modifier(id=${t.nom})}">Modifier</a></td>
+							th:href="@{/user/modifierSecteur(id=${s.nom})}">Modifier</a></td>
 						<td><a class="btn btn-danger"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/admin/supprimer(id=${t.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+							th:href="@{/admin/supprimerSecteur(id=${s.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -47,7 +44,7 @@
 				<li class="nav-item"
 					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
 					th:each="pa,status:${pages}"><a class="nav-link active"
-					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
+					th:href="@{/secteur(page=${status.index}, size=${size}, motCle=${motCle})}"
 					th:text="${status.index}"></a></li>
 			</ul>
 		</div>

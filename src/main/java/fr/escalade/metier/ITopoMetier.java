@@ -6,9 +6,9 @@ import fr.escalade.entities.Topo;
 
 public interface ITopoMetier {
 	
-	Topo consulterTopo(Integer id);
-	void ajouterTopo(Model model, Integer id);
-	void supprimerTopo(Integer id);
-	void proprietaire(Integer id, String proprietaire);
+	Topo consulterTopo(String nom);
+	void ajouterTopo(Model model, String nom);
+	void supprimerTopo(String nom);
+	void proprietaire(String nom, String proprietaire);
 
 }
