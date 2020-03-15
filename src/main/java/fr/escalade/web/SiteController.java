@@ -54,6 +54,7 @@ public class SiteController {
 
 		model.addAttribute("listeSites", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
+				
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);

@@ -64,15 +64,6 @@
 			</table> -->
 			</div>
 		</div>
-		<div class="container">
-			<ul class="nav nav-pills">
-				<li class="nav-item"
-					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
-					th:each="pa,status:${pages}"><a class="nav-link active"
-					th:href="@{/longueur(page=${status.index}, size=${size}, motCle=${motCle})}"
-					th:text="${status.index}"></a></li>
-			</ul>
-		</div>
 	</div>
 </body>
 </html>

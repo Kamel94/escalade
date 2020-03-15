@@ -12,11 +12,12 @@ import fr.escalade.entities.Longueur;
 
 public interface LongueurRepository extends JpaRepository<Longueur, Integer> {
 	
-	@Query("select l from Longueur l where l.test like :x")
-	Page<Longueur> rechercher(@Param("x")String mc, Pageable pageable );
+	@Query("select l from Longueur l where l.nombreRelais like :x")
+	Page<Longueur> rechercher(@Param("x")int id, Pageable pageable );
 	
+	/*ERROR: operator does not exist: integer ~~ integer
 	@Query("select l from Longueur l where l.niveau like :x")
-	List<Longueur> findById(@Param("x")int id);
+	List<Longueur> findById(@Param("x")int id);*/
 
 	@Query("select l from Longueur l where l.niveau like :x")
 	List<Longueur> findAll(@Param("x")int id);

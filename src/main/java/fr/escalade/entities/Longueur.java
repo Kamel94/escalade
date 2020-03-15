@@ -17,26 +17,15 @@ public class Longueur implements Serializable {
 	
 	@Column(name = "nombre_relais")
 	private int nombreRelais;
-	
-	private String test;
-
-	public String getTest() {
-		return test;
-	}
-
-	public void setTest(String test) {
-		this.test = test;
-	}
 
 	public Longueur() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Longueur(int nombreRelais, String test) {
+	public Longueur(int nombreRelais) {
 		super();
 		this.nombreRelais = nombreRelais;
-		this.test = test;
 	}
 
 	public Integer getNiveau() {

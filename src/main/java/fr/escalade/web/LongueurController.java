@@ -11,12 +11,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import fr.escalade.dao.LongueurRepository;
 import fr.escalade.dao.VoieRepository;
 import fr.escalade.entities.Longueur;
 import fr.escalade.entities.Topo;
+import fr.escalade.entities.Voie;
 
 @Controller
 public class LongueurController {
@@ -25,28 +29,18 @@ public class LongueurController {
 	private LongueurRepository longueurRepository;
 
 	@GetMapping(value = "/longueur")
-	public String longueur(Model model, 
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "2") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc,
-			@RequestParam(name="niveau", defaultValue = "") int id) {
+	public String longueur(Model model,
+			@RequestParam(name="niveau", defaultValue = "0") int id) {
 		
-		Page<Longueur> pageTopos = longueurRepository.rechercher("%" + mc + "%", PageRequest.of(p, s));
-		
-		model.addAttribute("listeTopos", pageTopos);
-		int[] pages = new int[pageTopos.getTotalPages()];
-		model.addAttribute("pages", pages);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-		model.addAttribute("niveau", id);
+		List<Longueur> liste = longueurRepository.findAll();
+		model.addAttribute("listeLongueur", liste);
 		
 		return "longueur";
 	}
 	
 	/*String lien(int numeroVoie, int numeroLongueur) {
 		if(numeroVoie == numeroLongueur) {
-			return "informations";
+			return "longueur";
 		}
 		return "voie";
 	}*/
