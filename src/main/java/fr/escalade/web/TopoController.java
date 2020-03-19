@@ -62,12 +62,12 @@ public class TopoController {
 		return "Modif";
 	}
 	
-	@RequestMapping(value="/user/commentaire", method=RequestMethod.GET)
+	/*@RequestMapping(value="/user/commentaire", method=RequestMethod.GET)
 	public String commentaire(Model model, String id) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		model.addAttribute("topo", t);
 		return "commentaire";
-	}
+	}*/
 	
 	@GetMapping(value="/admin/supprimer")
 	public String supprimer(String id, String motCle, int page, int size) {

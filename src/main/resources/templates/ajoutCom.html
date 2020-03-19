@@ -12,38 +12,32 @@
 	<div layout:fragment="content">
 		<div class="col-8 spacer">
 			<div class="card-fluid">
-				<div class="card-header">Saisie d'un secteur</div>
+				<div class="card-header">Saisie d'un commentaire</div>
 				<div class="card-body" >
 					<form th:action="@{/user/enregistrerCom}" method="post">
 					<div class="form-group">
-							<label class="col-form-label">Numéro de voie : </label> 
-							<input class="form-control-xs" type="text" name="id"
-								th:value="${voie.id}">
-								<span class="red" th:errors="${voie.id}" th:inline="text"></span>
+							<label class="col-form-label">Site : </label> 
+							<input class="form-control-xs" type="text" name="site"
+								th:value="${commentaire.site}">
+								<span class="red" th:errors="${commentaire.site}" th:inline="text"></span>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">Nom du secteur : </label> 
-							<input class="form-control-xs" type="text" name="secteurNom"
-								th:value="${voie.secteurNom}">
-								<span class="red" th:errors="${voie.secteurNom}" th:inline="text"></span>
+							<label class="col-form-label">Commentaire : </label> 
+							<input class="form-control-xs" type="text" name="comment" placeholder="Votre Commentaire"
+								th:value="${commentaire.comment}">
+								<span class="red" th:errors="${commentaire.comment}" th:inline="text"></span>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">Nombre de longueur : </label> <input
-								class="form-control-xs" type="text" name="nombreLongueur"
-								th:value="${voie.nombreLongueur}"> <span class="red"
-								th:errors="${voie.nombreLongueur}"></span>
+							<label class="col-form-label">Auteur : </label> <input
+								class="form-control-xs" type="text" name="auteur"
+								th:value="${#httpServletRequest.remoteUser}"> <span class="red"
+								th:errors="${commentaire.auteur}">[[${#httpServletRequest.remoteUser}]]</span>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">Nombre de point : </label> <input
-								class="form-control-xs" type="text" name="nombrePoint"
-								th:value="${voie.nombrePoint}"> <span class="red"
-								th:errors="${voie.nombrePoint}"></span>
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Cotation : </label> <input
-								class="form-control-xs" type="text" name="cotation"
-								th:value="${voie.cotation}"> <span class="red"
-								th:errors="${voie.cotation}"></span>
+							<label class="col-form-label">Date : </label> <input
+								class="form-control-xs" type="text" name="date"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"> <span class="red"
+								th:errors="${commentaire.date}"></span>
 						</div>
 						<div>
 							<button type="submit" class="btn btn-primary">Enregistrer</button>

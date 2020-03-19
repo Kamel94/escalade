@@ -18,7 +18,7 @@
 					<div class="form-group">
 							<label class="col-form-label">Site : </label> 
 							<input class="form-control-xs" type="text" name="siteNom"
-								th:value="${secteur.siteNom}">
+								th:value="${secteur.siteNom != null} ? ${site.nom}">
 								<span class="red" th:errors="${secteur.siteNom}" th:inline="text"></span>
 						</div>
 						<div class="form-group">

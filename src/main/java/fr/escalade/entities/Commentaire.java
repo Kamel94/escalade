@@ -2,40 +2,63 @@ package fr.escalade.entities;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Commentaire {
    
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(name = "site_nom")
+    private String site;
+	
+	@Column(length = 500)
+	@Size(min = 1, max = 500)
+	private String comment;
     
-    private Utilisateur auteur;
+    private String auteur;
     
     private Timestamp date;
     
-    private Topo topo;
+    public Commentaire() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public Commentaire(String site, String comment, String auteur, Timestamp date) {
+		super();
+		this.site = site;
+		this.comment = comment;
+		this.auteur = auteur;
+		this.date = date;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Utilisateur getAuteur() {
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(Utilisateur auteur) {
+    public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
 
@@ -47,12 +70,12 @@ public class Commentaire {
         this.date = date;
     }
 
-    public Topo getTopo() {
-        return topo;
+    public String getSite() {
+        return site;
     }
 
-    public void setTopo(Topo topo) {
-        this.topo = topo;
+    public void setSite(String site) {
+        this.site = site;
     }
 
 }

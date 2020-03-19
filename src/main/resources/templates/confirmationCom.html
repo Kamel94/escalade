@@ -12,12 +12,20 @@
 		<div class="card">
 			<div class="card-header">Confirmation Commentaire</div>
 			<div class="card-body">
-				<div class="form-group">
-					<label>Nom topo : </label>
-					<label th:text="${topo.id}"></label>
+			<div class="form-group">
+					<label>Auteur : </label>
+					<label th:text="${commentaire.auteur}"></label>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-primary droite" th:href="@{/accueil}">Retour à la liste</a>
+					<label>Commentaire : </label>
+					<label th:text="${commentaire.comment}"></label>
+				</div>
+				<div class="form-group">
+					<label>Date : </label>
+					<label th:text="${commentaire.date}"></label>
+				</div>
+				<div class="form-group">
+					<a class="btn btn-primary droite" th:href="@{/commentaire}">Retour aux commentaires</a>
 				</div>
 			</div>
 		</div>

@@ -52,7 +52,7 @@ public class Site implements Serializable {
 	@NotNull
 	private String ville;
 	
-	@Column
+	@Column(name = "nombre_secteur")
 	@NotNull
 	private int nombreSecteur;
 
