@@ -4,13 +4,16 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Longueur implements Serializable {
 	
 	@Id
-	private Integer niveau;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
 	@Column(name = "voie_numero")
 	private int numeroVoie;
@@ -28,12 +31,12 @@ public class Longueur implements Serializable {
 		this.nombreRelais = nombreRelais;
 	}
 
-	public Integer getNiveau() {
-		return niveau;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setNiveau(Integer niveau) {
-		this.niveau = niveau;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public int getNombreRelais() {

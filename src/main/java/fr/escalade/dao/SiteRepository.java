@@ -17,6 +17,8 @@ public interface SiteRepository extends JpaRepository<Site, String> {
 	
 	/*@Query(value = "SELECT s FROM Site s ORDER BY s.nom")
 	Page<Site> chercher(Pageable pageable);*/
+	@Query("select s from Site s where s.nom like :x")
+	Site finById(@Param("x")String id);
 	
 	Site findByNom(String nom);
 

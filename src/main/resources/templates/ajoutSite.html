@@ -14,7 +14,7 @@
 			<div class="card-fluid">
 				<div class="card-header">Saisie d'un site</div>
 				<div class="card-body" >
-					<form th:action="@{/user/ajoutSecteur(id=${site.nom})}" method="get">
+					<form th:action="@{/user/enregistrerSite(id=${site.nom})}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Nom : </label> 
 							<input class="form-control-xs" type="text" name="nom"
@@ -46,7 +46,7 @@
 								th:errors="${site.nombreSecteur}"></span>
 						</div>
 						<div>
-							<button type="submit" class="btn btn-primary">Ajouter son secteur</button>
+							<button type="submit" class="btn btn-primary">Enregistrer</button>
 						</div>
 					</form>
 				</div>

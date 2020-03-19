@@ -62,8 +62,12 @@ public class SecteurController {
 	}
 
 	@GetMapping(value="/user/ajoutSecteur")
-	public String ajoutSite(Model model, String id) {
+	public String ajoutSecteur(Model model, String id) {
 		model.addAttribute("secteur", new Secteur());
+		Site site = new Site();
+		site.setNom(id);
+		site = siteRepository.finById(id);
+		model.addAttribute("site", site);
 		return "ajoutSecteur";
 	}
 

@@ -13,19 +13,15 @@
 			<div class="card-header">Confirmation</div>
 			<div class="card-body">
 				<div class="form-group">
-					<label>Site : </label>
-					<label th:text="${secteur.siteNom}"></label>
+					<label>Numéro de voie : </label>
+					<label th:text="${longueur.numeroVoie}"></label>
 				</div>
 				<div class="form-group">
-					<label>Nom : </label>
-					<label th:text="${secteur.nom}"></label>
+					<label>Nombre de relais : </label>
+					<label th:text="${longueur.nombreRelais}"></label>
 				</div>
 				<div class="form-group">
-					<label>Nombre de voie : </label>
-					<label th:text="${secteur.nombreVoie}"></label>
-				</div>
-				<div class="form-group">
-					<a class="btn btn-primary droite" th:href="@{/user/ajoutVoie}">Ajouter sa voie</a>
+					<a class="btn btn-primary droite" th:href="@{/longueur}">Retour à la liste</a>
 				</div>
 			</div>
 		</div>

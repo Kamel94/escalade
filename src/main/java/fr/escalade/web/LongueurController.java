@@ -10,9 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,35 +62,35 @@ public class LongueurController {
 		model.addAttribute("motCle", mc);
 
 		return "voie";
-	}
-
-	@GetMapping(value="/user/ajoutVoie")
-	public String ajoutVoie(Model model, Voie voie) {
-		model.addAttribute("voie", new Voie());
-		return "ajoutVoie";
-	}
-
-	@RequestMapping(value="/user/modifierVoie", method=RequestMethod.GET)
-	public String modifierVoie(Model model, int id) {
-		Voie voie = voieRepository.findById(id).orElse(null);
-		model.addAttribute("voie", voie);
-		return "modifVoie";
-	}
-
-	@GetMapping(value="/admin/supprimerVoie")
-	public String supprimerVoie(int id, String motCle, int page, int size) {
-		voieRepository.deleteById(id);
-		return "redirect:/voie?page=" + page + "&size=" + size + "&motCle=" + motCle ;
-	}
-
-	@RequestMapping(value="/user/enregistrerVoie", method=RequestMethod.POST)
-	public String enregistrerVoie(Model model, @Valid Voie voie, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
-			return "ajoutVoie";
-		}
-		voieRepository.save(voie);
-		return "confirmationVoie";
 	}*/
+
+	@GetMapping(value="/user/ajoutLongueur")
+	public String ajoutLongueur(Model model, Longueur longueur) {
+		model.addAttribute("longueur", new Longueur());
+		return "ajoutLongueur";
+	}
+
+	@RequestMapping(value="/user/modifierLongueur", method=RequestMethod.GET)
+	public String modifierLongueur(Model model, int id) {
+		Longueur longueur = longueurRepository.findById(id).orElse(null);
+		model.addAttribute("longueur", longueur);
+		return "modifLongueur";
+	}
+
+	@GetMapping(value="/admin/supprimerLongueur")
+	public String supprimerLongueur(int id) {
+		longueurRepository.deleteById(id);
+		return "redirect:/longueur";
+	}
+
+	@RequestMapping(value="/user/enregistrerLongueur", method=RequestMethod.POST)
+	public String enregistrerLongueur(Model model, @Valid Longueur longueur, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "ajoutLongueur";
+		}
+		longueurRepository.save(longueur);
+		return "confirmationLongueur";
+	}
 
 	/*@GetMapping(value = "/informations")
 	public String informationsSites(Model model, 

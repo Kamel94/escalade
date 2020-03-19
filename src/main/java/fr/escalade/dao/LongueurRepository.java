@@ -19,6 +19,6 @@ public interface LongueurRepository extends JpaRepository<Longueur, Integer> {
 	@Query("select l from Longueur l where l.niveau like :x")
 	List<Longueur> findById(@Param("x")int id);*/
 
-	@Query("select l from Longueur l where l.niveau like :x")
+	@Query("select l from Longueur l where l.id like :x")
 	List<Longueur> findAll(@Param("x")int id);
 }
