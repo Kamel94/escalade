@@ -14,7 +14,8 @@ public class Commentaire {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "site_nom")
+	@Column(name = "site_nom", length = 30)
+	@Size(min = 1, max = 30)
     private String site;
 	
 	@Column(length = 500)

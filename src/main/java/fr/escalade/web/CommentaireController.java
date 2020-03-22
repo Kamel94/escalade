@@ -35,8 +35,6 @@ public class CommentaireController {
     @Autowired
     CommentaireRepository commentaireRepository;
     
-    @Autowired
-    UtilisateurRepository utilisateurRepository;
     
    /* @GetMapping(value = "/user/commentaire")
 	public String commentaire(Model model, 

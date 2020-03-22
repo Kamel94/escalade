@@ -30,16 +30,7 @@ import fr.escalade.entities.Utilisateur;
 public class SecteurController {
 
 	@Autowired
-	private TopoRepository topoRepository;
-
-	@Autowired
 	private SiteRepository siteRepository;
-
-	@Autowired
-	private InfoSiteRepository infoSiteRepository;
-
-	@Autowired
-	private UtilisateurRepository utilisateurRepository;
 
 	@Autowired
 	private SecteurRepository secteurRepository;

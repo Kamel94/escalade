@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout">
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Topos</title>
@@ -11,8 +12,13 @@
 		<div class="container-fluid">
 			<br> <br>
 			<h3>Liste des topos
-			<a class="btn btn-success btn-titre"
-				th:href="@{/user/ajout}">Ajouter un topo</a></h3>
+							<a class="btn btn-primary btn-titre"
+							th:href="@{/user/listeMesTopos}">Mes topos</a></h3>
+			<form class="form-inline decaler-droite" th:action="@{/accueil}" method="get">
+				<label>Mot Clé :</label> <input type="text" name="motCle"
+					th:value="${motCle}" />
+				<button class="btn btn-success">Chercher</button>
+			</form>
 			<br>
 			<table class="table">
 				<thead>
@@ -30,15 +36,17 @@
 						<td th:text="${t.description}"></td>
 						<td th:text="${t.lieu}"></td>
 						<td th:text="${t.parution}"></td>
-						<td th:text="${t.disponibilite}"></td>
-						<td><a class="btn btn-primary"
-							th:href="@{/user/commentaire(id=${t.nom})}">Commentaire</a></td>
-						<td><a class="btn btn-primary"
-							th:href="@{/user/modifier(id=${t.nom})}">Modifier</a></td>
-						<td><a class="btn btn-danger"
-							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/admin/supprimer(id=${t.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
-					</tr>
+						<td th:text="${t.disponibilite}" ></td>
+                                <td><a th:class="${t.disponibilite} == 'Disponible'? 'btn btn-success' : 'btn btn-danger disabled'" 
+                                       th:href="@{/user/demandepret/{id}(id=${t.nom})}"
+                                       th:title="${t.emprunteur == null}? 'Demander l&acute;emprunt' : 'Annuler l&acute;emprunt'"
+                                       sec:authorize="hasAuthority('user')"
+                                       th:if="${t.emprunteur != null}? (${#httpServletRequest.remoteUser} == ${t.emprunteur.pseudo} and ${t.disponibilite} == 'Indisponible') : true"
+                                ><i class="far fa-question-circle"></i>Faire une demande</a></td>
+
+                              
+                            </tr>
+					
 				</tbody>
 			</table>
 		</div>

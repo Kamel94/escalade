@@ -42,14 +42,12 @@ public class Topo implements Serializable {
 	@Column(name = "date_parution")
 	/*@Size(min = 1, max = 70)*/
 	@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd", style = "dd-MM-yyyy")
-	private String parution;
+	private Date parution;
 	
-	@Column(length = 70)
-	@Size(min = 1, max = 70)
-	private String disponibilite;
+	private Utilisateur emprunteur;
 	
 	private Utilisateur utilisateur;
-
+	
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
@@ -58,17 +56,30 @@ public class Topo implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
+	public Utilisateur getEmprunteur() {
+		return emprunteur;
+	}
+
+	public void setEmprunteur(Utilisateur emprunteur) {
+		this.emprunteur = emprunteur;
+	}
+
+	@Column(length = 70)
+	@Size(min = 1, max = 70)
+	private String disponibilite;
+
 	public Topo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(String proprietaire, String description, String lieu, String parution, String disponibilite) {
+	public Topo(String proprietaire, String description, String lieu, Date parution, Utilisateur emprunteur, String disponibilite) {
 		super();
 		this.proprietaire = proprietaire;
 		this.description = description;
 		this.lieu = lieu;
 		this.parution = parution;
+		this.emprunteur = emprunteur;
 		this.disponibilite = disponibilite;
 	}
 
@@ -96,11 +107,11 @@ public class Topo implements Serializable {
 		this.lieu = lieu;
 	}
 
-	public String getParution() {
+	public Date getParution() {
 		return parution;
 	}
 
-	public void setParution(String parution) {
+	public void setParution(Date parution) {
 		this.parution = parution;
 	}
 

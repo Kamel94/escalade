@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="layout">
+<head ></head>
+
+<body>
+<header></header>
+<div layout:fragment="content">
+<div class="container">
+    <h3 sec:authorize="isAuthenticated()" class="my-3 monTitre">Mes Topos 
+			<a class="btn btn-success btn-titre"
+				th:href="@{/user/ajout}">Ajouter un topo</a></h3>
+
+    <div class="container my-2">
+        <div class="row">
+            <div th:switch="${#lists.size(topos)}">
+                <h4 th:case=0>Aucun topo !</h4>
+                <div th:case="*">
+                    <div class="table-responsive-md">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Topo (<span th:text="${#lists.size(topos)}"></span>)</th>
+                                <th scope="col">Parution</th>
+                                <th scope="col">Région</th>
+                                <th scope="col">Propriétaire</th>
+                                <th scope="col">Disponible</th>
+                                <th scope="col">Emprunteur</th>
+                                <th scope="col"> </th>
+                                <th scope="col"> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr scope="row" th:each="topo : ${topos}">
+                                <td th:text="${topo.nom}"></td>
+                                <td th:text="${topo.parution}"></td>
+                                <td th:text="${topo.lieu}"></td>
+                                <td th:text="${topo.proprietaire}"></td>
+                                <td th:text="${topo.disponibilite}" ></td>
+                                <!-- <td th:class="(${topo.disponibilite} == 'Disponible')? 'text-success' : 'text-danger'" th:utext="(${topo.disponibilite} == 'Disponible')? 'Disponible' : 'Indisponible'"></td>
+								 -->
+                                 <th:block th:switch="${topo.disponibilite}">
+                                    <td th:case="Demande" th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></td>
+                                    <td th:case="Disponible" th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : 'Aucun'"></td>
+                                    <td th:case="Indisponible"><a href="#" th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></a></td>
+                                        
+						<td><a class="btn btn-primary"
+							th:href="@{/user/modifier(id=${topo.nom})}">Modifier</a></td>
+						<td><a class="btn btn-danger"
+							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+							th:href="@{/admin/supprimer(id=${topo.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+                                        
+                                </th:block>
+
+                                
+                                <td><a class="btn btn-success" th:href="@{/user/accepterpret/{id}(id=${topo.nom})}" sec:authorize="hasAuthority('user')"
+                                       th:if="${topo.disponibilite == 'Demande'}" title="Accepter le prêt">Accepter<i class=" far fa-thumbs-up"></i></a></td>
+                                <td><a class="btn btn-danger" th:href="@{/user/refuserpret/{id}(id=${topo.nom})}" sec:authorize="hasAuthority('user')"
+                                       th:if="${topo.disponibilite == 'Demande'}" title="Refuser le prêt">Refuser<i class=" far fa-thumbs-down"></i></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<br/>
+
+<footer></footer>
+</div>
+</body>
+</html>

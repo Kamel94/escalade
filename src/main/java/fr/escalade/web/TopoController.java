@@ -1,5 +1,8 @@
 package fr.escalade.web;
 
+import java.security.Principal;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +21,7 @@ import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
 import fr.escalade.entities.Topo;
+import fr.escalade.entities.Utilisateur;
 
 @Controller
 public class TopoController {
@@ -83,6 +88,49 @@ public class TopoController {
 		topoRepository.save(topo);
 		return "Confirmation";
 	}
+	
+	@GetMapping(value="/user/listeMesTopos")
+    public String listeToposDunUtilisateur(Principal principal, Model model) {
+        List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
+        model.addAttribute("topos", topos);
+        return "listemestopos";
+    }
+	
+	@GetMapping("/user/demandepret/{id}")
+    public String gererDemandeEmpruntTopo(@PathVariable("id") String id, Principal principal, Model model) {
+        Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
+        if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
+            Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+            topo.setEmprunteur(emprunteur);
+            topo.setDisponibilite("Demande");
+        } else {
+            if (topo.getDisponibilite().equals("Demande") && topo.getEmprunteur().getPseudo().equals(principal.getName())) {
+                Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+                topo.setDisponibilite("Disponible");
+                topo.setEmprunteur(null);
+            } else {
+            }
+        }
+        topoRepository.save(topo);
+        return "redirect:/accueil";
+    }
+	
+	@GetMapping("/user/accepterpret/{id}")
+    public String accepterPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
+        Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu pour acceptation prêt: " + id));
+        topo.setDisponibilite("Indisponible");
+        topoRepository.save(topo);
+        return "redirect:/listemestopos";
+    }
+	
+	@GetMapping("/user/refuserpret/{id}")
+    public String refuserPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
+        Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
+        topo.setDisponibilite("Disponible");
+        topo.setEmprunteur(null);
+        topoRepository.save(topo);
+        return "redirect:/listemestopos";
+    }
 	
 	@GetMapping(value = "/user/reserver")
 	public String reserver() {

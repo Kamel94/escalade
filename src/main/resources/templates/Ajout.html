@@ -13,13 +13,13 @@
 		<div class="col-8 spacer">
 			<div class="card-fluid">
 				<div class="card-header">Saisie d'un topo</div>
-				<div class="card-body" >
+				<div class="card-body">
 					<form th:action="@{/user/enregistrer}" method="post">
 						<div class="form-group">
-							<label class="col-form-label">Propriétaire : </label> 
-							<input class="form-control-xs" type="text" name="proprietaire"
-								th:value="${#httpServletRequest.remoteUser}">
-								<span class="red" th:errors="${topo.proprietaire}" th:inline="text">[[]]</span>
+							<label class="col-form-label">Propriétaire : </label> <input
+								class="form-control-xs" type="text" name="proprietaire"
+								th:value="${#httpServletRequest.remoteUser}"> <span
+								class="red" th:errors="${topo.proprietaire}" th:inline="text">[[]]</span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Nom : </label> <input
@@ -41,15 +41,22 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Parution : </label> <input
-								class="form-control-xs" type="text" name="parution"
+								class="form-control-xs" type="date" name="parution"
 								th:value="${topo.parution}"> <span class="red"
 								th:errors="${topo.parution}"></span>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">Disponibilité : </label> <input
+							<label for="exampleFormControlSelect1">Disponibilité</label> <select
+								class="form-control" name="disponibilite" th:value="${topo.disponibilite}">
+								<option>Disponible</option>
+								<option>Indisponible</option>
+								<option>Demande</option>
+							</select><span class="red"
+								th:errors="${topo.disponibilite}"></span>
+							<!-- <label class="col-form-label">Disponibilité : </label> <input
 								class="form-control-xs" type="text" name="disponibilite"
 								th:value="${topo.disponibilite}"> <span class="red"
-								th:errors="${topo.disponibilite}"></span>
+								th:errors="${topo.disponibilite}"></span> -->
 						</div>
 						<div>
 							<button type="submit" class="btn btn-primary">Enregistrer</button>

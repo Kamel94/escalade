@@ -13,8 +13,8 @@ public class ReservationTopo implements Serializable {
 	@Column(name = "topo_nom")
 	private String topoNom;
 	
-	@Column(name = "utilisateur_email")
-	private String Proprietaire;
+	@Column(name = "utilisateur_identifiant")
+	private String demandeur;
 	
 	private String reponseDemande;
 
@@ -44,12 +44,12 @@ public class ReservationTopo implements Serializable {
 		this.topoNom = topoNom;
 	}
 
-	public String getProprietaire() {
-		return Proprietaire;
+	public String getDemandeur() {
+		return demandeur;
 	}
 
-	public void setProprietaire(String proprietaire) {
-		Proprietaire = proprietaire;
+	public void setDemandeur(String demandeur) {
+		demandeur = demandeur;
 	}
 
 }

@@ -17,6 +17,9 @@ import com.sun.istack.NotNull;
 public class Utilisateur implements Serializable {
 
 	@Id
+	@Column(length = 15, name = "identifiant")
+	private String pseudo;
+	
 	@Column(length = 50)
 	private String email;
 	
@@ -37,8 +40,6 @@ public class Utilisateur implements Serializable {
 	@Column(length = 30)
 	private String prenom;
 
-	@Column(length = 15)
-	private String pseudo;
 	
 	@Column(length = 50)
 	private String password;
