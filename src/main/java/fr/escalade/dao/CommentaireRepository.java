@@ -19,8 +19,8 @@ public interface CommentaireRepository extends JpaRepository<Commentaire, Intege
 	Page<Commentaire> chercher(@Param("x")String mc, Pageable pageable);
 	
 	
-	@Query("select c from Commentaire c where c.id like :x")
-	List<Commentaire> findAll(@Param("x")int id);
+	@Query("select c from Commentaire c where c.site like :x")
+	List<Commentaire> findAll(@Param("x")String id);
 	
 	/*@Query("select c from Commentaire c where c.id like :x")
 	List<Commentaire> findById(@Param("x")int id);*/

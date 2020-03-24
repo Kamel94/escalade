@@ -11,10 +11,12 @@
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<br> <br>
-			<h3>Liste des topos
-							<a class="btn btn-primary btn-titre"
-							th:href="@{/user/listeMesTopos}">Mes topos</a></h3>
-			<form class="form-inline decaler-droite" th:action="@{/accueil}" method="get">
+			<h3>
+				Liste des topos <a class="btn btn-primary btn-titre"
+					th:href="@{/user/listeMesTopos}">Mes topos</a>
+			</h3>
+			<form class="form-inline decaler-droite" th:action="@{/accueil}"
+				method="get">
 				<label>Mot Clé :</label> <input type="text" name="motCle"
 					th:value="${motCle}" />
 				<button class="btn btn-success">Chercher</button>
@@ -36,17 +38,16 @@
 						<td th:text="${t.description}"></td>
 						<td th:text="${t.lieu}"></td>
 						<td th:text="${t.parution}"></td>
-						<td th:text="${t.disponibilite}" ></td>
-                                <td><a th:class="${t.disponibilite} == 'Disponible'? 'btn btn-success' : 'btn btn-danger disabled'" 
-                                       th:href="@{/user/demandepret/{id}(id=${t.nom})}"
-                                       th:title="${t.emprunteur == null}? 'Demander l&acute;emprunt' : 'Annuler l&acute;emprunt'"
-                                       sec:authorize="hasAuthority('user')"
-                                       th:if="${t.emprunteur != null}? (${#httpServletRequest.remoteUser} == ${t.emprunteur.pseudo} and ${t.disponibilite} == 'Indisponible') : true"
-                                ><i class="far fa-question-circle"></i>Faire une demande</a></td>
+						<td th:text="${t.disponibilite}"
+							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
+						<td><a
+							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-success' : 'btn btn-danger disabled'"
+							th:href="@{/user/demandepret/{id}(id=${t.nom})}"
+							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
+							th:if="${t.emprunteur != t.proprietaire}? (${#httpServletRequest.remoteUser} != ${t.proprietaire} ) : true"><i
+								class="far fa-question-circle"></i>Faire une demande</a></td>
+					</tr>
 
-                              
-                            </tr>
-					
 				</tbody>
 			</table>
 		</div>
@@ -56,7 +57,8 @@
 					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
 					th:each="pa,status:${pages}"><a class="nav-link active"
 					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
-					th:text="${status.index}"></a></li>
+					th:text="${status.index}"></a>
+				</li>
 			</ul>
 		</div>
 	</div>

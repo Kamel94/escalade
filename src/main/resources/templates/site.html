@@ -14,11 +14,12 @@
 				Liste des sites <a class="btn btn-success btn-titre"
 					th:href="@{/user/ajoutSite}">Ajouter un site</a>
 			</h3>
-			<form class="form-inline decaler-droite" th:action="@{/site}" method="get">
+			<form class="form-inline decaler-droite" th:action="@{/site}"
+				method="get">
 				<label>Mot Clé :</label> <input type="text" name="motCle"
 					th:value="${motCle}" />
 				<button class="btn btn-success">Chercher</button>
-				</form>
+			</form>
 			<br>
 			<table class="table">
 				<thead>
@@ -38,7 +39,7 @@
 						<td th:text="${s.ville}"></td>
 						<td th:text="${s.nombreSecteur}"></td>
 						<td><a class="btn btn-primary"
-							th:href="@{/commentaire(id=${s.nom})}">Commentaire</a></td>
+							th:href="@{/commentaire/{id}(id=${s.nom})}">Commentaire</a></td>
 						<td><a class="btn btn-primary"
 							th:href="@{/admin/modifierSite(id=${s.nom})}">Modifier</a></td>
 						<td><a class="btn btn-danger"

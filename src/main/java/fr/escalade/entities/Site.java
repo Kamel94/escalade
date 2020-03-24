@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 import org.springframework.ui.Model;
 
@@ -56,9 +58,21 @@ public class Site implements Serializable {
 	@NotNull
 	private int nombreSecteur;
 
+	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
+	@OrderBy("dateRedaction desc")
+	private List<Commentaire> commentaire;
+
 	public Site() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public List<Commentaire> getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(List<Commentaire> commentaire) {
+		this.commentaire = commentaire;
 	}
 
 	public Site( String pays, String region, String ville, int nombreSecteur) {

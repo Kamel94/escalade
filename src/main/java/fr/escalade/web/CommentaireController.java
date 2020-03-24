@@ -1,5 +1,6 @@
 package fr.escalade.web;
 
+import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,18 +27,19 @@ import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
 import fr.escalade.entities.Commentaire;
 import fr.escalade.entities.Site;
+import fr.escalade.entities.Topo;
 
 @Controller
 public class CommentaireController {
 
-    @Autowired
-    TopoRepository topoRepository;
+	@Autowired
+	TopoRepository topoRepository;
 
-    @Autowired
-    CommentaireRepository commentaireRepository;
-    
-    
-   /* @GetMapping(value = "/user/commentaire")
+	@Autowired
+	CommentaireRepository commentaireRepository;
+
+
+	/* @GetMapping(value = "/user/commentaire")
 	public String commentaire(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
@@ -45,7 +48,7 @@ public class CommentaireController {
 		Page<Commentaire> pageSites = commentaireRepository.chercher( mc  , PageRequest.of(p, s));
 		model.addAttribute("listeCommentaires", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
-				
+
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
@@ -53,24 +56,24 @@ public class CommentaireController {
 
 		return "commentaire";
 	}*/
-    
-    @GetMapping(value = "/commentaire")
-	public String commentaire(Model model) {
-		
-		List<Commentaire> commentaire = commentaireRepository.findAll();
+
+	@GetMapping(value = "/commentaire/{id}")
+	public String commentaire(Model model, @PathVariable("id")String id) {
+
+		List<Commentaire> commentaire = commentaireRepository.findAll(id);
 		model.addAttribute("liste", commentaire);
-		
+
 		return "commentaire";
 	}
-    
-    @GetMapping(value="/user/ajoutCom")
+
+	@GetMapping(value="/user/ajoutCom")
 	public String ajoutCom(Model model) {
 		model.addAttribute("commentaire", new Commentaire());
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "ajoutCom"; 
 	}
-    
-    @RequestMapping(value="/admin/modifierCom", method=RequestMethod.GET)
+
+	@RequestMapping(value="/admin/modifierCom", method=RequestMethod.GET)
 	public String modifierCom(Model model, int id) {
 		Commentaire commentaire = commentaireRepository.findById(id).orElse(null);
 		model.addAttribute("commentaire", commentaire);
@@ -83,8 +86,8 @@ public class CommentaireController {
 		commentaireRepository.deleteById(id);
 		return "redirect:/commentaire";
 	}
-    
-    @RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
+
+	@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
 	public String enregistrerCom(Model model, @Valid Commentaire commentaire, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "ajoutCom";

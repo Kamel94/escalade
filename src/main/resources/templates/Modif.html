@@ -35,15 +35,20 @@ layout:decorator="layout">
 						<input class="form-control-xs" type="text" name="lieu" th:value="${topo.lieu}">
 						<span class="red" th:errors="${topo.lieu}"></span>
 					</div>
-					<div class="form-group">
-						<label class="col-form-label">Parution : </label>
-						<input class="form-control-xs" type="text" name="parution" th:value="${topo.parution}">
-						<span class="red" th:errors="${topo.parution}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Disponibilité : </label>
-						<input class="form-control-xs" type="text" name="disponibilite" th:value="${topo.disponibilite}">
-						<span class="red" th:errors="${topo.disponibilite}"></span>
+						<div class="form-group">
+							<label class="col-form-label">Parution : </label> <input
+								class="form-control-xs" type="date" name="parution"
+								th:value="${topo.parution}"> <span class="red"
+								th:errors="${topo.parution}"></span>
+						</div>
+						<div class="form-group">
+							<label for="exampleFormControlSelect1">Disponibilité</label> <select
+								class="form-control" name="disponibilite" th:value="${topo.disponibilite}">
+								<option>Disponible</option>
+								<option>Indisponible</option>
+								<option>Demande</option>
+							</select><span class="red"
+								th:errors="${topo.disponibilite}"></span>
 					</div>
 					<div>
 						<button type="submit" class="btn btn-primary">Enregistrer</button>

@@ -25,61 +25,58 @@ import fr.escalade.entities.Utilisateur;
 
 @Controller
 public class TopoController {
-	
+
 	@Autowired
 	private TopoRepository topoRepository;
-	
-	@Autowired
-	private SiteRepository siteRepository;
-	
-	
+
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
-	
+
 	@GetMapping(value = "/accueil")
 	public String accueil(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "2") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc) {
-		
-		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-		
+			@RequestParam(name="motCle", defaultValue = "") String mc,
+			@RequestParam(name="motCle", defaultValue = "") String dispo) {
+
+		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%","%" + dispo + "%", PageRequest.of(p, s));
+
 		model.addAttribute("listeTopos", pageTopos.getContent());
 		int[] pages = new int[pageTopos.getTotalPages()];
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
-		
+
 		return "Accueil";
 	}
-	
+
 	@GetMapping(value="/user/ajout")
 	public String ajout(Model model, String nom) {
 		model.addAttribute("topo", new Topo());
 		return "Ajout";
 	}
-	
+
 	@RequestMapping(value="/user/modifier", method=RequestMethod.GET)
 	public String modifier(Model model, String id) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		model.addAttribute("topo", t);
 		return "Modif";
 	}
-	
+
 	/*@RequestMapping(value="/user/commentaire", method=RequestMethod.GET)
 	public String commentaire(Model model, String id) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		model.addAttribute("topo", t);
 		return "commentaire";
 	}*/
-	
+
 	@GetMapping(value="/admin/supprimer")
-	public String supprimer(String id, String motCle, int page, int size) {
+	public String supprimer(String id) {
 		topoRepository.deleteById(id);
-		return "redirect:/accueil?page=" + page + "&size=" + size + "&motCle=" + motCle ;
+		return "redirect:/listeMesTopos";
 	}
-	
+
 	@RequestMapping(value="/user/enregistrer", method=RequestMethod.POST)
 	public String enregistrer(Model model, @Valid Topo topo, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
@@ -88,60 +85,60 @@ public class TopoController {
 		topoRepository.save(topo);
 		return "Confirmation";
 	}
-	
+
 	@GetMapping(value="/user/listeMesTopos")
-    public String listeToposDunUtilisateur(Principal principal, Model model) {
-        List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
-        model.addAttribute("topos", topos);
-        return "listemestopos";
-    }
-	
+	public String listeToposDunUtilisateur(Principal principal, Model model) {
+		List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
+		model.addAttribute("topos", topos);
+		return "listemestopos";
+	}
+
 	@GetMapping("/user/demandepret/{id}")
-    public String gererDemandeEmpruntTopo(@PathVariable("id") String id, Principal principal, Model model) {
-        Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
-        if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
-            Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-            topo.setEmprunteur(emprunteur);
-            topo.setDisponibilite("Demande");
-        } else {
-            if (topo.getDisponibilite().equals("Demande") && topo.getEmprunteur().getPseudo().equals(principal.getName())) {
-                Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-                topo.setDisponibilite("Disponible");
-                topo.setEmprunteur(null);
-            } else {
-            }
-        }
-        topoRepository.save(topo);
-        return "redirect:/accueil";
-    }
-	
+	public String gererDemandeEmpruntTopo(@PathVariable("id") String id, Principal principal, Model model) {
+		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
+		if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
+			Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			topo.setEmprunteur(emprunteur);
+			topo.setDisponibilite("Demande");
+		} else {
+			if (topo.getDisponibilite().equals("Demande") && topo.getEmprunteur().getPseudo().equals(principal.getName())) {
+				Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+				topo.setDisponibilite("Disponible");
+				topo.setEmprunteur(null);
+			} else {
+			}
+		}
+		topoRepository.save(topo);
+		return "redirect:/accueil";
+	}
+
 	@GetMapping("/user/accepterpret/{id}")
-    public String accepterPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
-        Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu pour acceptation prêt: " + id));
-        topo.setDisponibilite("Indisponible");
-        topoRepository.save(topo);
-        return "redirect:/listemestopos";
-    }
-	
+	public String accepterPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
+		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu pour acceptation prêt: " + id));
+		topo.setDisponibilite("Indisponible");
+		topoRepository.save(topo);
+		return "redirect:/user/listeMesTopos";
+	}
+
 	@GetMapping("/user/refuserpret/{id}")
-    public String refuserPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
-        Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
-        topo.setDisponibilite("Disponible");
-        topo.setEmprunteur(null);
-        topoRepository.save(topo);
-        return "redirect:/listemestopos";
-    }
-	
+	public String refuserPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
+		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
+		topo.setDisponibilite("Disponible");
+		topo.setEmprunteur(null);
+		topoRepository.save(topo);
+		return "redirect:/user/listeMesTopos";
+	}
+
 	@GetMapping(value = "/user/reserver")
 	public String reserver() {
 		return "reservation";
 	}
-	
+
 	@GetMapping("/")
 	public String defaut() {
 		return "redirect:/accueil";
 	}
-	
+
 	@GetMapping("/403")
 	public String nonAutorise() {
 		return "403";

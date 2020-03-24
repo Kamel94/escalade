@@ -1,5 +1,6 @@
 package fr.escalade.web;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 

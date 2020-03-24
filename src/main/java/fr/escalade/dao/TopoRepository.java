@@ -12,8 +12,8 @@ import fr.escalade.entities.Topo;
 
 public interface TopoRepository extends JpaRepository<Topo, String> {
 	
-	@Query("select p from Topo p where p.nom like :x")
-	Page<Topo> chercher(@Param("x")String mc, Pageable pageable);
+	@Query("select p from Topo p where p.nom like :x or p.disponibilite like :y")
+	Page<Topo> chercher(@Param("x")String mc,@Param("y")String dispo, Pageable pageable);
 
 	List<Topo> findByProprietaireOrderByNom(String name);
 
