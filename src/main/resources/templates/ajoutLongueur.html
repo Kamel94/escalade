@@ -17,8 +17,7 @@
 					<form th:action="@{/user/enregistrerLongueur}" method="post">
 					<div class="form-group">
 							<label class="col-form-label">Numéro de voie : </label> 
-							<input class="form-control-xs" type="text" name="numeroVoie"
-								th:value="${longueur.numeroVoie}">
+							[[${longueur.numeroVoie}]]
 								<span class="red" th:errors="${longueur.numeroVoie}" th:inline="text"></span>
 						</div>
 						<div class="form-group">

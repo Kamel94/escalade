@@ -30,11 +30,11 @@ public class LongueurController {
 	@Autowired
 	private LongueurRepository longueurRepository;
 
-	@GetMapping(value = "/longueur")
+	@GetMapping(value = "/longueur/{id}")
 	public String longueur(Model model,
-			@RequestParam(name="niveau", defaultValue = "0") int id) {
+			@PathVariable("id")int id) {
 		
-		List<Longueur> liste = longueurRepository.findAll();
+		List<Longueur> liste = longueurRepository.findByNumeroVoie(id);
 		model.addAttribute("listeLongueur", liste);
 		
 		return "longueur";
@@ -64,9 +64,9 @@ public class LongueurController {
 		return "voie";
 	}*/
 
-	@GetMapping(value="/user/ajoutLongueur")
-	public String ajoutLongueur(Model model, Longueur longueur) {
-		model.addAttribute("longueur", new Longueur());
+	@GetMapping(value="/user/ajoutLongueur/{id}")
+	public String ajoutLongueur(Model model, Longueur longueur, @PathVariable("id")int id) {
+		model.addAttribute("longueur", new Longueur(id));
 		return "ajoutLongueur";
 	}
 

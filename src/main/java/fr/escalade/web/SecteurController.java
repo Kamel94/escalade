@@ -1,5 +1,6 @@
 package fr.escalade.web;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +37,7 @@ public class SecteurController {
 	@Autowired
 	private SecteurRepository secteurRepository;
 
-	@GetMapping(value = "/secteur")
+	/*@GetMapping(value = "/secteur")
 	public String secteur(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
@@ -50,11 +52,18 @@ public class SecteurController {
 		model.addAttribute("motCle", mc);
 
 		return "secteur";
+	}*/
+	
+	@GetMapping(value="/secteur/{id}")
+	public String secteurSite(@PathVariable("id")String id, Model model) {
+		List<Secteur> secteur = secteurRepository.secteur(id);
+		model.addAttribute("secteur", secteur);
+		return "secteur";
 	}
 
-	@GetMapping(value="/user/ajoutSecteur")
-	public String ajoutSecteur(Model model, String id) {
-		model.addAttribute("secteur", new Secteur());
+	@GetMapping(value="/user/ajoutSecteur/{id}")
+	public String ajoutSecteur(Model model, @PathVariable("id")String id) {
+		model.addAttribute("secteur", new Secteur(id));
 		Site site = new Site();
 		site.setNom(id);
 		site = siteRepository.finById(id);

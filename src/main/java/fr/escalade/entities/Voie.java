@@ -26,13 +26,6 @@ public class Voie implements Serializable {
 	@Column(name = "nombre_point")
 	private int nombrePoint;
 	
-	public String lien(int numeroVoie, int numeroLongueur) {
-		if(numeroVoie == numeroLongueur) {
-			return "information";
-		}
-		return "voie";
-	}
-	
 	public String getSecteurNom() {
 		return secteurNom;
 	}
@@ -54,6 +47,11 @@ public class Voie implements Serializable {
 		this.nombreLongueur = nombreLongueur;
 		this.nombrePoint = nombrePoint;
 		this.cotation = cotation;
+	}
+	
+	public Voie(String secteurNom) {
+		super();
+		this.secteurNom = secteurNom;
 	}
 
 	public Integer getId() {

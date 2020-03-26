@@ -42,6 +42,8 @@ layout:decorator="layout">
 					</div>
 					<div>
 						<button type="submit" class="btn btn-primary">Enregistrer</button>
+						<a class="btn btn-danger btn-titre"
+							th:href="@{/siteDetail/{id}(id=${site.nom})}">Annuler</a>
 					</div>
 				</form>
 			</div>

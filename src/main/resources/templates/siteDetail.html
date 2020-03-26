@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Sites</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br> <br>
+			<h3 th:each="s:${site}">
+				Détail du site <a class="btn btn-success btn-titre"
+					th:href="@{/user/ajoutSecteur/{id}(id=${s.nom})}">Ajouter un
+					secteur</a>
+			</h3>
+			<br>
+			<table>
+				<tr th:each="s:${site}">
+					<!-- <td><a class="btn btn-primary btn-titre"
+						th:href="@{/commentaire/{id}(id=${s.nom})}"> Commentaires</a></td> -->
+					<td><a class="btn btn-primary btn-titre"
+						th:href="@{/secteur/{id}(id=${s.nom})}"> Voir ses secteurs</a></td>
+					<td><a class="btn btn-primary btn-titre"
+						th:href="@{/admin/modifierSite(id=${s.nom})}">Modifier</a></td>
+					<td><a class="btn btn-danger btn-titre"
+						onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+						th:href="@{/admin/supprimerSite(id=${s.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+				</tr>
+			</table>
+			<br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Nom</th>
+						<th>Pays</th>
+						<th>Région</th>
+						<th>Ville</th>
+						<th>Nombre de secteur</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="s:${site}">
+						<td th:text="${s.nom}"></td>
+						<td th:text="${s.pays}"></td>
+						<td th:text="${s.region}"></td>
+						<td th:text="${s.ville}"></td>
+						<td th:text="${#lists.size(secteur)}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<br> <br>
+			<h3>Liste des commentaires</h3>
+			<br> <br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Commentaire</th>
+						<th>Auteur</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c:${liste}">
+						<td th:text="${c.comment}"></td>
+						<td th:text="${c.auteur}"></td>
+						<td th:text="${c.date}"></td>
+						<td><a class="btn btn-primary"
+							th:href="@{/admin/modifierCom(id=${c.id})}">Modifier</a></td>
+						<td><a class="btn btn-danger"
+							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+							th:href="@{/admin/supprimerCom(id=${c.id})}">Supprimer</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<a class="btn btn-success btn-titre"
+				th:href="@{/user/ajoutCom/{id}(id=${commentaire.site})}">Ajouter
+				un commentaire</a>
+
+
+			<!-- <div class="card-header" th:if="${#httpServletRequest.remoteUser != null}? true"><i
+								class="far fa-question-circle"></i>
+								Saisir un commentaire</div>
+			<div class="card-header" th:unless="${#httpServletRequest.remoteUser != null}? true"><i
+								class="far fa-question-circle"></i>
+								Veuillez vous connecter ou vous inscrire pour saisir un commentaire</div>
+			<div class="card-body">
+				<form th:action="@{/user/enregistrerCom}" method="post" >
+					<div class="form-group">
+							<label class="col-form-label"> Site : </label> <select
+								class="form-control" name="site" th:value="${commentaire.site}">
+								<option>[[${commentaire.site}]]</option>
+							</select>
+								<span class="red" th:errors="${commentaire.site}" th:inline="text"></span>
+						</div>
+					<div class="form-group">
+						<label class="col-form-label">Date : </label> <br>
+						[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
+							class="red" th:errors="${commentaire.date}"></span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Auteur : </label> <br>
+						[[${#httpServletRequest.remoteUser}]] <span class="red"
+							th:errors="${commentaire.auteur}">[[${#httpServletRequest.remoteUser}]]</span>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Commentaire : </label> <br>
+						<textarea class="decaler" rows="5" cols="25"
+							th:field="${commentaire.comment}" placeholder="Votre Commentaire"></textarea>
+						<input class="form-control-xs p-3" type="text" name="comment" placeholder="Votre Commentaire"
+								th:value="${commentaire.comment}">
+						<span class="red" th:errors="${commentaire.comment}"
+							th:inline="text"></span>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Enregistrer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		(page=${status.index}, size=${size}, motCle=${motCle}) -->
+		<br><br><br>
+			<div class="container">
+				<ul class="nav nav-pills">
+					<li class="nav-item"
+						th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
+						th:each="pa,status:${pages}"><a class="nav-link active"
+						th:href="@{/siteDetail/{id}(page=${status.index}, size=${size},id=${commentaire.site})}"
+						th:text="${status.index}"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

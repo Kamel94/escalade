@@ -16,9 +16,12 @@
 				<div class="card-body" >
 					<form th:action="@{/user/enregistrerCom}" method="post">
 					<div class="form-group">
-							<label class="col-form-label">Site : </label> 
-							<input class="form-control-xs decaler" type="text" name="site"
-								th:value="${commentaire.site}" placeholder="Le nom du site">
+							<label class="col-form-label">Site : </label> <select
+								class="form-control" name="site" th:value="${commentaire.site}">
+								<option>[[${commentaire.site}]]</option>
+							</select>
+							<!-- <input class="form-control-xs decaler" type="text" name="site"
+								th:value="${commentaire.site}" placeholder="Le nom du site"> -->
 								<span class="red" th:errors="${commentaire.site}" th:inline="text"></span>
 						</div>
 						<div class="form-group">

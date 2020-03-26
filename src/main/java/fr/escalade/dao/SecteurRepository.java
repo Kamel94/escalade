@@ -15,5 +15,8 @@ public interface SecteurRepository extends JpaRepository<Secteur, String> {
 
 	@Query("select s from Secteur s where s.nom like :x")
 	Page<Secteur> chercher(@Param("x")String nom, Pageable pageable);
+	
+	@Query("select s from Secteur s where s.site like :x")
+	List<Secteur> secteur(@Param("x")String nom);
 
 }

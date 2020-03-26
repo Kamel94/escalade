@@ -17,8 +17,8 @@ layout:decorator="layout">
 				<form th:action="@{/user/enregistrer}" method="post">
 				<div class="form-group">
 						<label class="col-form-label">Proprietaire : </label>
-						<input class="form-control-xs" type="text" name="proprietaire" th:value="${topo.proprietaire}">
-						<span class="red" th:errors="${topo.proprietaire}"></span>
+						<input class="form-control-xs" type="hidden" name="proprietaire" th:value="${topo.proprietaire}">
+						[[${topo.proprietaire}]]<span class="red" th:errors="${topo.proprietaire}"></span>
 					</div>
 				<div class="form-group">
 						<label class="col-form-label">Nom : </label>

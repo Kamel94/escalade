@@ -58,21 +58,9 @@ public class Site implements Serializable {
 	@NotNull
 	private int nombreSecteur;
 
-	@OneToMany (mappedBy = "site", cascade = CascadeType.ALL)
-	@OrderBy("dateRedaction desc")
-	private List<Commentaire> commentaire;
-
 	public Site() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public List<Commentaire> getCommentaire() {
-		return commentaire;
-	}
-
-	public void setCommentaire(List<Commentaire> commentaire) {
-		this.commentaire = commentaire;
 	}
 
 	public Site( String pays, String region, String ville, int nombreSecteur) {

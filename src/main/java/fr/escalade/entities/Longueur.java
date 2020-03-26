@@ -26,9 +26,9 @@ public class Longueur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Longueur(int nombreRelais) {
+	public Longueur(int numeroVoie) {
 		super();
-		this.nombreRelais = nombreRelais;
+		this.numeroVoie = numeroVoie;
 	}
 
 	public Integer getId() {

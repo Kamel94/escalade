@@ -10,26 +10,25 @@
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<br> <br>
-			<h3>Liste des secteurs 
-			<a class="btn btn-success btn-titre"
-					th:href="@{/user/ajoutSecteur}">Ajouter secteur</a>
-			<a class="btn btn-success btn-titre"
-					th:href="@{/voie}">Liste des voies</a>
+			<h3>Secteurs du site [[${id}]]
 			</h3>
 			<br>
 			<table class="table">
 				<thead>
 					<tr class="text-primary">
-						<th>Site</th>
 						<th>Nom</th>
 						<th>Nombre de voie</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="s:${listeSecteurs}">
-						<td th:text="${s.siteNom}"></td>
+					<tr th:each="s:${secteur}">
+						<!-- <td th:text="${s.site}"></td> -->
 						<td th:text="${s.nom}"></td>
 						<td th:text="${s.nombreVoie}"></td>
+			<td><a class="btn btn-success"
+					th:href="@{/user/ajoutVoie/{nom}(nom=${s.nom})}">Ajouter voie</a></td>
+			<td><a class="btn btn-success"
+					th:href="@{/voie/{id}(id=${s.nom})}">Voir ses voies</a></td>
 						<td><a class="btn btn-primary"
 							th:href="@{/user/modifierSecteur(id=${s.nom})}">Modifier</a></td>
 						<td><a class="btn btn-danger"

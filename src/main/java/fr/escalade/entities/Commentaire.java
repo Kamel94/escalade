@@ -38,6 +38,10 @@ public class Commentaire {
 		this.auteur = auteur;
 		this.date = date;
 	}
+	public Commentaire(String site) {
+		super();
+		this.site = site;
+	}
 
 	public Integer getId() {
 		return id;

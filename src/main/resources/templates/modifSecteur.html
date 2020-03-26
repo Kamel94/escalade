@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
 <head>
 <meta charset="UTF-8">
 <title>Modifier site</title>
-	<link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 	<div layout:fragment="content">
-	<div class="col-8 spacer">
-		<div class="card">
-			<div class="card-header">Modification d'un site</div>
-			<div class="card-body">
-				<form th:action="@{/user/enregistrerSecteur}" method="post">
-				<div class="form-group">
-						<label class="col-form-label">Site : </label>
-						<input class="form-control-xs" type="text" name="siteNom" th:value="${secteur.siteNom}">
-						<span class="red" th:errors="${secteur.siteNom}"></span>
-					</div>
-				<div class="form-group">
-						<label class="col-form-label">Nom : </label>
-						<input class="form-control-xs" type="text" name="nom" th:value="${secteur.nom}">
-						<span class="red" th:errors="${secteur.nom}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Nombre de voie : </label>
-						<input class="form-control-xs" type="text" name="nombreVoie" th:value="${secteur.nombreVoie}">
-						<span class="red" th:errors="${secteur.nombreVoie}"></span>
-					</div>
-					<div>
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-					</div>
-				</form>
+		<div class="col-8 spacer">
+			<div class="card">
+				<div class="card-header">Modification d'un site</div>
+				<div class="card-body">
+					<form th:action="@{/user/enregistrerSecteur}" method="post">
+						<div class="form-group">
+							<label class="col-form-label">Site : </label> <input
+								class="form-control-xs" type="hidden" name="site"
+								th:value="${secteur.site}">[[${secteur.site}]] <span
+								class="red" th:errors="${secteur.site}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Nom : </label> <input
+								class="form-control-xs" type="text" name="nom"
+								th:value="${secteur.nom}"> <span class="red"
+								th:errors="${secteur.nom}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Nombre de voie : </label> <input
+								class="form-control-xs" type="text" name="nombreVoie"
+								th:value="${secteur.nombreVoie}"> <span class="red"
+								th:errors="${secteur.nombreVoie}"></span>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-primary">Enregistrer</button>
+							<a class="btn btn-danger btn-titre"
+								th:href="@{/secteur/{id}(id=${secteur.site})}">Annuler</a>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

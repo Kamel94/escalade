@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class VoieController {
 	@Autowired
 	private LongueurRepository longueurRepository;
 
-	@GetMapping(value = "/voie")
+	/*@GetMapping(value = "/voie")
 	public String voie(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
@@ -56,7 +57,7 @@ public class VoieController {
 		return "voie";
 	}
 	
-	/*@GetMapping(value = "/voie")
+	@GetMapping(value = "/voie")
 	public String longueur(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
@@ -72,10 +73,17 @@ public class VoieController {
 
 		return "voie";
 	}*/
+	
+	@GetMapping(value="/voie/{id}")
+	public String secteurSite(@PathVariable("id")String id, Model model) {
+		List<Voie> voie = voieRepository.voie(id);
+		model.addAttribute("voie", voie);
+		return "voie";
+	}
 
-	@GetMapping(value="/user/ajoutVoie")
-	public String ajoutVoie(Model model, Voie voie) {
-		model.addAttribute("voie", new Voie());
+	@GetMapping(value="/user/ajoutVoie/{nom}")
+	public String ajoutVoie(Model model, Voie voie, @PathVariable("nom")String id) {
+		model.addAttribute("voie", new Voie(id));
 		return "ajoutVoie";
 	}
 

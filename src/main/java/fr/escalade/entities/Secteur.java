@@ -24,14 +24,14 @@ public class Secteur implements Serializable {
 	/*@OneToMany
 	@JoinColumn(name="site_id")*/
 	@Column(name = "site_nom")
-	private String siteNom;
+	private String site;
 
-	public String getSiteNom() {
-		return siteNom;
+	public String getSite() {
+		return site;
 	}
 
-	public void setSiteNom(String siteNom) {
-		this.siteNom = siteNom;
+	public void setSite(String site) {
+		this.site = site;
 	}
 	
 	@Column
@@ -43,9 +43,9 @@ public class Secteur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Secteur(int nombreVoie) {
+	public Secteur(String site) {
 		super();
-		this.nombreVoie = nombreVoie;
+		this.site = site;
 	}
 
 	public int getNombreVoie() {

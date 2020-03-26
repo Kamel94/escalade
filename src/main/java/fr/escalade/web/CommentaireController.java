@@ -66,9 +66,9 @@ public class CommentaireController {
 		return "commentaire";
 	}
 
-	@GetMapping(value="/user/ajoutCom")
-	public String ajoutCom(Model model) {
-		model.addAttribute("commentaire", new Commentaire());
+	@GetMapping(value="/user/ajoutCom/{id}")
+	public String ajoutCom(Model model, @PathVariable("id") String id) {
+		model.addAttribute("commentaire", new Commentaire(id));
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "ajoutCom"; 
 	}
@@ -87,13 +87,13 @@ public class CommentaireController {
 		return "redirect:/commentaire";
 	}
 
-	@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
+	/*@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
 	public String enregistrerCom(Model model, @Valid Commentaire commentaire, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "ajoutCom";
 		}
 		commentaireRepository.save(commentaire);
 		return "confirmationCom";
-	}
+	}*/
 
 }
