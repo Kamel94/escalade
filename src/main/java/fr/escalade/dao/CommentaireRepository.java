@@ -22,6 +22,8 @@ public interface CommentaireRepository extends JpaRepository<Commentaire, Intege
 	@Query("select c from Commentaire c where c.site like :x")
 	List<Commentaire> findAll(@Param("x")String id);
 	
+	Commentaire findBySite(String id);
+	
 	/*@Query("select c from Commentaire c where c.id like :x")
 	List<Commentaire> findById(@Param("x")int id);*/
 	

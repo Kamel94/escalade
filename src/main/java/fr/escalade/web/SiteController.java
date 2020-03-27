@@ -52,9 +52,12 @@ public class SiteController {
 	public String site(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc) {
+			@RequestParam(name="motCle", defaultValue = "") String mc,
+			@RequestParam(name="pays", defaultValue = "") String pays,
+			@RequestParam(name="region", defaultValue = "") String region,
+			@RequestParam(name="ville", defaultValue = "") String ville) {
 
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + mc + "%", "%" + mc + "%", "%" + mc + "%", PageRequest.of(p, s));
+		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + pays + "%", "%" + region + "%", "%" + ville + "%", PageRequest.of(p, s));
 		model.addAttribute("listeSites", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
 				
@@ -85,6 +88,7 @@ public class SiteController {
 		
 		model.addAttribute("commentaire", new Commentaire(id));
 		model.addAttribute("localDate", LocalDateTime.now());
+		
 		return "siteDetail";
 	}
 	

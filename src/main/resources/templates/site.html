@@ -9,17 +9,35 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<br> <br>
+			<br> <br> <label>Mot Clé :</label>
+			<form class="form-inline" th:action="@{/site}" method="get">
+				<label>Nom :</label> <select class="form-control" name="motCle"
+					th:value="${motCle}">
+					<option></option>
+					<option th:each="s:${listeSites}">[[${s.nom}]]</option>
+				</select> 
+				<label class="btn-titre">Pays :</label> <select
+					class="form-control" name="pays" th:value="${pays}">
+					<option></option>
+					<option th:each="s:${listeSites}">[[${s.pays}]]</option>
+				</select>
+				<label class="btn-titre">Région :</label> <select class="form-control" name="region"
+					th:value="${region}">
+					<option></option>
+					<option th:each="s:${listeSites}">[[${s.region}]]</option>
+				</select> 
+				<label class="btn-titre">Ville :</label> <select
+					class="form-control" name="ville" th:value="${ville}">
+					<option></option>
+					<option th:each="s:${listeSites}">[[${s.ville}]]</option>
+				</select>
+				<button class="btn btn-success">Chercher</button>
+			</form>
+			<br>
 			<h3>
 				Liste des sites <a class="btn btn-success btn-titre"
 					th:href="@{/user/ajoutSite}">Ajouter un site</a>
 			</h3>
-			<form class="form-inline decaler-droite" th:action="@{/site}"
-				method="get">
-				<label>Mot Clé :</label> <input type="text" name="motCle"
-					th:value="${motCle}" />
-				<button class="btn btn-success">Chercher</button>
-			</form>
 			<br>
 			<table class="table">
 				<thead>

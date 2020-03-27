@@ -17,15 +17,19 @@
 					<form th:action="@{/user/enregistrer}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Propriétaire : </label> <input
-								class="form-control-xs" type="text" name="proprietaire"
-								th:value="${#httpServletRequest.remoteUser}"> <span
-								class="red" th:errors="${topo.proprietaire}" th:inline="text">[[]]</span>
+								class="form-control-xs" type="hidden" name="proprietaire"
+								th:value="${#httpServletRequest.remoteUser}"> [[${#httpServletRequest.remoteUser}]]<span
+								class="red" th:errors="${topo.proprietaire}" th:inline="text"></span>
 						</div>
-						<div class="form-group">
-							<label class="col-form-label">Nom : </label> <input
+						<div class="form-group"  >
+						<label for="exampleFormControlSelect1">Nom</label> <select
+								class="form-control" name="nom" th:value="${topo.nom}">
+								<option th:each="s:${site}">[[${s.nom}]]</option>
+							</select>
+							<!-- <label class="col-form-label">Nom : </label> <input
 								class="form-control-xs" type="text" name="nom"
 								th:value="${topo.nom}"> <span class="red"
-								th:errors="${topo.nom}"></span>
+								th:errors="${topo.nom}"></span> -->
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Description : </label> <input

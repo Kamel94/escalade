@@ -64,10 +64,6 @@ public class SecteurController {
 	@GetMapping(value="/user/ajoutSecteur/{id}")
 	public String ajoutSecteur(Model model, @PathVariable("id")String id) {
 		model.addAttribute("secteur", new Secteur(id));
-		Site site = new Site();
-		site.setNom(id);
-		site = siteRepository.finById(id);
-		model.addAttribute("site", site);
 		return "ajoutSecteur";
 	}
 

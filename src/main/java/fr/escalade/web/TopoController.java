@@ -2,12 +2,14 @@ package fr.escalade.web;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
+import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
 
@@ -30,16 +33,18 @@ public class TopoController {
 	private TopoRepository topoRepository;
 
 	@Autowired
+	private SiteRepository siteRepository;
+	
+	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
 	@GetMapping(value = "/accueil")
 	public String accueil(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "2") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc,
-			@RequestParam(name="motCle", defaultValue = "") String dispo) {
+			@RequestParam(name="size", defaultValue = "4") int s,
+			@RequestParam(name="motCle", defaultValue = "") String mc) {
 
-		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%","%" + dispo + "%", PageRequest.of(p, s));
+		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%","%" + mc + "%", PageRequest.of(p, s));
 
 		model.addAttribute("listeTopos", pageTopos.getContent());
 		int[] pages = new int[pageTopos.getTotalPages()];
@@ -50,9 +55,20 @@ public class TopoController {
 
 		return "Accueil";
 	}
+	
+	@GetMapping(value = "/accueil/{id}")
+	public String topoSite(Model model, @PathVariable("id")String id) {
+
+		List<Topo> topos = topoRepository.findByNom(id);
+		model.addAttribute("listeTopos", topos);
+
+		return "Accueil";
+	}
 
 	@GetMapping(value="/user/ajout")
-	public String ajout(Model model, String nom) {
+	public String ajout(Model model, String id) {
+		List<Site> site = siteRepository.findAll();
+		model.addAttribute("site", site);
 		model.addAttribute("topo", new Topo());
 		return "Ajout";
 	}
@@ -91,6 +107,20 @@ public class TopoController {
 		List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
 		model.addAttribute("topos", topos);
 		return "listemestopos";
+	}
+	
+	@GetMapping(value="/user/listeMesDemandes")
+	public String listeMesDemandes(Principal principal, Model model) {
+
+		List<Topo> topos = topoRepository.findAll();
+		model.addAttribute("topos", topos);
+		
+		/*(Principal principal, Model model, String n) {
+		List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
+		model.addAttribute("topos", topos);
+		Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		model.addAttribute("emprunteur", emprunteur);*/
+		return "listeMesDemandes";
 	}
 
 	@GetMapping("/user/demandepret/{id}")

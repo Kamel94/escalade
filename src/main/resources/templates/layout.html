@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>layout</title>
@@ -14,10 +14,14 @@
 	<div class="card-fluid">
 		<nav class="navbar navbar-light bg-primary">
 			<div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/accueil}">Accueil</a>
-				<a class="navbar-brand" th:href="@{/site}">Voir la liste des sites</a>  
-					<a class="btn btn-primary decaler-droite" th:href="@{/logout}" th:inline="text"> Se déconecter</a>
-                <a class="btn btn-primary btn-titre" href="/login" role="button" sec:authorize="isAnonymous()">S'identifier <i class="fas fa-user-check ml-2"></i></a>
+				<a class="navbar-brand" th:href="@{/accueil}">Accueil</a> <a
+					class="navbar-brand" th:href="@{/site}">Voir la liste des sites</a>
+				<a th:if="${#httpServletRequest.remoteUser} != null" class="btn btn-primary decaler-dr" th:href="@{/logout}"
+					th:inline="text"> Se déconecter</a> 
+					<a th:if="${#httpServletRequest.remoteUser} == null"
+					class="btn btn-primary decaler-dr" href="/login" role="button"
+					sec:authorize="isAnonymous()">S'identifier <i
+					class="fas fa-user-check ml-2"></i></a>
 			</div>
 		</nav>
 	</div>

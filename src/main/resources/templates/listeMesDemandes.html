@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head></head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3 text-success">Mes
+				demandes</h3>
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="table-responsive-md">
+						<table class="table">
+							<thead>
+								<tr class="text-primary">
+									<th scope="col">Topo</th>
+									<th scope="col">Parution</th>
+									<th scope="col">Région</th>
+									<th scope="col">Propriétaire</th>
+									<th scope="col">Disponibilite</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="topo : ${topos}"
+									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} and ${topo.disponibilite} == 'Demande' ) ? true">
+									<td th:text="${topo.nom}"></td>
+									<td th:text="${topo.parution}"></td>
+									<td th:text="${topo.lieu}"></td>
+									<td th:text="${topo.proprietaire}"></td>
+									<!-- <td th:text="${topo.disponibilite}"
+												th:class="${topo.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td> -->
+									<th:block th:switch="${topo.disponibilite}">
+										<td th:case="Demande"
+											th:utext="'Attente de la réponse du propriétaire'"></td>
+										<!-- <td th:case="Disponible"
+													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : 'Aucun'"></td>
+												<td th:case="Indisponible"
+													th:utext="${topo.emprunteur != null}? ''"></td>
+
+												<td><a class="btn btn-primary"
+													th:href="@{/user/modifier(id=${topo.nom})}">Modifier</a></td>
+												<td><a class="btn btn-danger"
+													onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+													th:href="@{/admin/supprimer(id=${topo.nom})}">Supprimer</a></td>
+ -->
+									</th:block>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

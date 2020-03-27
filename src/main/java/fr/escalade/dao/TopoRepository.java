@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import fr.escalade.entities.Topo;
+import fr.escalade.entities.Utilisateur;
 
 public interface TopoRepository extends JpaRepository<Topo, String> {
 	
@@ -16,5 +17,11 @@ public interface TopoRepository extends JpaRepository<Topo, String> {
 	Page<Topo> chercher(@Param("x")String mc,@Param("y")String dispo, Pageable pageable);
 
 	List<Topo> findByProprietaireOrderByNom(String name);
+	
+	List<Topo> findByProprietaireOrderByDisponibilite(String name);
+	
+	//Topo findByNom(String u);
+	
+	List<Topo> findByNom(String u);
 
 }
