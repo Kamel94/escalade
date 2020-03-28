@@ -1,17 +1,18 @@
 package fr.escalade.web;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,14 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.escalade.dao.CommentaireRepository;
-import fr.escalade.dao.InfoSiteRepository;
 import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
 import fr.escalade.dao.VoieRepository;
 import fr.escalade.entities.Commentaire;
-import fr.escalade.entities.InfoSite;
 import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
@@ -49,23 +48,28 @@ public class SiteController {
 	private CommentaireRepository commentaireRepository;
 
 	@GetMapping(value = "/site")
-	public String site(Model model, 
+	public String site(Model model,      
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc,
-			@RequestParam(name="pays", defaultValue = "") String pays,
-			@RequestParam(name="region", defaultValue = "") String region,
-			@RequestParam(name="ville", defaultValue = "") String ville) {
+			@RequestParam(name="motCle", defaultValue = "") String mc) {
 
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + pays + "%", "%" + region + "%", "%" + ville + "%", PageRequest.of(p, s));
+		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + mc + "%", "%" + mc + "%", "%" + mc + "%", PageRequest.of(p, s));
 		model.addAttribute("listeSites", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
-				
+		
+		List<Site> site = siteRepository.finById("%" + mc + "%");
+		Set<Site> mySet = new HashSet<Site>(pageSites.getContent());
+		List<Site> list2 = new ArrayList<Site>(mySet);
+		HashSet set = new HashSet() ;
+        set.addAll(list2) ;
+        ArrayList distinctList = new ArrayList(set) ;
+		
+		model.addAttribute("site", distinctList);
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
-
+		
 		return "site";
 	}
 	

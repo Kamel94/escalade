@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Accueil</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="bleu">
+			<header>
+				<a class="btn btn-primary btn-titre spacer" th:href="@{/site}">Voir
+					la liste des sites</a> <a class="btn btn-primary dr spacer titre"
+					th:href="@{/accueil}">Voir la liste des topos</a>
+			</header>
+			<h2 class="text-center text-warning p-3 font-italic">
+				<span class="font-weight-light">Bienvenue</span> <b> amis de l'escalade</b>
+			</h2>
+			<img src="/image/accueil.jpg" class="rounded" alt="Responsive image"
+				height="252" width="100%">
+				<br><br>
+				<span class="text-warning btn-titre font-italic font-weight-bold"><b>Pour plus d'information, cliquez sur le nom du site</b></span>
+		</div>
+
+		<div th:each="s:${site}" class="container-fluid bleu col-sm-4 g">
+			<table class="table vert-bleu text-info spacer">
+				<tbody class="moitie">
+					<tr>
+						<th>Nom :&nbsp; &nbsp; &nbsp;<a th:href="@{/siteDetail/{id}(id=${s.nom})}"> 
+						  [[${s.nom}]]</a></th>
+					</tr>
+					<tr>
+						<th>Lieu : &nbsp; &nbsp; &nbsp; [[${s.pays}]]</th>
+					</tr>
+					<tr>
+						<th>Secteurs : &nbsp; &nbsp; &nbsp; [[${s.nombreSecteur}]]</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

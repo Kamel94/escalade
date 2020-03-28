@@ -17,12 +17,6 @@
 					<a class="btn btn-primary btn-titre"
 					th:href="@{/user/listeMesDemandes}">Mes demandes</a>
 			</h3>
-			<form class="form-inline decaler-droite" th:action="@{/accueil}"
-				method="get">
-				<label>Mot Clé :</label> <input type="text" name="motCle"
-					th:value="${motCle}" />
-				<button class="btn btn-success">Chercher</button>
-			</form>
 			<br>
 			<table class="table">
 				<thead>

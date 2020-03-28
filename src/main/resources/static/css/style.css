@@ -1,9 +1,36 @@
+
+/* ---------------------------------------- Couleur ---------------------------------------- */
+
 .red{
 	color: red;
 }
 
+/* ---------------------------------- Couleur arrière-plan ---------------------------------- */
+
+.bleu{
+	background-color: #025E84;
+}
+
+.vert-bleu{
+	background-color: #C9E1DB;
+}
+
+/* --------------------------------------- Placement --------------------------------------- */
+
 .spacer{
 	margin-top: 20px;
+}
+
+.dr{
+	float: right;
+}
+
+.droit{
+	float: right;
+}
+
+.g{
+	float: left;
 }
 
 .decaler{
@@ -19,9 +46,17 @@
 }
 
 .decaler-droite{
-	margin-left: 600px;
+	margin-left: 700px;
 }
 
 .decaler-dr{
 	margin-left: 510px;
+}
+
+.titre{
+	margin-right: 25px;
+}
+
+.moitie{
+	width: "15px";
 }

@@ -12,24 +12,22 @@
 </head>
 <body>
 	<div class="card-fluid">
-		<nav class="navbar navbar-light bg-primary">
-			<div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/accueil}">Accueil</a> <a
-					class="navbar-brand" th:href="@{/site}">Voir la liste des sites</a>
-				<a th:if="${#httpServletRequest.remoteUser} != null" class="btn btn-primary decaler-dr" th:href="@{/logout}"
-					th:inline="text"> Se déconecter</a> 
-					<a th:if="${#httpServletRequest.remoteUser} == null"
-					class="btn btn-primary decaler-dr" href="/login" role="button"
-					sec:authorize="isAnonymous()">S'identifier <i
-					class="fas fa-user-check ml-2"></i></a>
-			</div>
+		<nav class="navbar navbar-light bleu">
+			<a class="navbar-brand text-light" th:href="@{/accueil1}">Accueil</a> <a
+				th:if="${#httpServletRequest.remoteUser} != null"
+				class="btn btn-primary" th:href="@{/logout}" th:inline="text">
+				Se déconecter</a> <a class="btn btn-info"
+				th:if="${#httpServletRequest.remoteUser} == null"
+				th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier <i
+				class="fas fa-user-check ml-2 "></i></a>
 		</nav>
 	</div>
 	<section layout:fragment="content"></section>
-	<footer class="navbar-fixed-bottom">
+	<footer class="navbar-fixed-bottom bleu">
 		<hr />
-		<div class="container-fluid">
-			<small> Les amis de l'escalade <br> Copyright @2020
+		<div class="container-fluid text-light">
+			<small> Les amis de l'escalade <br> <b>Copyright
+					@2020</b>
 			</small>
 		</div>
 	</footer>

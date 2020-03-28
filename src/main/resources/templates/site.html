@@ -9,33 +9,27 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<br> <br> <label>Mot Clé :</label>
-			<form class="form-inline" th:action="@{/site}" method="get">
-				<label>Nom :</label> <select class="form-control" name="motCle"
-					th:value="${motCle}">
-					<option></option>
-					<option th:each="s:${listeSites}">[[${s.nom}]]</option>
-				</select> 
-				<label class="btn-titre">Pays :</label> <select
-					class="form-control" name="pays" th:value="${pays}">
-					<option></option>
-					<option th:each="s:${listeSites}">[[${s.pays}]]</option>
-				</select>
-				<label class="btn-titre">Région :</label> <select class="form-control" name="region"
-					th:value="${region}">
-					<option></option>
-					<option th:each="s:${listeSites}">[[${s.region}]]</option>
-				</select> 
-				<label class="btn-titre">Ville :</label> <select
-					class="form-control" name="ville" th:value="${ville}">
-					<option></option>
-					<option th:each="s:${listeSites}">[[${s.ville}]]</option>
-				</select>
-				<button class="btn btn-success">Chercher</button>
-			</form>
+			<br>
+			<div class="dr">
+				<form class="form-inline" th:action="@{/site(id=${nom})}" method="get">
+					<label>Recherche : &nbsp;</label> <select class="form-control"
+						name="motCle" th:value="${motCle}">
+						<option></option>
+						<optgroup label="------- Nom -------"></optgroup>
+						<option th:each="s:${listeSites}">[[${s.nom}]]</option>
+						<optgroup label="------- Pays -------"></optgroup>
+						<option th:each="se:${site}">[[${se.pays}]]</option>
+						<optgroup label="------- Région -------"></optgroup>
+						<option th:each="se:${site}">[[${se.region}]]</option>
+						<optgroup label="------- Nombre de secteur -------"></optgroup>
+						<option th:each="s:${listeSites}">[[${s.nombreSecteur}]]</option>
+					</select> &nbsp; &nbsp;
+					<button class="btn btn-success">Chercher</button>
+				</form>
+			</div>
 			<br>
 			<h3>
-				Liste des sites <a class="btn btn-success btn-titre"
+				Liste des sites <a class="btn btn-info btn-titre"
 					th:href="@{/user/ajoutSite}">Ajouter un site</a>
 			</h3>
 			<br>
@@ -45,7 +39,7 @@
 						<th>Nom</th>
 						<th>Pays</th>
 						<th>Région</th>
-						<th>Ville</th>
+						<th>Nombre de secteur</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,12 +47,10 @@
 						<td th:text="${s.nom}"></td>
 						<td th:text="${s.pays}"></td>
 						<td th:text="${s.region}"></td>
-						<td th:text="${s.ville}"></td>
+						<td th:text="${s.nombreSecteur}"></td>
 						<td><a class="btn btn-primary"
 							th:href="@{/siteDetail/{id}(id=${s.nom})}">Consulter le
 								détail</a></td>
-						<td><a class="btn btn-primary"
-							th:href="@{/commentaire/{id}(id=${s.nom})}">Commentaire</a></td>
 					</tr>
 				</tbody>
 			</table>

@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
+import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
@@ -34,6 +36,9 @@ public class TopoController {
 
 	@Autowired
 	private SiteRepository siteRepository;
+	
+	@Autowired
+	private SecteurRepository secteurRepository;
 	
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
@@ -166,7 +171,16 @@ public class TopoController {
 
 	@GetMapping("/")
 	public String defaut() {
-		return "redirect:/accueil";
+		return "redirect:/accueil1";
+	}
+	
+	@GetMapping("/accueil1")
+	public String accueil(Model model) {
+		List<Site> site = siteRepository.findAll();
+		model.addAttribute("site", site);
+		List<Secteur> secteur = secteurRepository.findAll();
+		model.addAttribute("secteur", secteur);
+		return "accueil1";
 	}
 
 	@GetMapping("/403")
