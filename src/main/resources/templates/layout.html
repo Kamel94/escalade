@@ -15,8 +15,8 @@
 		<nav class="navbar navbar-light bleu">
 			<a class="navbar-brand text-light" th:href="@{/accueil1}">Accueil</a> <a
 				th:if="${#httpServletRequest.remoteUser} != null"
-				class="btn btn-primary" th:href="@{/logout}" th:inline="text">
-				Se déconecter</a> <a class="btn btn-info"
+				class="btn btn-info rond-lege" th:href="@{/logout}" th:inline="text">
+				Se déconecter</a> <a class="btn btn-info rond-lege"
 				th:if="${#httpServletRequest.remoteUser} == null"
 				th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier <i
 				class="fas fa-user-check ml-2 "></i></a>

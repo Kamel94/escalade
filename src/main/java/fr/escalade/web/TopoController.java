@@ -92,7 +92,7 @@ public class TopoController {
 		return "commentaire";
 	}*/
 
-	@GetMapping(value="/admin/supprimer")
+	@GetMapping(value="/supprimer")
 	public String supprimer(String id) {
 		topoRepository.deleteById(id);
 		return "redirect:/listeMesTopos";

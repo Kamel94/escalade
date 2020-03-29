@@ -15,6 +15,20 @@
 	background-color: #C9E1DB;
 }
 
+/* ----------------------------------------- Bords ----------------------------------------- */
+
+.bord-rond{
+	border-radius: 50%;
+}
+
+.rond-haut{
+	border-radius: 32.5px 32.5px 0 0;
+}
+
+.rond-lege{
+	border-radius: 32.5px 32.5px 32.5px 32.5px;
+}
+
 /* --------------------------------------- Placement --------------------------------------- */
 
 .spacer{
@@ -22,10 +36,6 @@
 }
 
 .dr{
-	float: right;
-}
-
-.droit{
 	float: right;
 }
 
@@ -37,8 +47,8 @@
 	margin-right: 510px;
 }
 
-.droite{
-	margin-left: 255px;
+.centre{
+	margin-left: 20%;
 }
 
 .btn-titre{

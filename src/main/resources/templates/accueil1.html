@@ -11,8 +11,8 @@
 	<div layout:fragment="content">
 		<div class="bleu">
 			<header>
-				<a class="btn btn-primary btn-titre spacer" th:href="@{/site}">Voir
-					la liste des sites</a> <a class="btn btn-primary dr spacer titre"
+				<a class="btn btn-warning btn-titre spacer bord-rond" th:href="@{/site}">Voir
+					la liste des sites</a> <a class="btn btn-warning dr spacer titre bord-rond"
 					th:href="@{/accueil}">Voir la liste des topos</a>
 			</header>
 			<h2 class="text-center text-warning p-3 font-italic">
@@ -25,7 +25,7 @@
 		</div>
 
 		<div th:each="s:${site}" class="container-fluid bleu col-sm-4 g">
-			<table class="table vert-bleu text-info spacer">
+			<table class="table vert-bleu text-info spacer rond-haut">
 				<tbody class="moitie">
 					<tr>
 						<th>Nom :&nbsp; &nbsp; &nbsp;<a th:href="@{/siteDetail/{id}(id=${s.nom})}"> 

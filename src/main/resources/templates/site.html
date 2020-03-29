@@ -11,8 +11,9 @@
 		<div class="container-fluid">
 			<br>
 			<div class="dr">
-				<form class="form-inline" th:action="@{/site(id=${nom})}" method="get">
-					<label>Recherche : &nbsp;</label> <select class="form-control"
+				<form class="form-inline" th:action="@{/site(id=${nom})}"
+					method="get">
+					<label>Recherche : &nbsp;</label> <select class="form-control form-control-sm"
 						name="motCle" th:value="${motCle}">
 						<option></option>
 						<optgroup label="------- Nom -------"></optgroup>
@@ -24,12 +25,12 @@
 						<optgroup label="------- Nombre de secteur -------"></optgroup>
 						<option th:each="s:${listeSites}">[[${s.nombreSecteur}]]</option>
 					</select> &nbsp; &nbsp;
-					<button class="btn btn-success">Chercher</button>
+					<button class="btn btn-success rond-lege">Chercher</button>
 				</form>
 			</div>
 			<br>
 			<h3>
-				Liste des sites <a class="btn btn-info btn-titre"
+				Liste des sites <a class="btn btn-info btn-titre rond-lege"
 					th:href="@{/user/ajoutSite}">Ajouter un site</a>
 			</h3>
 			<br>
@@ -48,7 +49,7 @@
 						<td th:text="${s.pays}"></td>
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.nombreSecteur}"></td>
-						<td><a class="btn btn-primary"
+						<td><a class="btn btn-primary rond-lege"
 							th:href="@{/siteDetail/{id}(id=${s.nom})}">Consulter le
 								détail</a></td>
 					</tr>

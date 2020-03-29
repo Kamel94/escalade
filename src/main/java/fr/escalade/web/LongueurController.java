@@ -1,6 +1,6 @@
 package fr.escalade.web;
 
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,7 +24,7 @@ import fr.escalade.entities.Longueur;
 import fr.escalade.entities.Topo;
 import fr.escalade.entities.Voie;
 
-@Controller
+
 public class LongueurController {
 	
 	@Autowired
@@ -40,7 +40,7 @@ public class LongueurController {
 		return "longueur";
 	}
 	
-	/*String lien(int numeroVoie, int numeroLongueur) {
+	String lien(int numeroVoie, int numeroLongueur) {
 		if(numeroVoie == numeroLongueur) {
 			return "longueur";
 		}
@@ -62,7 +62,7 @@ public class LongueurController {
 		model.addAttribute("motCle", mc);
 
 		return "voie";
-	}*/
+	}
 
 	@GetMapping(value="/user/ajoutLongueur/{id}")
 	public String ajoutLongueur(Model model, Longueur longueur, @PathVariable("id")int id) {
@@ -109,6 +109,6 @@ public class LongueurController {
 		model.addAttribute("motCle", mc);
 		model.addAttribute("id", id);
 		return "informations";
-	}*/
+	}
 
-}
+}*/

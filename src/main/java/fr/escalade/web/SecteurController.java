@@ -75,9 +75,9 @@ public class SecteurController {
 	}
 
 	@GetMapping(value="/admin/supprimerSecteur")
-	public String supprimerSecteur(String id, String motCle, int page, int size) {
+	public String supprimerSecteur(String id) {
 		secteurRepository.deleteById(id);
-		return "redirect:/secteur?page=" + page + "&size=" + size + "&motCle=" + motCle ;
+		return "secteur";
 	}
 
 	@RequestMapping(value="/user/enregistrerSecteur", method=RequestMethod.POST)

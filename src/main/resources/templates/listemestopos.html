@@ -11,7 +11,7 @@
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3 red">
-				Mes Topos <a class="btn btn-primary btn-titre"
+				Mes Topos <a class="btn btn-primary btn-titre rond-lege"
 					th:href="@{/user/ajout}">Ajouter un topo</a>
 			</h3>
 
@@ -50,27 +50,25 @@
 												<td th:case="Indisponible"
 													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></td>
 
-												<td><a class="btn btn-primary"
+												<td><a class="btn btn-primary rond-lege"
 													th:href="@{/user/modifier(id=${topo.nom})}">Modifier</a></td>
-												<td><a class="btn btn-danger"
+												<td><a class="btn btn-danger rond-lege"
 													onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-													th:href="@{/admin/supprimer(id=${topo.nom})}">Supprimer</a></td>
+													th:href="@{/supprimer(id=${topo.nom})}">Supprimer</a></td>
 
 											</th:block>
 
 
-											<td><a class="btn btn-success"
+											<td><a class="btn btn-success rond-lege"
 												th:href="@{/user/accepterpret/{id}(id=${topo.nom})}"
 												sec:authorize="hasAuthority('user')"
 												th:if="${topo.disponibilite == 'Demande'}"
-												title="Accepter le prêt">Accepter<i
-													class=" far fa-thumbs-up"></i></a></td>
-											<td><a class="btn btn-danger"
+												title="Accepter le prêt">Accepter</a></td>
+											<td><a class="btn btn-danger rond-lege"
 												th:href="@{/user/refuserpret/{id}(id=${topo.nom})}"
 												sec:authorize="hasAuthority('user')"
 												th:if="${topo.disponibilite == 'Demande'}"
-												title="Refuser le prêt">Refuser<i
-													class=" far fa-thumbs-down"></i></a></td>
+												title="Refuser le prêt">Refuser</a></td>
 										</tr>
 									</tbody>
 								</table>

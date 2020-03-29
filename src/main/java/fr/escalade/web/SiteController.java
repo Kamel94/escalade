@@ -1,5 +1,6 @@
 package fr.escalade.web;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +48,9 @@ public class SiteController {
 	@Autowired
 	private CommentaireRepository commentaireRepository;
 
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
+
 	@GetMapping(value = "/site")
 	public String site(Model model,      
 			@RequestParam(name="page", defaultValue = "0") int p,
@@ -74,7 +78,7 @@ public class SiteController {
 	}
 	
 	@GetMapping(value="/siteDetail/{id}")
-	public String site(@PathVariable("id")String id, Model model,
+	public String site(@PathVariable("id")String id, Model model, Principal principal,
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s) {
 		List<Site> site = siteRepository.findByNom(id);
@@ -85,6 +89,23 @@ public class SiteController {
 		Page<Commentaire> commentaire = commentaireRepository.chercher(id, PageRequest.of(p, s));
 		model.addAttribute("liste", commentaire);
 		int[] pages = new int[commentaire.getTotalPages()];
+		
+		/*Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		//model.addAttribute("utilisateu", utilisateur);*/
+		Utilisateur us = new Utilisateur();
+		List<Utilisateur> u = utilisateurRepository.findAll();
+		model.addAttribute("utilisateu", u);
+		
+		//Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		if(principal == null){
+			us.setStatut("USER");
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(us.getStatut());
+			model.addAttribute("utilisateur", utilisateur);
+		} else if(principal != null) {
+			Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", util);
+		}
 		
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);

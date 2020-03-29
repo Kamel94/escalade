@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.escalade.dao.InfoSiteRepository;
-import fr.escalade.dao.LongueurRepository;
 import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
@@ -37,10 +36,10 @@ public class VoieController {
 	@Autowired
 	private VoieRepository voieRepository;
 	
-	@Autowired
+	/*@Autowired
 	private LongueurRepository longueurRepository;
 
-	/*@GetMapping(value = "/voie")
+	@GetMapping(value = "/voie")
 	public String voie(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,

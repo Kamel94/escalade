@@ -14,5 +14,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, String
 	List<Utilisateur> proprio ( @Param("x")String proprietaire);
 	
 	Utilisateur findUtilisateurByPseudo(String pseudo);
+	
+	Utilisateur findUtilisateurByStatut(String statut);
 
 }
