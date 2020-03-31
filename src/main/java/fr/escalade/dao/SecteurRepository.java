@@ -18,5 +18,9 @@ public interface SecteurRepository extends JpaRepository<Secteur, String> {
 	
 	@Query("select s from Secteur s where s.site like :x")
 	List<Secteur> secteur(@Param("x")String nom);
+	
+	/*"SELECT DISTINCT a FROM Article a  WHERE a.genre.idGenre = :genre"
+	@Query("select distinct s from Secteur s where s.site.siteNom like :x")
+	List<Secteur> sec(@Param("x")String nom);*/
 
 }

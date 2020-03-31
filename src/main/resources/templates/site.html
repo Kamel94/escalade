@@ -11,20 +11,17 @@
 		<div class="container-fluid">
 			<br>
 			<div class="dr">
-				<form class="form-inline" th:action="@{/site(id=${nom})}"
+				<form class="form-inline" th:action="@{/site}"
 					method="get">
-					<label>Recherche : &nbsp;</label> <select class="form-control form-control-sm"
-						name="motCle" th:value="${motCle}">
-						<option></option>
-						<optgroup label="------- Nom -------"></optgroup>
-						<option th:each="s:${listeSites}">[[${s.nom}]]</option>
-						<optgroup label="------- Pays -------"></optgroup>
-						<option th:each="se:${site}">[[${se.pays}]]</option>
-						<optgroup label="------- Région -------"></optgroup>
-						<option th:each="se:${site}">[[${se.region}]]</option>
-						<optgroup label="------- Nombre de secteur -------"></optgroup>
-						<option th:each="s:${listeSites}">[[${s.nombreSecteur}]]</option>
-					</select> &nbsp; &nbsp;
+					<label>Nom : &nbsp;</label>
+					<input class="form-control-xs" type="text" name="motCle" th:value="${motCle}">
+					<label>Pays : &nbsp;</label>
+					<input class="form-control-xs" type="text" name="pays" th:value="${pays}">
+					<label>Region : &nbsp;</label>
+					<input class="form-control-xs" type="text" name="region" th:value="${region}">
+					<!-- <label>Ville : &nbsp;</label>
+					<input class="form-control-xs" type="text" name="i" th:value="${i}"> -->
+					 &nbsp; &nbsp;
 					<button class="btn btn-success rond-lege">Chercher</button>
 				</form>
 			</div>

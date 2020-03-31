@@ -12,9 +12,9 @@
 		<div class="container-fluid">
 			<br> <br>
 			<h3>
-				Liste des topos <a class="btn btn-primary btn-titre rond-lege"
-					th:href="@{/user/listeMesTopos}">Mes topos</a>
-					<a class="btn btn-primary btn-titre rond-lege"
+				Liste des topos <a class="btn btn-info btn-titre rond-lege"
+					th:href="@{/user/listeMesTopos}">Mes topos</a> <a
+					class="btn btn-info btn-titre rond-lege"
 					th:href="@{/user/listeMesDemandes}">Mes demandes</a>
 			</h3>
 			<br>
@@ -37,7 +37,7 @@
 						<td th:text="${t.disponibilite}"
 							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 						<td><a
-							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-success' : 'btn btn-danger disabled'"
+							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info' : 'btn btn-danger disabled'"
 							th:href="@{/user/demandepret/{id}(id=${t.nom})}"
 							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
 							th:if="${t.emprunteur != t.proprietaire}? (${#httpServletRequest.remoteUser} != ${t.proprietaire} ) : true"><i
@@ -50,11 +50,10 @@
 		<div class="container">
 			<ul class="nav nav-pills">
 				<li class="nav-item"
-					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
-					th:each="pa,status:${pages}"><a class="nav-link active"
+					th:class="${pageCourante}==${status.index}?'nav-link btn-info':'nav-link'"
+					th:each="pa,status:${pages}"><a class="nav-link btn-info"
 					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
-					th:text="${status.index}"></a>
-				</li>
+					th:text="${status.index}"></a></li>
 			</ul>
 		</div>
 	</div>

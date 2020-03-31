@@ -17,6 +17,15 @@
 					<label>[[${#httpServletRequest.remoteUser}]]</label>
 				</div>
 				<div class="form-group">
+					<label>Date de création : </label>
+					<label th:text="${site.nombreSecteur}"></label>
+				</div>
+				<div th:if="${site.dateModif == null}" 
+					 class="form-group">
+					<label>Date de modification : </label>
+					<label th:text="${site.nombreSecteur}"></label>
+				</div>
+				<div class="form-group">
 					<label>Nom : </label>
 					<label th:text="${site.nom}"></label>
 				</div>

@@ -26,6 +26,7 @@ public class Secteur implements Serializable {
 	@Column(name = "site_nom")
 	private String site;
 
+
 	public String getSite() {
 		return site;
 	}

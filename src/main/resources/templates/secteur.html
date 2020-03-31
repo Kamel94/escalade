@@ -9,7 +9,10 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<br> <br>
+			<br> 
+			<a class="btn btn-success rond-lege"
+					th:href="@{/siteDetail/{id}(id=${id})}">Retour</a>
+			<br><br>
 			<h3>Secteurs du site [[${id}]]
 			</h3>
 			<br>
@@ -25,13 +28,17 @@
 						<!-- <td th:text="${s.site}"></td> -->
 						<td th:text="${s.nom}"></td>
 						<td th:text="${s.nombreVoie}"></td>
-			<td><a class="btn btn-success"
+			<td><a class="btn btn-success rond-lege"
 					th:href="@{/user/ajoutVoie/{nom}(nom=${s.nom})}">Ajouter voie</a></td>
-			<td><a class="btn btn-success"
+			<td><a class="btn btn-success rond-lege"
 					th:href="@{/voie/{id}(id=${s.nom})}">Voir ses voies</a></td>
-						<td><a class="btn btn-primary"
+					<!-- Rajouter les conditions pour faire apparaître les boutons modifier et supprimer
+					pour les utilisateurs connectés et pour les membres.
+					Et ne pas oublier de faire une condition aussi dans le controller, se référer au 
+					controller site (siteDetail) -->
+						<td><a class="btn btn-primary rond-lege"
 							th:href="@{/user/modifierSecteur(id=${s.nom})}">Modifier</a></td>
-						<td><a class="btn btn-danger"
+						<td><a class="btn btn-danger rond-lege"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 							th:href="@{/admin/supprimerSecteur(id=${s.nom})}">Supprimer</a></td>
 					</tr>

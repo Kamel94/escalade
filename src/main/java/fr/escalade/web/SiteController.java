@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,24 +57,33 @@ public class SiteController {
 	public String site(Model model,      
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc) {
+			@RequestParam(name="motCle", defaultValue = "") String mc,
+			@RequestParam(name="pays", defaultValue = "") String pays,
+			@RequestParam(name="region", defaultValue = "") String region,
+			@RequestParam(name="i", defaultValue = "0") int i,
+			Principal principal) {
 
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + mc + "%", "%" + mc + "%", "%" + mc + "%", PageRequest.of(p, s));
+		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + pays + "%", "%" + region + "%", PageRequest.of(p, s));
 		model.addAttribute("listeSites", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
 		
-		List<Site> site = siteRepository.finById("%" + mc + "%");
+		/*List<Site> site = siteRepository.finById("%" + mc + "%");
 		Set<Site> mySet = new HashSet<Site>(pageSites.getContent());
 		List<Site> list2 = new ArrayList<Site>(mySet);
 		HashSet set = new HashSet() ;
         set.addAll(list2) ;
-        ArrayList distinctList = new ArrayList(set) ;
-		
+        ArrayList distinctList = new ArrayList(set);
 		model.addAttribute("site", distinctList);
+		
+		List<Site> site = siteRepository.cherche(id);
+		model.addAttribute("site", site);*/
+		
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
+		model.addAttribute("pays", pays);
+		model.addAttribute("region", region);
 		
 		return "site";
 	}
@@ -117,6 +128,21 @@ public class SiteController {
 		return "siteDetail";
 	}
 	
+	@GetMapping(value="/admin/tag/{id}")
+	public String tag(Model model, @PathVariable("id")String id) {
+		
+		Site site = siteRepository.getOne(id);
+		model.addAttribute("site", site);
+		
+		if(site.getTag() == null) {
+			site.setTag("Non officiel");
+		} else if(site.getTag().equals("Non officiel")) {
+			site.setTag("Officiel Les amis de l’escalade");
+		}
+		siteRepository.save(site);
+		return "redirect:/siteDetail/{id}";
+	}
+	
 	@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
 	public String enregistrerCom(Model model, @Valid Commentaire commentaire, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
@@ -136,17 +162,21 @@ public class SiteController {
 	@GetMapping(value="/user/ajoutSite")
 	public String ajoutSite(Model model, String id) {
 		model.addAttribute("site", new Site());
+		model.addAttribute("localDate", LocalDateTime.now());
+		
 		return "ajoutSite"; 
 	}
 
-	@RequestMapping(value="/admin/modifierSite", method=RequestMethod.GET)
+	@RequestMapping(value="/user/modifierSite", method=RequestMethod.GET)
 	public String modifierSite(Model model, String id) {
 		Site site = siteRepository.findById(id).orElse(null);
 		model.addAttribute("site", site);
+		model.addAttribute("localDate", LocalDateTime.now());
+		
 		return "modifSite"; 
 	}
 
-	@GetMapping(value="/admin/supprimerSite")
+	@GetMapping(value="/user/supprimerSite")
 	public String supprimerSite(String id, String motCle, int page, int size) {
 		siteRepository.deleteById(id);
 		return "redirect:/site?page=" + page + "&size=" + size + "&motCle=" + motCle ;

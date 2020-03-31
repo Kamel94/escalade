@@ -1,7 +1,9 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -58,17 +60,33 @@ public class Site implements Serializable {
 	@NotNull
 	private int nombreSecteur;
 
+	@Column(length = 45)
+	private String tag;
+	
+	@Column(name = "utilisateur_createur")
+	private String utilisateurCreateur;
+
+	@Column(name = "utilisateur_modif")
+	private String utilisateurModif;
+
+	@Column(name = "date_creation")
+	private Timestamp dateCreation;
+
+	@Column(name = "date_modif")
+	private Timestamp dateModif;
+
 	public Site() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Site( String pays, String region, String ville, int nombreSecteur) {
+	public Site( String pays, String region, String ville, int nombreSecteur, String tag) {
 		super();
 		this.pays = pays;
 		this.region = region;
 		this.ville = ville;
 		this.nombreSecteur = nombreSecteur;
+		this.tag = tag;
 	}
 
 	public String getNom() {
@@ -111,4 +129,43 @@ public class Site implements Serializable {
 		this.nombreSecteur = nombreSecteur;
 	}
 
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public String getUtilisateurCreateur() {
+		return utilisateurCreateur;
+	}
+
+	public void setUtilisateurCreateur(String utilisateurCreateur) {
+		this.utilisateurCreateur = utilisateurCreateur;
+	}
+
+	public String getUtilisateurModif() {
+		return utilisateurModif;
+	}
+
+	public void setUtilisateurModif(String utilisateurModif) {
+		this.utilisateurModif = utilisateurModif;
+	}
+
+	public Timestamp getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Timestamp dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public Timestamp getDateModif() {
+		return dateModif;
+	}
+
+	public void setDateModif(Timestamp dateModif) {
+		this.dateModif = dateModif;
+	}
 }

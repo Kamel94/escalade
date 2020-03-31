@@ -1,54 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
 <head>
 <meta charset="UTF-8">
 <title>Modifier site</title>
-	<link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 	<div layout:fragment="content">
-	<div class="col-8 spacer">
-		<div class="card">
-			<div class="card-header">Modification d'un site</div>
-			<div class="card-body">
-				<form th:action="@{/user/enregistrerSite}" method="post">
-				<div class="form-group">
-						<label class="col-form-label">Nom : </label>
-						<input class="form-control-xs" type="text" name="nom" th:value="${site.nom}">
-						<span class="red" th:errors="${site.nom}"></span>
-					</div>
-				<div class="form-group">
-						<label class="col-form-label">Pays : </label>
-						<input class="form-control-xs" type="text" name="pays" th:value="${site.pays}">
-						<span class="red" th:errors="${site.pays}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Région : </label>
-						<input class="form-control-xs" type="text" name="region" th:value="${site.region}">
-						<span class="red" th:errors="${site.region}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Ville : </label>
-						<input class="form-control-xs" type="text" name="ville" th:value="${site.ville}">
-						<span class="red" th:errors="${site.ville}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Nombre de secteur : </label>
-						<input class="form-control-xs" type="text" name="nombreSecteur" th:value="${site.nombreSecteur}">
-						<span class="red" th:errors="${site.nombreSecteur}"></span>
-					</div>
-					<div>
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-						<a class="btn btn-danger btn-titre"
-							th:href="@{/siteDetail/{id}(id=${site.nom})}">Annuler</a>
-					</div>
-				</form>
+		<div class="col-8 spacer">
+			<div class="card">
+				<div class="card-header">Modification d'un site</div>
+				<div class="card-body">
+					<form th:action="@{/user/enregistrerSite}" method="post">
+						<div class="form-group">
+							<label class="col-form-label">Créateur : </label> 
+							<input class="form-control-xs" type="hidden" name="utilisateurCreateur"
+								th:value="${site.utilisateurCreateur}"> [[${site.utilisateurCreateur}]]
+								<span class="red" th:errors="${site.utilisateurCreateur}" th:inline="text"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Date de création : </label> <input
+								class="form-control-xs decaler" type="hidden" name="dateCreation"
+								th:value="${site.dateCreation}"> [[${site.dateCreation}]] <span class="red"
+								th:errors="${site.dateCreation}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Auteur modif : </label> <input
+								class="form-control-xs" type="hidden" name="utilisateurModif"
+								th:value="${#httpServletRequest.remoteUser}">
+							[[${#httpServletRequest.remoteUser}]] <span class="red"
+								th:errors="${site.utilisateurModif}" th:inline="text"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Nom : </label> <input
+								class="form-control-xs" type="hidden" name="nom"
+								th:value="${site.nom}">[[${site.nom}]] <span class="red"
+								th:errors="${site.nom}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Pays : </label> <input
+								class="form-control-xs" type="text" name="pays"
+								th:value="${site.pays}"> <span class="red"
+								th:errors="${site.pays}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Région : </label> <input
+								class="form-control-xs" type="text" name="region"
+								th:value="${site.region}"> <span class="red"
+								th:errors="${site.region}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Ville : </label> <input
+								class="form-control-xs" type="text" name="ville"
+								th:value="${site.ville}"> <span class="red"
+								th:errors="${site.ville}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Nombre de secteur : </label> <input
+								class="form-control-xs" type="text" name="nombreSecteur"
+								th:value="${site.nombreSecteur}"> <span class="red"
+								th:errors="${site.nombreSecteur}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Date de modification : </label> <input
+								class="form-control-xs decaler" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
+								class="red" th:errors="${site.dateModif}"></span>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-primary">Enregistrer</button>
+							<a class="btn btn-danger btn-titre"
+								th:href="@{/siteDetail/{id}(id=${site.nom})}">Annuler</a>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

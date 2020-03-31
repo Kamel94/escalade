@@ -1,6 +1,7 @@
 package fr.escalade.web;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,7 +23,6 @@ import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
 import fr.escalade.dao.VoieRepository;
-import fr.escalade.entities.InfoSite;
 import fr.escalade.entities.Longueur;
 import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
@@ -36,10 +36,10 @@ public class VoieController {
 	@Autowired
 	private VoieRepository voieRepository;
 	
-	/*@Autowired
-	private LongueurRepository longueurRepository;
+	@Autowired
+	private SiteRepository siteRepository;
 
-	@GetMapping(value = "/voie")
+	/*@GetMapping(value = "/voie")
 	public String voie(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
@@ -77,6 +77,7 @@ public class VoieController {
 	public String secteurSite(@PathVariable("id")String id, Model model) {
 		List<Voie> voie = voieRepository.voie(id);
 		model.addAttribute("voie", voie);
+		
 		return "voie";
 	}
 

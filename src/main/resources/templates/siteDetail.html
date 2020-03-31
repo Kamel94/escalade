@@ -9,17 +9,9 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid" th:each="s:${site}">
-			<br> <br>
-			<h3 th:each="s:${site}">
-				Détail du site <a class="btn btn-success btn-titre rond-lege"
-					th:href="@{/user/ajoutSecteur/{id}(id=${s.nom})}">Ajouter un
-					secteur</a>
-				<a class="btn btn-primary btn-titre rond-lege"
-						th:href="@{/admin/modifierSite(id=${s.nom})}">Modifier</a>
-				<a class="btn btn-danger btn-titre rond-lege"
-						onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-						th:href="@{/admin/supprimerSite(id=${s.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a>
-			</h3>
+			<br> <a class="btn btn-info rond-lege" th:href="@{/site}">Retourner
+				sur la liste des sites</a> <br> <br>
+			<h3 th:each="s:${site}">Détail du site</h3>
 			<br>
 			<table class="centre">
 				<tr th:each="s:${site}">
@@ -32,12 +24,12 @@
 				<thead>
 					<tr class="text-primary">
 						<th><a title="Voir son topo"
-						th:href="@{/accueil/{id}(id=${s.nom})}">Nom </a></th>
+							th:href="@{/accueil/{id}(id=${s.nom})}">Nom </a></th>
 						<th>Pays</th>
 						<th>Région</th>
 						<th>Ville</th>
-						<th> <a title="Voir ses secteurs" 
-						th:href="@{/secteur/{id}(id=${s.nom})}"> Nombre de secteur</a></th>
+						<th>Nombre de secteur</th>
+						<th>Tag</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,42 +39,67 @@
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.ville}"></td>
 						<td th:text="${#lists.size(secteur)}"></td>
-					</tr>
-				</tbody>
-			</table>
-			<br> <br>
-			<div>
-			<h3>Liste des commentaires</h3>
-			<br> <br>
-			<table class="table">
-				<thead>
-					<tr class="text-primary">
-						<th>Commentaire</th>
-						<th>Auteur</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="c:${liste}">
-						<td th:text="${c.comment}"></td>
-						<td th:text="${c.auteur}"></td>
-						<td th:text="${c.date}"></td>
-						<td><a class="btn btn-primary rond-lege"
-							th:if="${#httpServletRequest.remoteUser} == ${c.auteur}"
-							th:href="@{/admin/modifierCom(id=${c.id})}">Modifier</a></td>
-							<!-- Enlever 'admin' de l'url supprimerCom -->
-						<td><a class="btn btn-danger rond-lege"
-							th:if="${utilisateur.statut == 'ADMIN'} or (${#httpServletRequest.remoteUser} == ${c.auteur}) "
-							
+						<td th:text="${s.tag == null}? 'Non officiel' : ${s.tag}"
+							th:class="${s.tag} == 'Officiel Les amis de l’escalade'? 'text-success' : 'text-danger'"></td>
+						<td><a th:class="${s.tag} == 'Non officiel'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+							th:href="@{/admin/tag/{id}(id=${s.nom})}"
+							th:if="${utilisateur.statut == 'ADMIN'}"><i
+							class="far fa-question-circle"></i>Taguer</a></td>
+						<td><a title="Voir ses secteurs"
+							class="btn btn-info rond-lege"
+							th:href="@{/secteur/{id}(id=${s.nom})}">Voir secteurs</a></td>
+						<td><a class="btn btn-info btn-titre rond-lege"
+							th:if="${#httpServletRequest.remoteUser} != null"
+							th:href="@{/user/modifierSite(id=${s.nom})}">Modifier</a></td>
+						<!-- Rajouter dans la table site "auteur" pour pouvoir faire disparaître le bouton -->
+						<td><a class="btn btn-danger btn-titre rond-lege"
+							th:if="${#httpServletRequest.remoteUser} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
+							th:unless="${#httpServletRequest.remoteUser} == null "
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/admin/supprimerCom(id=${c.id})}">Supprimer</a></td>
+							th:href="@{/user/supprimerSite(id=${s.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>
+			<a class="btn btn-info btn-titre rond-lege"
+				th:if="${#httpServletRequest.remoteUser != null}"
+				th:href="@{/user/ajoutTopo/{id}(id=${s.nom})}">Ajouter un topo</a> <a
+				class="btn btn-info btn-titre rond-lege"
+				th:if="${#httpServletRequest.remoteUser == null}"
+				th:href="@{/login}">Ajouter un topo</a> <a
+				class="btn btn-info btn-titre rond-lege"
+				th:href="@{/user/ajoutSecteur/{id}(id=${s.nom})}">Ajouter un
+				secteur</a> <br> <br>
+			<div>
+				<h3>Liste des commentaires</h3>
+				<br> <br>
+				<table class="table">
+					<thead>
+						<tr class="text-primary">
+							<th>Commentaire</th>
+							<th>Auteur</th>
+							<th>Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="c:${liste}">
+							<td th:text="${c.comment}"></td>
+							<td th:text="${c.auteur}"></td>
+							<td th:text="${c.date}"></td>
+							<td><a class="btn btn-info rond-lege"
+								th:if="${#httpServletRequest.remoteUser} == ${c.auteur}"
+								th:href="@{/admin/modifierCom(id=${c.id})}">Modifier</a></td>
+							<!-- Enlever 'admin' de l'url supprimerCom -->
+							<td><a class="btn btn-danger rond-lege"
+								th:if="${utilisateur.statut == 'ADMIN'} or (${#httpServletRequest.remoteUser} == ${c.auteur}) "
+								onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+								th:href="@{/admin/supprimerCom(id=${c.id})}">Supprimer</a></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<a th:if="${#httpServletRequest.remoteUser} == null"
 				th:href="@{/login}"> Pour ajouter un commentaire identifiez-vous</a>
-			<a class="btn btn-success btn-titre rond-lege"
+			<a class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser} != null"
 				th:href="@{/user/ajoutCom/{id}(id=${commentaire.site})}">Ajouter
 				un commentaire</a>
@@ -128,7 +145,7 @@
 			</div>
 		</div>
 		(page=${status.index}, size=${size}, motCle=${motCle}) -->
-		<br><br><br>
+			<br> <br> <br>
 			<div class="container">
 				<ul class="nav nav-pills">
 					<li class="nav-item"

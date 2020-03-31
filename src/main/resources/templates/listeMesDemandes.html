@@ -9,8 +9,10 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3 text-success">Mes
-				demandes</h3>
+			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3 text-success">
+				Mes demandes<a class="btn btn-info btn-titre" th:href="@{/accueil}">Retourner
+					sur la liste des topos</a>
+			</h3>
 
 			<div class="container-fluid">
 				<div class="row">
@@ -46,8 +48,7 @@
 													th:href="@{/user/modifier(id=${topo.nom})}">Modifier</a></td>
 												<td><a class="btn btn-danger"
 													onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-													th:href="@{/admin/supprimer(id=${topo.nom})}">Supprimer</a></td>
- -->
+													th:href="@{/admin/supprimer(id=${topo.nom})}">Supprimer</a></td> -->
 									</th:block>
 								</tr>
 							</tbody>

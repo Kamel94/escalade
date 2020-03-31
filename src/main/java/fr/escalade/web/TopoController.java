@@ -44,7 +44,7 @@ public class TopoController {
 	private UtilisateurRepository utilisateurRepository;
 
 	@GetMapping(value = "/accueil")
-	public String accueil(Model model, 
+	public String topo(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "4") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
@@ -70,8 +70,8 @@ public class TopoController {
 		return "Accueil";
 	}
 
-	@GetMapping(value="/user/ajout")
-	public String ajout(Model model, String id) {
+	@GetMapping(value="/user/ajoutTopo/{id}")
+	public String ajout(Model model, @PathVariable("id")String id) {
 		List<Site> site = siteRepository.findAll();
 		model.addAttribute("site", site);
 		model.addAttribute("topo", new Topo());
@@ -98,10 +98,10 @@ public class TopoController {
 		return "redirect:/listeMesTopos";
 	}
 
-	@RequestMapping(value="/user/enregistrer", method=RequestMethod.POST)
+	@RequestMapping(value="/user/enregistrer/{id}", method=RequestMethod.POST)
 	public String enregistrer(Model model, @Valid Topo topo, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "Ajout";
+			return "redirect:/user/ajoutTopo/{id}";
 		}
 		topoRepository.save(topo);
 		return "Confirmation";
@@ -175,7 +175,22 @@ public class TopoController {
 	}
 	
 	@GetMapping("/accueil1")
-	public String accueil(Model model) {
+	public String accueil(Model model, 
+			@RequestParam(name="page", defaultValue = "0") int p,
+			@RequestParam(name="size", defaultValue = "6") int s,
+			@RequestParam(name="motCle", defaultValue = "") String mc,
+			@RequestParam(name="pays", defaultValue = "") String pays,
+			@RequestParam(name="region", defaultValue = "") String region) {
+
+		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + pays + "%", "%" + region + "%", PageRequest.of(p, s));
+		model.addAttribute("listeSites", pageSites.getContent());
+		int[] pages = new int[pageSites.getTotalPages()];
+		
+		model.addAttribute("pages", pages);
+		model.addAttribute("size", s);
+		model.addAttribute("pageCourante", p);
+		model.addAttribute("motCle", mc);
+		
 		List<Site> site = siteRepository.findAll();
 		model.addAttribute("site", site);
 		List<Secteur> secteur = secteurRepository.findAll();

@@ -12,24 +12,24 @@
 	<div layout:fragment="content">
 		<div class="col-8 spacer">
 			<div class="card-fluid">
-				<div class="card-header">Saisie d'un topo</div>
+				<div class="card-header">Saisie d'un topo [[${id}]]</div>
 				<div class="card-body">
-					<form th:action="@{/user/enregistrer}" method="post">
+					<form th:action="@{/user/enregistrer/{id}(id=${id})}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Propriétaire : </label> <input
 								class="form-control-xs" type="hidden" name="proprietaire"
 								th:value="${#httpServletRequest.remoteUser}"> [[${#httpServletRequest.remoteUser}]]<span
 								class="red" th:errors="${topo.proprietaire}" th:inline="text"></span>
 						</div>
-						<div class="form-group"  >
-						<label for="exampleFormControlSelect1">Nom</label> <select
-								class="form-control" name="nom" th:value="${topo.nom}">
-								<option th:each="s:${site}">[[${s.nom}]]</option>
-							</select>
+						<div class="form-group">
+						<label for="exampleFormControlSelect1">Nom : </label><input
+								class="form-control-xs" type="hidden" name="nom" th:value="${id}">
+								[[${id}]]
 							<!-- <label class="col-form-label">Nom : </label> <input
 								class="form-control-xs" type="text" name="nom"
-								th:value="${topo.nom}"> <span class="red"
-								th:errors="${topo.nom}"></span> -->
+								th:value="${topo.nom}"> -->
+								<span class="red"
+								th:errors="${topo.nom}"></span> 
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Description : </label> <input
@@ -63,7 +63,8 @@
 								th:errors="${topo.disponibilite}"></span> -->
 						</div>
 						<div>
-							<button type="submit" class="btn btn-primary">Enregistrer</button>
+							<button type="submit" class="btn btn-primary rond-lege">Enregistrer</button>
+							<a class="btn btn-danger btn-titre rond-lege" th:href="@{/siteDetail/{id}(id=${id})}">Annuler</a>
 						</div>
 					</form>
 				</div>
