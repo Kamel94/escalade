@@ -11,17 +11,16 @@
 		<div class="container-fluid">
 			<br>
 			<div class="dr">
-				<form class="form-inline" th:action="@{/site}"
-					method="get">
-					<label>Nom : &nbsp;</label>
-					<input class="form-control-xs" type="text" name="motCle" th:value="${motCle}">
-					<label>Pays : &nbsp;</label>
-					<input class="form-control-xs" type="text" name="pays" th:value="${pays}">
-					<label>Region : &nbsp;</label>
-					<input class="form-control-xs" type="text" name="region" th:value="${region}">
+				<form class="form-inline" th:action="@{/site}" method="get">
+					<label>Nom : &nbsp;</label> <input class="form-control-xs"
+						type="text" name="motCle" th:value="${motCle}"> <label>Pays
+						: &nbsp;</label> <input class="form-control-xs" type="text" name="pays"
+						th:value="${pays}"> <label>Region : &nbsp;</label> <input
+						class="form-control-xs" type="text" name="region"
+						th:value="${region}">
 					<!-- <label>Ville : &nbsp;</label>
 					<input class="form-control-xs" type="text" name="i" th:value="${i}"> -->
-					 &nbsp; &nbsp;
+					&nbsp; &nbsp;
 					<button class="btn btn-success rond-lege">Chercher</button>
 				</form>
 			</div>

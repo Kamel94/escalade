@@ -10,9 +10,9 @@
 	<header></header>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3 red">
-				Mes Topos <a class="btn btn-info btn-titre"
-				th:href="@{/accueil}">Retourner sur la liste des topos</a>
+			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3">
+				Mes Topos <a class="btn btn-info btn-titre rond-lege"
+					th:href="@{/topos}">Retourner sur la liste des topos</a>
 			</h3>
 
 			<div class="container-fluid">
@@ -29,7 +29,7 @@
 											</th>
 											<th scope="col">Parution</th>
 											<th scope="col">Région</th>
-											<th scope="col">Propriétaire</th>
+											<!-- <th scope="col">Propriétaire</th> -->
 											<th scope="col">Disponibilité</th>
 											<th scope="col">Emprunteur</th>
 										</tr>
@@ -39,7 +39,7 @@
 											<td th:text="${topo.nom}"></td>
 											<td th:text="${topo.parution}"></td>
 											<td th:text="${topo.lieu}"></td>
-											<td th:text="${topo.proprietaire}"></td>
+											<!-- <td th:text="${topo.proprietaire}"></td> -->
 											<td th:text="${topo.disponibilite}"
 												th:class="${topo.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 											<th:block th:switch="${topo.disponibilite}">

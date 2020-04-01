@@ -14,19 +14,22 @@
 				<a class="btn btn-warning btn-titre spacer bord-rond"
 					th:href="@{/site}">Voir la liste des sites</a> <a
 					class="btn btn-warning dr spacer titre bord-rond"
-					th:href="@{/accueil}">Voir la liste des topos</a>
+					th:href="@{/topos}">Voir la liste des topos</a>
 			</header>
 			<h2 class="text-center text-warning p-3 font-italic">
 				<span class="font-weight-light">Bienvenue</span> <b> amis de
 					l'escalade</b>
 			</h2>
 			<img src="/image/accueil.jpg" class="rounded" alt="Responsive image"
-				height="252" width="100%"> <br>
-			<br> <span
+				height="252" width="100%"> <br> <br> <span
 				class="text-warning btn-titre font-italic font-weight-bold"><b>
-					Pour plus d'information, cliquez sur le nom du site</b></span>
+					Pour plus d'information, cliquez sur le nom du site</b></span> <a
+				class="btn btn-info dr rond-lege titre" th:href="@{/user/ajoutSite}">Ajouter
+				un site</a> <br> <br>
 		</div>
-		<div th:each="s:${listeSites}" class="container-fluid bleu col-sm-10 pt-1">
+		<br>
+		<div th:each="s:${listeSites}"
+			class="container-fluid bleu col-sm-10 pt-1">
 			<table class="table vert-bleu text-info spacer rond-haut">
 				<tbody class="moitie">
 					<tr>
@@ -49,7 +52,7 @@
 				<li class="nav-item"
 					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
 					th:each="pa,status:${pages}"><a class="nav-link active"
-					th:href="@{/accueil1(page=${status.index}, size=${size}, motCle=${motCle})}"
+					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
 					th:text="${status.index}"></a></li>
 			</ul>
 		</div>

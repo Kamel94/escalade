@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Réservation</title>
 </head>
 <body>
-<div layout:fragment="content">
-</div>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br>
+			<h3>
+				<a class="btn btn-info rond-lege" th:href="@{/topos}">Retour</a> <br> <br>
+				Historique des réservations
+			</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Nom</th>
+						<th>Demandeur</th>
+						<th>Date de la demande</th>
+						<th>Proprietaire</th>
+						<th>Réponse</th>
+						<th>Date de la réponse</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="r:${reservation}">
+						<td th:text="${r.topoNom}"></td>
+						<td th:text="${r.demandeur}"></td>
+						<td th:text="${r.dateCreation}"></td>
+						<td th:text="${r.utilisateurModif}"></td>
+						<td th:text="${r.reponseDemande} == 'Demande'? 'En attente' : ${r.reponseDemande}"></td>
+						<td th:text="${r.dateModif}"></td>
+						<!-- <td><a
+							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info' : 'btn btn-danger disabled'"
+							th:href="@{/user/demandepret/{id}(id=${t.nom})}"
+							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
+							th:if="${t.emprunteur != t.proprietaire}? (${#httpServletRequest.remoteUser} != ${t.proprietaire} ) : true"><i
+								class="far fa-question-circle"></i>Faire une demande</a></td> -->
+					</tr>
 
+				</tbody>
+			</table>
+		</div>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:class="${pageCourante}==${status.index}?'nav-link btn-info':'nav-link'"
+					th:each="pa,status:${pages}"><a class="nav-link btn-info"
+					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
+					th:text="${status.index}"></a></li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>

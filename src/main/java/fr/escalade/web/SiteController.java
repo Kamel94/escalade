@@ -118,6 +118,15 @@ public class SiteController {
 			model.addAttribute("utilisateur", util);
 		}
 		
+		Site si = siteRepository.getOne(id);
+		model.addAttribute("si", si);
+		
+		if(si.getTag() == null) {
+			si.setTag("Non officiel");
+		}
+
+		siteRepository.save(si);
+		
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);

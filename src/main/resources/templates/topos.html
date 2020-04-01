@@ -15,7 +15,9 @@
 				Liste des topos <a class="btn btn-info btn-titre rond-lege"
 					th:href="@{/user/listeMesTopos}">Mes topos</a> <a
 					class="btn btn-info btn-titre rond-lege"
-					th:href="@{/user/listeMesDemandes}">Mes demandes</a>
+					th:href="@{/user/listeMesDemandes}">Mes demandes</a> <a
+					class="btn btn-info btn-titre rond-lege"
+					th:href="@{/admin/reservation}">Historique des reservations</a>
 			</h3>
 			<br>
 			<table class="table">
@@ -37,7 +39,7 @@
 						<td th:text="${t.disponibilite}"
 							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 						<td><a
-							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info' : 'btn btn-danger disabled'"
+							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							th:href="@{/user/demandepret/{id}(id=${t.nom})}"
 							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
 							th:if="${t.emprunteur != t.proprietaire}? (${#httpServletRequest.remoteUser} != ${t.proprietaire} ) : true"><i
@@ -52,7 +54,7 @@
 				<li class="nav-item"
 					th:class="${pageCourante}==${status.index}?'nav-link btn-info':'nav-link'"
 					th:each="pa,status:${pages}"><a class="nav-link btn-info"
-					th:href="@{/accueil(page=${status.index}, size=${size}, motCle=${motCle})}"
+					th:href="@{/topos(page=${status.index}, size=${size}, motCle=${motCle})}"
 					th:text="${status.index}"></a></li>
 			</ul>
 		</div>
