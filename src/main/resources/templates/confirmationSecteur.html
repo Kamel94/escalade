@@ -13,6 +13,20 @@
 			<div class="card-header">Confirmation</div>
 			<div class="card-body">
 				<div class="form-group">
+					<label>Auteur : </label>
+					<label th:text="${#httpServletRequest.remoteUser}"></label>
+				</div>
+				<div th:if="${secteur.dateCreation == null}"
+					 class="form-group">
+					<label>Date : </label>
+					<label th:text="${secteur.dateCreation}"></label>
+				</div>
+				<div th:if="${secteur.dateModif != null}"
+					 class="form-group">
+					<label>Date de modification : </label>
+					<label th:text="${secteur.dateModif}"></label>
+				</div>
+				<div class="form-group">
 					<label>Site : </label>
 					<label th:text="${secteur.site}"></label>
 				</div>
@@ -25,7 +39,7 @@
 					<label th:text="${secteur.nombreVoie}"></label>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-primary btn-titre" th:href="@{/secteur/{id}}">Retour à la liste</a>
+					<a class="btn btn-info btn-titre rond-lege" th:href="@{/secteur/{id}(id=${secteur.site})}">Retour à la liste</a>
 				</div>
 			</div>
 		</div>

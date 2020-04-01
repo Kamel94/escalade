@@ -16,6 +16,18 @@
 				<div class="card-body">
 					<form th:action="@{/user/enregistrerSecteur}" method="post">
 						<div class="form-group">
+							<label class="col-form-label">Auteur : </label> <input
+								class="form-control-xs" type="hidden" name="utilisateurCreateur"
+								th:value="${#httpServletRequest.remoteUser}">[[${#httpServletRequest.remoteUser}]] <span
+								class="red" th:errors="${secteur.utilisateurCreateur}" th:inline="text"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Date : </label> <input
+								class="form-control-xs" type="hidden" name="dateCreation"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
+								class="red" th:errors="${secteur.dateCreation}" th:inline="text"></span>
+						</div>
+						<div class="form-group">
 							<label class="col-form-label">Site : </label> <input
 								class="form-control-xs" type="hidden" name="site"
 								th:value="${secteur.site}">[[${secteur.site}]] <span
@@ -34,7 +46,8 @@
 								th:errors="${secteur.nombreVoie}"></span>
 						</div>
 						<div>
-							<button type="submit" class="btn btn-primary">Enregistrer</button>
+							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+							<a type="submit" th:href="@{/siteDetail/{id}(id=${secteur.site})}" class="btn btn-danger btn-titre rond-lege">Annuler</a>
 						</div>
 					</form>
 				</div>

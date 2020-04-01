@@ -21,10 +21,18 @@ public class Commentaire {
 	@Column(length = 500)
 	@Size(min = 1, max = 500)
 	private String comment;
-    
+
+	@Column(name = "utilisateur_createur", length = 15)
     private String auteur;
-    
+
+	@Column(name = "date_creation")
     private Timestamp date;
+
+	@Column(name = "utilisateur_modif", length = 15)
+	private String utilisateurModif;
+
+	@Column(name = "date_modif")
+	private Timestamp dateModif;
     
     public Commentaire() {
 		super();
@@ -38,6 +46,7 @@ public class Commentaire {
 		this.auteur = auteur;
 		this.date = date;
 	}
+	
 	public Commentaire(String site) {
 		super();
 		this.site = site;
@@ -82,5 +91,21 @@ public class Commentaire {
     public void setSite(String site) {
         this.site = site;
     }
+
+	public String getUtilisateurModif() {
+		return utilisateurModif;
+	}
+
+	public void setUtilisateurModif(String utilisateurModif) {
+		this.utilisateurModif = utilisateurModif;
+	}
+
+	public Timestamp getDateModif() {
+		return dateModif;
+	}
+
+	public void setDateModif(Timestamp dateModif) {
+		this.dateModif = dateModif;
+	}
 
 }

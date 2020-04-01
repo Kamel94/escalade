@@ -16,6 +16,32 @@
 				<div class="card-body">
 					<form th:action="@{/user/enregistrerCom}" method="post">
 						<div class="form-group">
+							<label th:if="${commentaire.auteur == null}"
+								class="col-form-label">Auteur : </label> <input
+								class="form-control-xs" type="hidden" name="auteur"
+								th:value="${commentaire.auteur}"> <span
+								class="red" th:errors="${commentaire.auteur}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Auteur : </label> <input
+								class="form-control-xs" type="hidden" name="utilisateurModif"
+								th:value="${#httpServletRequest.remoteUser}"> [[${#httpServletRequest.remoteUser}]] <span
+								class="red" th:errors="${commentaire.utilisateurModif}"></span>
+						</div>
+						<div class="form-group">
+							<label th:if="${commentaire.date == null}"
+								class="col-form-label">Date de création : </label> <input
+								class="form-control-xs" type="hidden" name="date"
+								th:value="${commentaire.date}">
+							<span class="red" th:errors="${commentaire.date}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Date : </label> <input
+								class="form-control-xs" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"> [[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]
+							<span class="red" th:errors="${commentaire.dateModif}"></span>
+						</div>
+						<div class="form-group">
 							<label class="col-form-label">Site : </label> <input
 								class="form-control-xs" type="hidden" name="site"
 								th:value="${commentaire.site}">[[${commentaire.site}]] <span
@@ -26,18 +52,6 @@
 								class="form-control-xs" type="text" name="comment"
 								th:value="${commentaire.comment}"> <span class="red"
 								th:errors="${commentaire.comment}"></span>
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Auteur : </label> <input
-								class="form-control-xs" type="hidden" name="auteur"
-								th:value="${#httpServletRequest.remoteUser}"> [[${#httpServletRequest.remoteUser}]] <span
-								class="red" th:errors="${commentaire.auteur}"></span>
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Date : </label> <input
-								class="form-control-xs" type="hidden" name="date"
-								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"> [[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]
-							<span class="red" th:errors="${commentaire.date}"></span>
 						</div>
 						<div>
 							<button type="submit" class="btn btn-primary">Enregistrer</button>

@@ -54,21 +54,25 @@
 						<!-- Rajouter dans la table site "auteur" pour pouvoir faire disparaître le bouton -->
 						<td><a class="btn btn-danger btn-titre rond-lege"
 							th:if="${#httpServletRequest.remoteUser} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
-							th:unless="${#httpServletRequest.remoteUser} == null "
+							th:unless="${#httpServletRequest.remoteUser} == null"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 							th:href="@{/user/supprimerSite(id=${s.nom}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>
-			<a class="btn btn-info btn-titre rond-lege"
+			<a  class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser != null}"
-				th:href="@{/user/ajoutTopo/{id}(id=${s.nom})}">Ajouter un topo</a> <a
-				class="btn btn-info btn-titre rond-lege"
+				th:href="@{/user/ajoutTopo/{id}(id=${s.nom})}">Ajouter un topo</a> 
+			<a	class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser == null}"
-				th:href="@{/login}">Ajouter un topo</a> <a
-				class="btn btn-info btn-titre rond-lege"
+				th:href="@{/login}">Ajouter un topo</a> 
+			<a	class="btn btn-info btn-titre rond-lege"
+				th:if="${#httpServletRequest.remoteUser != null}"
 				th:href="@{/user/ajoutSecteur/{id}(id=${s.nom})}">Ajouter un
-				secteur</a> <br> <br>
+				secteur</a>
+			<a	class=" btn-titre rond-lege"
+				th:if="${#httpServletRequest.remoteUser == null}"
+				th:href="@{/login}">S'identifier pour ajouter un secteur</a> <br> <br>
 			<div>
 				<h3>Liste des commentaires</h3>
 				<br> <br>
@@ -87,12 +91,13 @@
 							<td th:text="${c.date}"></td>
 							<td><a class="btn btn-info rond-lege"
 								th:if="${#httpServletRequest.remoteUser} == ${c.auteur}"
-								th:href="@{/admin/modifierCom(id=${c.id})}">Modifier</a></td>
+								th:href="@{/user/modifierCom(id=${c.id})}">Modifier</a></td>
 							<!-- Enlever 'admin' de l'url supprimerCom -->
 							<td><a class="btn btn-danger rond-lege"
 								th:if="${utilisateur.statut == 'ADMIN'} or (${#httpServletRequest.remoteUser} == ${c.auteur}) "
+								th:unless="${#httpServletRequest.remoteUser} == null "
 								onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-								th:href="@{/admin/supprimerCom(id=${c.id})}">Supprimer</a></td>
+								th:href="@{/user/supprimerCom/{site}(id=${c.id}, site=${c.site})}">Supprimer</a></td>
 						</tr>
 					</tbody>
 				</table>

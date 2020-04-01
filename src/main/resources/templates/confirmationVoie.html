@@ -12,28 +12,40 @@
 		<div class="card">
 			<div class="card-header">Confirmation</div>
 			<div class="card-body">
-				<div class="form-group">
-					<label>Numéro de voie : </label>
-					<label th:text="${voie.id}"></label>
+				<div th:if="${voie.utilisateurModif == null}" class="form-group">
+					<label>Auteur : </label>
+					<label th:text="${voie.utilisateurCreateur}"></label>
+				</div>
+				<div th:if="${voie.utilisateurModif != null}" class="form-group">
+					<label>Auteur : </label>
+					<label th:text="${voie.utilisateurModif}"></label>
+				</div>
+				<div th:if="${voie.dateCreation != null}" class="form-group">
+					<label>Date : </label>
+					<label th:text="${voie.dateCreation}"></label>
+				</div>
+				<div th:if="${voie.dateCreation == null}" class="form-group">
+					<label>Date : </label>
+					<label th:text="${voie.dateModif}"></label>
 				</div>
 				<div class="form-group">
 					<label>Nom du secteur : </label>
 					<label th:text="${voie.secteurNom}"></label>
 				</div>
 				<div class="form-group">
-					<label>Nombre de longueur : </label>
-					<label th:text="${voie.nombreLongueur}"></label>
+					<label>Numéro de voie : </label>
+					<label th:text="${voie.numeroVoie}"></label>
 				</div>
 				<div class="form-group">
-					<label>Nombre de point : </label>
-					<label th:text="${voie.nombrePoint}"></label>
+					<label>Nombre de longueur : </label>
+					<label th:text="${voie.nombreLongueur}"></label>
 				</div>
 				<div class="form-group">
 					<label>Cotation : </label>
 					<label th:text="${voie.cotation}"></label>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-primary droite" th:href="@{/voie/{id}}">Retour à la liste</a>
+					<a class="btn btn-info rond-lege droite" th:href="@{/secteur/{site}(site=${site.nom})}">Retour à la liste</a>
 				</div>
 			</div>
 		</div>

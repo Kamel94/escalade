@@ -16,6 +16,32 @@
 				<div class="card-body">
 					<form th:action="@{/user/enregistrerSecteur}" method="post">
 						<div class="form-group">
+							<label th:if="${secteur.utilisateurCreateur == null}"
+								class="col-form-label">Auteur : </label> <input
+								class="form-control-xs" type="hidden" name="utilisateurCreateur"
+								th:value="${secteur.utilisateurCreateur}"> <span
+								class="red" th:errors="${secteur.utilisateurCreateur}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Auteur : </label> <input
+								class="form-control-xs" type="hidden" name="utilisateurModif"
+								th:value="${#httpServletRequest.remoteUser}"> [[${#httpServletRequest.remoteUser}]] <span
+								class="red" th:errors="${secteur.utilisateurModif}"></span>
+						</div>
+						<div class="form-group">
+							<label th:if="${secteur.dateCreation == null}"
+								class="col-form-label">Date de création : </label> <input
+								class="form-control-xs" type="hidden" name="dateCreation"
+								th:value="${secteur.dateCreation}">
+							<span class="red" th:errors="${secteur.dateCreation}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Date : </label> <input
+								class="form-control-xs" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"> [[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]
+							<span class="red" th:errors="${secteur.dateModif}"></span>
+						</div>
+						<div class="form-group">
 							<label class="col-form-label">Site : </label> <input
 								class="form-control-xs" type="hidden" name="site"
 								th:value="${secteur.site}">[[${secteur.site}]] <span
@@ -23,8 +49,8 @@
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Nom : </label> <input
-								class="form-control-xs" type="text" name="nom"
-								th:value="${secteur.nom}"> <span class="red"
+								class="form-control-xs" type="hidden" name="nom"
+								th:value="${secteur.nom}">[[${secteur.nom}]] <span class="red"
 								th:errors="${secteur.nom}"></span>
 						</div>
 						<div class="form-group">
@@ -34,8 +60,8 @@
 								th:errors="${secteur.nombreVoie}"></span>
 						</div>
 						<div>
-							<button type="submit" class="btn btn-primary">Enregistrer</button>
-							<a class="btn btn-danger btn-titre"
+							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+							<a class="btn btn-danger btn-titre rond-lege"
 								th:href="@{/secteur/{id}(id=${secteur.site})}">Annuler</a>
 						</div>
 					</form>

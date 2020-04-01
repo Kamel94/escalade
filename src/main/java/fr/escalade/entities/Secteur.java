@@ -1,6 +1,7 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,19 +26,22 @@ public class Secteur implements Serializable {
 	@JoinColumn(name="site_id")*/
 	@Column(name = "site_nom")
 	private String site;
-
-
-	public String getSite() {
-		return site;
-	}
-
-	public void setSite(String site) {
-		this.site = site;
-	}
 	
 	@Column
 	@NotNull
 	private int nombreVoie;
+	
+	@Column(name = "utilisateur_createur")
+	private String utilisateurCreateur;
+
+	@Column(name = "utilisateur_modif")
+	private String utilisateurModif;
+
+	@Column(name = "date_creation")
+	private Timestamp dateCreation;
+
+	@Column(name = "date_modif")
+	private Timestamp dateModif;
 
 	public Secteur() {
 		super();
@@ -49,6 +53,14 @@ public class Secteur implements Serializable {
 		this.site = site;
 	}
 
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+	
 	public int getNombreVoie() {
 		return nombreVoie;
 	}
@@ -63,6 +75,38 @@ public class Secteur implements Serializable {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public String getUtilisateurCreateur() {
+		return utilisateurCreateur;
+	}
+
+	public void setUtilisateurCreateur(String utilisateurCreateur) {
+		this.utilisateurCreateur = utilisateurCreateur;
+	}
+
+	public String getUtilisateurModif() {
+		return utilisateurModif;
+	}
+
+	public void setUtilisateurModif(String utilisateurModif) {
+		this.utilisateurModif = utilisateurModif;
+	}
+
+	public Timestamp getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Timestamp dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public Timestamp getDateModif() {
+		return dateModif;
+	}
+
+	public void setDateModif(Timestamp dateModif) {
+		this.dateModif = dateModif;
 	}
 
 }

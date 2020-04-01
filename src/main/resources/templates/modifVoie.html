@@ -14,16 +14,40 @@ layout:decorator="layout">
 		<div class="card">
 			<div class="card-header">Modification d'une voie</div>
 			<div class="card-body">
-				<form th:action="@{/user/enregistrerVoie}" method="post">
+				<form th:action="@{/user/enregistrerVoie/{site}(site=${site.nom})}" method="post">
 				<div class="form-group">
-						<label class="col-form-label">Numéro de voie : </label>
-						<input class="form-control-xs" type="text" name="id" th:value="${voie.id}">
+						<input class="form-control-xs" type="hidden" name="id" th:value="${voie.id}">
 						<span class="red" th:errors="${voie.id}"></span>
+					</div>
+				<div th:if="${voie.utilisateurCreateur == null}" class="form-group">
+						<label class="col-form-label">Auteur : </label>
+						<input class="form-control-xs" type="hidden" name="utilisateurCreateur" th:value="${#httpServletRequest.remoteUser}">[[${#httpServletRequest.remoteUser}]]
+						<span class="red" th:errors="${voie.utilisateurCreateur}"></span>
+					</div>
+				<div th:if="${voie.utilisateurCreateur != null}" class="form-group">
+						<label class="col-form-label">Auteur : </label>
+						<input class="form-control-xs" type="hidden" name="utilisateurModif" th:value="${#httpServletRequest.remoteUser}">[[${#httpServletRequest.remoteUser}]]
+						<span class="red" th:errors="${voie.utilisateurModif}"></span>
+					</div>
+				<div th:if="${voie.dateCreation == null}" class="form-group">
+						<label class="col-form-label">Date : </label>
+						<input class="form-control-xs" type="hidden" name="dateCreation" th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+						[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]<span class="red" th:errors="${voie.dateCreation}"></span>
+					</div>
+				<div th:if="${voie.dateCreation != null}" class="form-group">
+						<label class="col-form-label">Date : </label>
+						<input class="form-control-xs" type="hidden" name="dateModif" th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+						[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]<span class="red" th:errors="${voie.dateModif}"></span>
 					</div>
 				<div class="form-group">
 						<label class="col-form-label">Nom du secteur : </label>
-						<input class="form-control-xs" type="text" name="secteurNom" th:value="${voie.secteurNom}">
+						<input class="form-control-xs" type="hidden" name="secteurNom" th:value="${voie.secteurNom}">[[${voie.secteurNom}]]
 						<span class="red" th:errors="${voie.secteurNom}"></span>
+					</div>
+				<div class="form-group">
+						<label class="col-form-label">Numéro de voie : </label>
+						<input class="form-control-xs" type="text" name="numeroVoie" th:value="${voie.numeroVoie}">
+						<span class="red" th:errors="${voie.numeroVoie}"></span>
 					</div>
 					<div class="form-group">
 						<label class="col-form-label">Nombre de longueur : </label>
@@ -31,19 +55,14 @@ layout:decorator="layout">
 						<span class="red" th:errors="${voie.nombreLongueur}"></span>
 					</div>
 					<div class="form-group">
-						<label class="col-form-label">Nombre de point : </label>
-						<input class="form-control-xs" type="text" name="nombrePoint" th:value="${voie.nombrePoint}">
-						<span class="red" th:errors="${voie.nombrePoint}"></span>
-					</div>
-					<div class="form-group">
 						<label class="col-form-label">Cotation : </label>
 						<input class="form-control-xs" type="text" name="cotation" th:value="${voie.cotation}">
 						<span class="red" th:errors="${voie.cotation}"></span>
 					</div>
 					<div>
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-						<a class="btn btn-danger btn-titre"
-							th:href="@{/voie/{id}(id=${voie.secteurNom})}">Annuler</a>
+						<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+						<a class="btn btn-danger btn-titre rond-lege"
+							th:href="@{/voie/{site}/{nom}(site=${site.nom}, nom=${voie.secteurNom})}">Annuler</a>
 					</div>
 				</form>
 			</div>

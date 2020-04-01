@@ -73,7 +73,7 @@ public class CommentaireController {
 		return "ajoutCom"; 
 	}
 
-	@RequestMapping(value="/admin/modifierCom", method=RequestMethod.GET)
+	@RequestMapping(value="/user/modifierCom", method=RequestMethod.GET)
 	public String modifierCom(Model model, int id) {
 		Commentaire commentaire = commentaireRepository.findById(id).orElse(null);
 		model.addAttribute("commentaire", commentaire);
@@ -81,10 +81,10 @@ public class CommentaireController {
 		return "modifCom"; 
 	}
 
-	@GetMapping(value="/admin/supprimerCom")
+	@GetMapping(value="/user/supprimerCom/{site}")
 	public String supprimerCom(Integer id) {
 		commentaireRepository.deleteById(id);
-		return "redirect:/commentaire";
+		return "redirect:/siteDetail/{site}";
 	}
 
 	/*@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)

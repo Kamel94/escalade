@@ -1,6 +1,8 @@
 package fr.escalade.web;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,6 +38,9 @@ public class SecteurController {
 
 	@Autowired
 	private SecteurRepository secteurRepository;
+	
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
 
 	/*@GetMapping(value = "/secteur")
 	public String secteur(Model model, 
@@ -55,26 +60,44 @@ public class SecteurController {
 	}*/
 	
 	@GetMapping(value="/secteur/{id}")
-	public String secteurSite(@PathVariable("id")String id, Model model) {
+	public String secteurSite(@PathVariable("id")String id, Model model, Principal principal) {
 		List<Secteur> secteur = secteurRepository.secteur(id);
 		model.addAttribute("secteur", secteur);
+
+		Utilisateur u = new Utilisateur();
+		
+		if(principal == null){
+			u.setStatut("USER");
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(u.getStatut());
+			model.addAttribute("utilisateur", utilisateur);
+		} else if(principal != null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", utilisateur);
+		}
+		
 		return "secteur";
 	}
 
 	@GetMapping(value="/user/ajoutSecteur/{id}")
 	public String ajoutSecteur(Model model, @PathVariable("id")String id) {
+		
 		model.addAttribute("secteur", new Secteur(id));
+		model.addAttribute("localDate", LocalDateTime.now());
+		
 		return "ajoutSecteur";
 	}
 
 	@RequestMapping(value="/user/modifierSecteur", method=RequestMethod.GET)
 	public String modifierSecteur(Model model, String id) {
+		
 		Secteur secteur = secteurRepository.findById(id).orElse(null);
 		model.addAttribute("secteur", secteur);
+		model.addAttribute("localDate", LocalDateTime.now());
+		
 		return "modifSecteur";
 	}
 
-	@GetMapping(value="/admin/supprimerSecteur")
+	@GetMapping(value="/user/supprimerSecteur")
 	public String supprimerSecteur(String id) {
 		secteurRepository.deleteById(id);
 		return "secteur";

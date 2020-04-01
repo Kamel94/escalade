@@ -16,14 +16,15 @@
 					<label>Utilisateur : </label>
 					<label>[[${#httpServletRequest.remoteUser}]]</label>
 				</div>
-				<div class="form-group">
+				<div th:if="${site.dateModif == null}"
+					 class="form-group">
 					<label>Date de création : </label>
-					<label th:text="${site.nombreSecteur}"></label>
+					<label th:text="${site.dateCreation}"></label>
 				</div>
-				<div th:if="${site.dateModif == null}" 
+				<div th:if="${site.dateModif != null}" 
 					 class="form-group">
 					<label>Date de modification : </label>
-					<label th:text="${site.nombreSecteur}"></label>
+					<label th:text="${site.dateModif}"></label>
 				</div>
 				<div class="form-group">
 					<label>Nom : </label>

@@ -9,12 +9,10 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<br> 
-			<a class="btn btn-success rond-lege"
-					th:href="@{/siteDetail/{id}(id=${id})}">Retour</a>
-			<br><br>
-			<h3>Secteurs du site [[${id}]]
-			</h3>
+			<br> <a class="btn btn-info rond-lege"
+				th:href="@{/siteDetail/{id}(id=${id})}">Retour</a> <br>
+			<br>
+			<h3>Secteurs du site [[${id}]]</h3>
 			<br>
 			<table class="table">
 				<thead>
@@ -28,19 +26,25 @@
 						<!-- <td th:text="${s.site}"></td> -->
 						<td th:text="${s.nom}"></td>
 						<td th:text="${s.nombreVoie}"></td>
-			<td><a class="btn btn-success rond-lege"
-					th:href="@{/user/ajoutVoie/{nom}(nom=${s.nom})}">Ajouter voie</a></td>
-			<td><a class="btn btn-success rond-lege"
-					th:href="@{/voie/{id}(id=${s.nom})}">Voir ses voies</a></td>
-					<!-- Rajouter les conditions pour faire apparaître les boutons modifier et supprimer
+						<td><a class="btn btn-info rond-lege"
+							th:if="${#httpServletRequest.remoteUser != null}"
+							th:href="@{/user/ajoutVoie/{site}/{nom}(site=${s.site}, nom=${s.nom})}">Ajouter voie</a>
+							<a class="" th:if="${#httpServletRequest.remoteUser == null}"
+							th:href="@{/login}">S'identifier pour ajouter une voie</a></td>
+						<td><a class="btn btn-success rond-lege"
+							th:href="@{/voie/{site}/{id}(id=${s.nom}, site=${s.site})}">Voir ses voies</a></td>
+						<!-- Rajouter les conditions pour faire apparaître les boutons modifier et supprimer
 					pour les utilisateurs connectés et pour les membres.
 					Et ne pas oublier de faire une condition aussi dans le controller, se référer au 
 					controller site (siteDetail) -->
 						<td><a class="btn btn-primary rond-lege"
+							th:if="${#httpServletRequest.remoteUser} != null"
 							th:href="@{/user/modifierSecteur(id=${s.nom})}">Modifier</a></td>
 						<td><a class="btn btn-danger rond-lege"
+							th:if="${#httpServletRequest.remoteUser} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
+							th:unless="${#httpServletRequest.remoteUser} == null"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/admin/supprimerSecteur(id=${s.nom})}">Supprimer</a></td>
+							th:href="@{/user/supprimerSecteur(id=${s.nom})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>
