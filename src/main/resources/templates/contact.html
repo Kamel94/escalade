@@ -25,6 +25,7 @@
 									<th scope="col">Région</th>
 									<th scope="col">Propriétaire</th>
 									<th scope="col">Réponse</th>
+									<th scope="col">Contact</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -43,10 +44,9 @@
 										<td th:case="Disponible" th:utext="'Refusée'"></td>
 									</th:block>
 									<th:block th:switch="${topo.disponibilite}">
-										<td th:case="Indisponible" >
-										<a th:href="@{/user/contact/{nom}(nom=${topo.nom})}">Afficher le contact</a></td>
-										<td th:case="Disponible" th:utext="''"></td>
-										<td th:case="Demande" th:utext="''"></td>
+										<td th:case="Indisponible" th:utext="${utilisateur.email}"></td>
+										<td th:case="Disponible" th:utext="'N/C'"></td>
+										<td th:case="Demande" th:utext="'N/C'"></td>
 									</th:block>
 								</tr>
 							</tbody>

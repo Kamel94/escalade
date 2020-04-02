@@ -127,7 +127,7 @@ public class TopoController {
 		
 		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName(), PageRequest.of(p, s));
 		//	model.addAttribute("topos", topos);
-
+		
 		model.addAttribute("topos", topos.getContent());
 		int[] pages = new int[topos.getTotalPages()];
 		model.addAttribute("pages", pages);
@@ -144,15 +144,19 @@ public class TopoController {
 
 		Page<Topo> topos = topoRepository.findAll(PageRequest.of(p, s));
 		int[] pages = new int[topos.getTotalPages()];
+		
+		/*Topo topo = topoRepository.findByProprietaireOrderByNom(principal.getName());
+		model.addAttribute("tp", topo);
 
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
+		model.addAttribute("utilisateur", utilisateur);*/
+		
 		model.addAttribute("topos", topos.getContent());
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
 		
-		List<ReservationTopo> r = reservationRepository.findAll();
-		model.addAttribute("r", r);
 		
 		
 
@@ -166,6 +170,36 @@ public class TopoController {
 		model.addAttribute("topos", topos);*/
 
 		return "listeMesDemandes";
+	}
+	
+	@GetMapping(value="/user/contact/{nom}")
+	public String contact(@PathVariable("nom")String nom, Model model, 
+			@RequestParam(name="page", defaultValue = "0") int p,
+			@RequestParam(name="size", defaultValue = "10") int s,
+			@RequestParam(name="motCle", defaultValue = "") String mc) {
+		
+		Page<Topo> topos = topoRepository.findAll(PageRequest.of(p, s));
+		int[] pages = new int[topos.getTotalPages()];
+		
+		/*Topo topo = topoRepository.findByProprietaireOrderByNom(principal.getName());
+		model.addAttribute("tp", topo);
+
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
+		model.addAttribute("utilisateur", utilisateur);*/
+		
+		model.addAttribute("topos", topos.getContent());
+		model.addAttribute("pages", pages);
+		model.addAttribute("size", s);
+		model.addAttribute("pageCourante", p);
+		model.addAttribute("motCle", mc);
+		
+		Topo topo = topoRepository.findById(nom).orElse(null);
+		model.addAttribute("tp", topo);
+		
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
+		model.addAttribute("utilisateur", utilisateur);
+		
+		return "contact";
 	}
 
 	@GetMapping("/user/demandepret/{id}")

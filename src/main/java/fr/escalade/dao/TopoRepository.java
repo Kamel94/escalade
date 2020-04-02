@@ -24,6 +24,8 @@ public interface TopoRepository extends JpaRepository<Topo, String> {
 	
 	//Topo findByNom(String u);
 	
+	Topo findByProprietaireOrderByNom(String dispo);
+	
 	Topo findByProprietaire(String p);
 	
 	List<Topo> findByNom(String u);
