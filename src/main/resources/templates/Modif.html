@@ -14,7 +14,7 @@ layout:decorator="layout">
 		<div class="card">
 			<div class="card-header">Modification d'un topo</div>
 			<div class="card-body">
-				<form th:action="@{/user/enregistrer}" method="post">
+				<form th:action="@{/user/enregistrer/{id}(id=${topo.nom})}" method="post">
 				<div class="form-group">
 						<label class="col-form-label">Proprietaire : </label>
 						<input class="form-control-xs" type="hidden" name="proprietaire" th:value="${topo.proprietaire}">
@@ -51,7 +51,8 @@ layout:decorator="layout">
 								th:errors="${topo.disponibilite}"></span>
 					</div>
 					<div>
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
+						<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+						<a class="btn btn-danger rond-lege" th:href="@{/user/listeMesTopos}">Annuler</a>
 					</div>
 				</form>
 			</div>

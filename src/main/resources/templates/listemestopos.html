@@ -40,17 +40,20 @@
 											<td th:text="${topo.parution}"></td>
 											<td th:text="${topo.lieu}"></td>
 											<!-- <td th:text="${topo.proprietaire}"></td> -->
-											<td th:text="${topo.disponibilite}"
-												th:class="${topo.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
+											<td
+												th:text="${topo.disponibilite} == 'Redisponible'? 'Disponible' : ${topo.disponibilite}"
+												th:class="${topo.disponibilite} != 'Indisponible'? 'text-success' : 'text-danger'"></td>
 											<th:block th:switch="${topo.disponibilite}">
 												<td th:case="Demande"
 													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></td>
 												<td th:case="Disponible"
 													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : 'Aucun'"></td>
+												<td th:case="Redisponible"
+													th:utext="${topo.emprunteur != null} ? ${topo.emprunteur.pseudo} : 'Aucun' "></td>
 												<td th:case="Indisponible"
 													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></td>
 
-												<td><a class="btn btn-primary rond-lege"
+												<td><a class="btn btn-info rond-lege"
 													th:href="@{/user/modifier(id=${topo.nom})}">Modifier</a></td>
 												<td><a class="btn btn-danger rond-lege"
 													onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
@@ -58,12 +61,18 @@
 
 											</th:block>
 
-
+											<td><a class="btn btn-info rond-lege"
+												th:href="@{/user/redisponible/{id}(id=${topo.nom})}"
+												sec:authorize="hasAuthority('user')"
+												th:if="${topo.disponibilite == 'Indisponible'}"
+												title="Rendre disponible le topo">Rendre disponible</a></td>
+												
 											<td><a class="btn btn-success rond-lege"
 												th:href="@{/user/accepterpret/{id}(id=${topo.nom})}"
 												sec:authorize="hasAuthority('user')"
 												th:if="${topo.disponibilite == 'Demande'}"
 												title="Accepter le prêt">Accepter</a></td>
+												
 											<td><a class="btn btn-danger rond-lege"
 												th:href="@{/user/refuserpret/{id}(id=${topo.nom})}"
 												sec:authorize="hasAuthority('user')"
@@ -72,6 +81,16 @@
 										</tr>
 									</tbody>
 								</table>
+								<div class="container">
+									<ul class="nav nav-pills">
+										<li class="nav-item"
+											th:class="${pageCourante}==${status.index}?'nav-link btn-info':'nav-link'"
+											th:each="pa,status:${pages}"><a
+											class="nav-link btn-info"
+											th:href="@{/user/listeMesTopos(page=${status.index}, size=${size}, motCle=${motCle})}"
+											th:text="${status.index}"></a></li>
+									</ul>
+								</div>
 							</div>
 						</div>
 
@@ -80,9 +99,6 @@
 			</div>
 
 		</div>
-		<br />
-
-		<footer></footer>
 	</div>
 </body>
 </html>

@@ -16,6 +16,7 @@
 					th:href="@{/user/listeMesTopos}">Mes topos</a> <a
 					class="btn btn-info btn-titre rond-lege"
 					th:href="@{/user/listeMesDemandes}">Mes demandes</a> <a
+					th:if="${utilisateur.statut} == 'ADMIN'"
 					class="btn btn-info btn-titre rond-lege"
 					th:href="@{/admin/reservation}">Historique des reservations</a>
 			</h3>
@@ -36,7 +37,7 @@
 						<td th:text="${t.description}"></td>
 						<td th:text="${t.lieu}"></td>
 						<td th:text="${t.parution}"></td>
-						<td th:text="${t.disponibilite}"
+						<td th:text="${t.disponibilite}" 
 							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 						<td><a
 							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"

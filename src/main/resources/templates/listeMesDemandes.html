@@ -28,8 +28,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="topo : ${topos}"
-									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} and ${topo.disponibilite} != 'Disponible' ) ? true">
+								<tr th:each="topo, r : ${topos}"
+									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} )">
 									<td th:text="${topo.nom}"></td>
 									<td th:text="${topo.parution}"></td>
 									<td th:text="${topo.lieu}"></td>
@@ -40,6 +40,7 @@
 										<td th:case="Demande"
 											th:utext="'Attente de la réponse du propriétaire'"></td>
 										<td th:case="Indisponible" th:utext="'Acceptée'"></td>
+										<td th:case="Disponible" th:utext="'Refusée'"></td>
 										<!--		<td th:case="Indisponible"
 													th:utext="${topo.emprunteur != null}? ''"></td>
 
@@ -52,6 +53,15 @@
 								</tr>
 							</tbody>
 						</table>
+						<div class="container">
+							<ul class="nav nav-pills">
+								<li class="nav-item"
+									th:class="${pageCourante}==${status.index}?'nav-link btn-info':'nav-link'"
+									th:each="pa,status:${pages}"><a class="nav-link btn-info"
+									th:href="@{/user/listeMesDemandes(page=${status.index}, size=${size})}"
+									th:text="${status.index}"></a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 

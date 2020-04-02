@@ -13,6 +13,8 @@ public interface ReservationTopoRepository extends JpaRepository<ReservationTopo
 	@Query("select r from ReservationTopo r where r.topoNom like :x")
 	Page<ReservationTopo> page(@Param("x")String topo, Pageable pageable);
 	
-	ReservationTopo findByTopoNom(String topo);
+	ReservationTopo findByTopoNomAndReponseDemande(String topo, String demande);
+	
+	ReservationTopo findByUtilisateurModif(String topo);
 
 }
