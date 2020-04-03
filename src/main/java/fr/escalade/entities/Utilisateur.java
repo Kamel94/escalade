@@ -1,60 +1,59 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.sun.istack.NotNull;
+import javax.validation.constraints.Email;
 
 @Entity
 public class Utilisateur implements Serializable {
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -591498517976957905L;
 
 	@Id
 	@Column(length = 15, name = "identifiant")
 	private String pseudo;
 	
-	@Column(length = 50)
+	@Email
+	@Column(length = 50, unique = true)
 	private String email;
-	
-	/*@OneToMany(mappedBy="utilisateur", fetch=FetchType.LAZY)
-	private Collection<Topo> topos;
-
-	public Collection<Topo> getTopos() {
-		return topos;
-	}
-
-	public void setTopos(Collection<Topo> topos) {
-		this.topos = topos;
-	}*/
 
 	@Column(length = 30)
 	private String nom;
 
 	@Column(length = 30)
 	private String prenom;
-
 	
 	@Column(length = 50)
 	private String password;
 	
-	@Column(length = 5)
+	@Column(length = 6)
 	private String statut;
-
-	private String dateAdhesion;
 
 	@Column(length = 15)
 	private String telephone;
 	
 	@Column(name = "active")
-	@javax.validation.constraints.NotNull
 	private boolean compteActif;
+	
+	@Column(name = "utilisateur_createur")
+	private String utilisateurCreateur;
+
+	@Column(name = "utilisateur_modif")
+	private String utilisateurModif;
+
+	@Column(name = "date_creation")
+	private Timestamp dateCreation;
+
+	@Column(name = "date_modif")
+	private Timestamp dateModif;
 
 	public Utilisateur() {
 		super();
@@ -62,14 +61,13 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String pseudo, String password, String statut,
-			String dateAdhesion, String niveau, String telephone, boolean compteActif) {
+			 String niveau, String telephone, boolean compteActif) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.pseudo = pseudo;
 		this.password = password;
 		this.statut = statut;
-		this.dateAdhesion = dateAdhesion;
 		this.compteActif = compteActif;
 		this.telephone = telephone;
 	}
@@ -122,14 +120,6 @@ public class Utilisateur implements Serializable {
 		this.statut = statut;
 	}
 
-	public String getDateAdhesion() {
-		return dateAdhesion;
-	}
-
-	public void setDateAdhesion(String dateAdhesion) {
-		this.dateAdhesion = dateAdhesion;
-	}
-
 	public boolean isCompteActif() {
 		return compteActif;
 	}
@@ -144,6 +134,42 @@ public class Utilisateur implements Serializable {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getUtilisateurCreateur() {
+		return utilisateurCreateur;
+	}
+
+	public void setUtilisateurCreateur(String utilisateurCreateur) {
+		this.utilisateurCreateur = utilisateurCreateur;
+	}
+
+	public String getUtilisateurModif() {
+		return utilisateurModif;
+	}
+
+	public void setUtilisateurModif(String utilisateurModif) {
+		this.utilisateurModif = utilisateurModif;
+	}
+
+	public Timestamp getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Timestamp dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public Timestamp getDateModif() {
+		return dateModif;
+	}
+
+	public void setDateModif(Timestamp dateModif) {
+		this.dateModif = dateModif;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

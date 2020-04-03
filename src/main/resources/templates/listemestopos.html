@@ -45,13 +45,13 @@
 												th:class="${topo.disponibilite} != 'Indisponible'? 'text-success' : 'text-danger'"></td>
 											<th:block th:switch="${topo.disponibilite}">
 												<td th:case="Demande"
-													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></td>
+													th:utext="${topo.emprunteur != null}? ${topo.emprunteur} : ''"></td>
 												<td th:case="Disponible"
-													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : 'Aucun'"></td>
+													th:utext="${topo.emprunteur != null}? ${topo.emprunteur} : 'Aucun'"></td>
 												<td th:case="Redisponible"
-													th:utext="${topo.emprunteur != null} ? ${topo.emprunteur.pseudo} : 'Aucun' "></td>
+													th:utext="${topo.emprunteur != null} ? ${topo.emprunteur} : 'Aucun' "></td>
 												<td th:case="Indisponible"
-													th:utext="${topo.emprunteur != null}? ${topo.emprunteur.pseudo} : ''"></td>
+													th:utext="${topo.emprunteur != null}? ${topo.emprunteur} : ''"></td>
 
 												<td><a class="btn btn-info rond-lege"
 													th:href="@{/user/modifier(id=${topo.nom})}">Modifier</a></td>

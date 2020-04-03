@@ -1,6 +1,7 @@
 package fr.escalade.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import com.sun.istack.NotNull;
 
 @Entity
 public class Topo implements Serializable {
-	
+
 	@Id
 	@Column(length = 70)
 	@NotNull
@@ -44,7 +45,23 @@ public class Topo implements Serializable {
 	@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd", style = "dd-MM-yyyy")
 	private Date parution;
 	
-	private Utilisateur emprunteur;
+	private String emprunteur;
+	
+	private String contact;
+	
+	@Column(name = "utilisateur_createur")
+	private String utilisateurCreateur;
+
+	@Column(name = "utilisateur_modif")
+	private String utilisateurModif;
+
+	@Column(name = "date_creation")
+	private Timestamp dateCreation;
+
+	@Column(name = "date_modif")
+	private Timestamp dateModif;
+	
+	private String demandeur;
 	
 	private Utilisateur utilisateur;
 	
@@ -56,11 +73,11 @@ public class Topo implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
-	public Utilisateur getEmprunteur() {
+	public String getEmprunteur() {
 		return emprunteur;
 	}
 
-	public void setEmprunteur(Utilisateur emprunteur) {
+	public void setEmprunteur(String emprunteur) {
 		this.emprunteur = emprunteur;
 	}
 
@@ -73,7 +90,7 @@ public class Topo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(String proprietaire, String description, String lieu, Date parution, Utilisateur emprunteur, String disponibilite) {
+	public Topo(String proprietaire, String description, String lieu, Date parution, String emprunteur, String disponibilite) {
 		super();
 		this.proprietaire = proprietaire;
 		this.description = description;
@@ -129,6 +146,54 @@ public class Topo implements Serializable {
 
 	public void setProprietaire(String proprietaire) {
 		this.proprietaire = proprietaire;
+	}
+
+	public String getDemandeur() {
+		return demandeur;
+	}
+
+	public void setDemandeur(String demandeur) {
+		this.demandeur = demandeur;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getUtilisateurCreateur() {
+		return utilisateurCreateur;
+	}
+
+	public void setUtilisateurCreateur(String utilisateurCreateur) {
+		this.utilisateurCreateur = utilisateurCreateur;
+	}
+
+	public String getUtilisateurModif() {
+		return utilisateurModif;
+	}
+
+	public void setUtilisateurModif(String utilisateurModif) {
+		this.utilisateurModif = utilisateurModif;
+	}
+
+	public Timestamp getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Timestamp dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public Timestamp getDateModif() {
+		return dateModif;
+	}
+
+	public void setDateModif(Timestamp dateModif) {
+		this.dateModif = dateModif;
 	}
 
 }

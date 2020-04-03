@@ -30,7 +30,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="topo : ${topos}"
-									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} )">
+									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} and ${topo.demandeur} == ${#httpServletRequest.remoteUser} )">
 									<td th:text="${topo.nom}"></td>
 									<td th:text="${topo.parution}"></td>
 									<td th:text="${topo.lieu}"></td>
@@ -44,7 +44,8 @@
 										<td th:case="Disponible" th:utext="'Refusée'"></td>
 									</th:block>
 									<th:block th:switch="${topo.disponibilite}">
-										<td th:case="Indisponible" th:utext="${utilisateur.email}"></td>
+										<td
+										th:case="Indisponible" th:utext="${utilisateur.email}"></td>
 										<td th:case="Disponible" th:utext="'N/C'"></td>
 										<td th:case="Demande" th:utext="'N/C'"></td>
 									</th:block>

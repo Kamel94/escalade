@@ -25,11 +25,12 @@
 									<th scope="col">Région</th>
 									<th scope="col">Propriétaire</th>
 									<th scope="col">Réponse</th>
+									<th scope="col">Contact</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="topo : ${topos}"
-									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} )">
+								<tr th:each="topo : ${topos}" 
+									th:if=" (${#httpServletRequest.remoteUser} != ${topo.proprietaire} and ${topo.demandeur} == ${#httpServletRequest.remoteUser} )">
 									<td th:text="${topo.nom}"></td>
 									<td th:text="${topo.parution}"></td>
 									<td th:text="${topo.lieu}"></td>
@@ -43,12 +44,8 @@
 										<td th:case="Disponible" th:utext="'Refusée'"></td>
 									</th:block>
 									<th:block th:switch="${topo.disponibilite}">
-										<td th:case="Indisponible" >
-										<a th:href="@{/user/contact/{nom}(nom=${topo.nom})}">Afficher le contact</a></td>
-										<td th:case="Disponible" th:utext="''"></td>
-										<td th:case="Demande" th:utext="''"></td>
+										<td th:case="Indisponible" th:utext="${topo.contact}"></td>
 									</th:block>
-								</tr>
 							</tbody>
 						</table>
 						<div class="container">

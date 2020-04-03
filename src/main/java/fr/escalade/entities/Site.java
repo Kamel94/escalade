@@ -26,8 +26,6 @@ import fr.escalade.dao.SecteurRepository;
 @Entity
 public class Site implements Serializable {
 	
-	
-	
 	/*@OneToMany(mappedBy="site", fetch=FetchType.LAZY)
 	private Collection<Secteur> secteurs;
 
