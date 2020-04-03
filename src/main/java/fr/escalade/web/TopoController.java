@@ -59,11 +59,16 @@ public class TopoController {
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
 
 		Page<Topo> pageTopos = topoRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 		int[] pages = new int[pageTopos.getTotalPages()];
-		
 
-		model.addAttribute("utilisateur", utilisateur);
+		if(principal == null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			model.addAttribute("utilisateur", utilisateur);
+		} else {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", utilisateur);
+		}
+		
 		model.addAttribute("listeTopos", pageTopos.getContent());
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
@@ -188,7 +193,10 @@ public class TopoController {
 	@GetMapping("/user/demandepret/{id}")
 	public String gererDemandeEmpruntTopo(@PathVariable("id") String id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
-		if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
+
+		if(principal == null) {
+			return "redirect:/login";
+		} else if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
 			Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 			LocalDateTime dateTime = LocalDateTime.now();
 			Utilisateur proprio = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
@@ -200,12 +208,6 @@ public class TopoController {
 			topo.setDisponibilite("Demande");
 			reservationRepository.save(resa);
 		} else {
-			if (topo.getDisponibilite().equals("Demande")) {
-				Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-				topo.setDisponibilite("Disponible");
-				topo.setEmprunteur(null);
-			} else {
-			}
 		}
 		topoRepository.save(topo);
 		return "redirect:/topos";

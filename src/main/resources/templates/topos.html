@@ -43,12 +43,8 @@
 							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							th:href="@{/user/demandepret/{id}(id=${t.nom})}"
 							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
-							th:if="${t.emprunteur != t.proprietaire}? (${#httpServletRequest.remoteUser} != ${t.proprietaire} ) : true"><i
-								class="far fa-question-circle"></i>Faire une demande</a><a
-							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
-							th:href="@{/user/maDemande/{id}(id=${t.nom})}"
-							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
-							th:unless="${t.emprunteur} != ${t.proprietaire} ">Voir l'état de ma demande</a></td>
+							th:if="${t.emprunteur != t.proprietaire} and ${#httpServletRequest.remoteUser} != ${t.proprietaire}"><i
+								class="far fa-question-circle"></i>Faire une demande</a></td>
 					</tr>
 
 				</tbody>

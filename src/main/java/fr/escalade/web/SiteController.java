@@ -97,6 +97,8 @@ public class SiteController {
 		List<Secteur> secteur = secteurRepository.secteur(id);
 		model.addAttribute("secteur", secteur);
 		
+		Site sit = siteRepository.findById(id).orElse(null);
+		
 		Page<Commentaire> commentaire = commentaireRepository.chercher(id, PageRequest.of(p, s));
 		model.addAttribute("liste", commentaire);
 		int[] pages = new int[commentaire.getTotalPages()];
@@ -108,15 +110,7 @@ public class SiteController {
 		model.addAttribute("utilisateu", u);
 		
 		//Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-		
-		if(principal == null){
-			us.setStatut("USER");
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(us.getStatut());
-			model.addAttribute("utilisateur", utilisateur);
-		} else if(principal != null) {
-			Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-			model.addAttribute("utilisateur", util);
-		}
+
 		
 		Site si = siteRepository.getOne(id);
 		model.addAttribute("si", si);
@@ -126,6 +120,15 @@ public class SiteController {
 		}
 
 		siteRepository.save(si);
+		
+		if(principal == null){
+			us.setStatut("VISITEUR");
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(us.getStatut());
+			model.addAttribute("utilisateur", utilisateur);
+		} else if(principal != null) {
+			Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", util);
+		}
 		
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);

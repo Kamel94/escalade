@@ -67,7 +67,7 @@ public class SecteurController {
 		Utilisateur u = new Utilisateur();
 		
 		if(principal == null){
-			u.setStatut("USER");
+			u.setStatut("VISITEUR");
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(u.getStatut());
 			model.addAttribute("utilisateur", utilisateur);
 		} else if(principal != null) {

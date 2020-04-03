@@ -9,8 +9,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid" th:each="s:${site}">
-			<br> <a class="btn btn-info rond-lege" th:href="@{/site}">Retourner
-				sur la liste des sites</a> <br> <br>
+			<br> <a class="btn btn-info rond-lege" th:href="@{/accueil}">Retour</a> <br> <br>
 			<h3 th:each="s:${site}">Détail du site</h3>
 			<br>
 			<table class="centre">
@@ -41,17 +40,17 @@
 						<td th:text="${#lists.size(secteur)}"></td>
 						<td th:text="${s.tag == null}? 'Non officiel' : ${s.tag}"
 							th:class="${s.tag} == 'Officiel Les amis de l’escalade'? 'text-success' : 'text-danger'"></td>
-						<td><a th:class="${s.tag} == 'Non officiel'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+						<td><a
+							th:class="${s.tag} == 'Non officiel'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							th:href="@{/admin/tag/{id}(id=${s.nom})}"
 							th:if="${utilisateur.statut == 'ADMIN'}"><i
-							class="far fa-question-circle"></i>Taguer</a></td>
+								class="far fa-question-circle"></i>Taguer</a></td>
 						<td><a title="Voir ses secteurs"
 							class="btn btn-info rond-lege"
 							th:href="@{/secteur/{id}(id=${s.nom})}">Voir secteurs</a></td>
 						<td><a class="btn btn-info btn-titre rond-lege"
 							th:if="${#httpServletRequest.remoteUser} != null"
 							th:href="@{/user/modifierSite(id=${s.nom})}">Modifier</a></td>
-						<!-- Rajouter dans la table site "auteur" pour pouvoir faire disparaître le bouton -->
 						<td><a class="btn btn-danger btn-titre rond-lege"
 							th:if="${#httpServletRequest.remoteUser} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
 							th:unless="${#httpServletRequest.remoteUser} == null"
@@ -60,19 +59,19 @@
 					</tr>
 				</tbody>
 			</table>
-			<a  class="btn btn-info btn-titre rond-lege"
+			<a class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser != null}"
-				th:href="@{/user/ajoutTopo/{id}(id=${s.nom})}">Ajouter un topo</a> 
-			<a	class="btn btn-info btn-titre rond-lege"
+				th:href="@{/user/ajoutTopo/{id}(id=${s.nom})}">Ajouter un topo</a> <a
+				class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser == null}"
-				th:href="@{/login}">Ajouter un topo</a> 
-			<a	class="btn btn-info btn-titre rond-lege"
+				th:href="@{/login}">Ajouter un topo</a> <a
+				class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser != null}"
 				th:href="@{/user/ajoutSecteur/{id}(id=${s.nom})}">Ajouter un
-				secteur</a>
-			<a	class=" btn-titre rond-lege"
+				secteur</a> <a class=" btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser == null}"
-				th:href="@{/login}">S'identifier pour ajouter un secteur</a> <br> <br>
+				th:href="@{/login}">S'identifier pour ajouter un secteur</a> <br>
+			<br>
 			<div>
 				<h3>Liste des commentaires</h3>
 				<br> <br>

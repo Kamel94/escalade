@@ -1,5 +1,6 @@
 package fr.escalade.web;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,9 @@ public class VoieController {
 
 	@Autowired
 	private SecteurRepository secteurRepository;
+	
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
 
 	/*@GetMapping(value = "/voie")
 	public String voie(Model model, 
@@ -78,11 +82,23 @@ public class VoieController {
 	}*/
 
 	@GetMapping(value="/voie/{site}/{id}")
-	public String secteurSite(@PathVariable("id")String id, Model model, @PathVariable("site")String site) {
+	public String secteurSite(@PathVariable("id")String id, Model model, @PathVariable("site")String site,
+			Principal principal) {
 		List<Voie> voie = voieRepository.voie(id);
 		model.addAttribute("voie", voie);
 		Site sit = siteRepository.findById(site).orElse(null);
 		model.addAttribute("site", sit);
+
+		Utilisateur u = new Utilisateur();
+
+		if(principal == null){
+			u.setStatut("VISITEUR");
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(u.getStatut());
+			model.addAttribute("utilisateur", utilisateur);
+		} else if(principal != null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", utilisateur);
+		}
 
 		return "voie";
 	}

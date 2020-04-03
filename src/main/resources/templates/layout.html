@@ -16,11 +16,10 @@
 			<a class="navbar-brand text-light" th:href="@{/accueil}">Accueil</a>
 			<a th:if="${#httpServletRequest.remoteUser} != null"
 				class="btn btn-info rond-lege" th:href="@{/logout}" th:inline="text">
-				Se déconecter [[${#httpServletRequest.remoteUser}]]</a> <a
-				class="btn btn-info rond-lege"
+				Se déconecter [[${#httpServletRequest.remoteUser}]]</a> 
+				<a class="btn btn-info rond-lege"
 				th:if="${#httpServletRequest.remoteUser} == null"
-				th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier <i
-				class="fas fa-user-check ml-2 "></i></a>
+				th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
 		</nav>
 		<p class="text-right text-light titre"
 			th:if="${#httpServletRequest.remoteUser} != null">Salut ami
