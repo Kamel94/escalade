@@ -15,7 +15,7 @@ import fr.escalade.entities.Site;
 
 public interface SiteRepository extends JpaRepository<Site, Integer> {
 
-	@Query("select s from Site s where lower(s.nom) like lower(:nom) and lower(s.pays) like lower(:pays) and lower(s.region) like lower(:region) and s.nombreSecteur >= :sec")
+	@Query("select distinct s from Site s where lower(s.nom) like lower(:nom) and lower(s.pays) like lower(:pays) and lower(s.region) like lower(:region) and s.nombreSecteur >= :sec")
 	Page<Site> chercher(@Param("nom")String nom, @Param("pays")String m, @Param("region")String region, @Param("sec")int secteur, Pageable pageable);
 	
 	/*@Query(value = "SELECT distinct site.* FROM site " + "LEFT JOIN secteur on site.nom = secteur.site_nom " + 

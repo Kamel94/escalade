@@ -10,7 +10,7 @@ import fr.escalade.entities.ReservationTopo;
 
 public interface ReservationTopoRepository extends JpaRepository<ReservationTopo, Integer> {
 	
-	@Query("select r from ReservationTopo r where r.topoId like :x")
+	@Query("select r from ReservationTopo r where r.topoId >= :x")
 	Page<ReservationTopo> page(@Param("x")int topo, Pageable pageable);
 	
 	ReservationTopo findByUtilisateurModif(int topo);

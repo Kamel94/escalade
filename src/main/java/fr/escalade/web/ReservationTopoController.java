@@ -52,7 +52,7 @@ public class ReservationTopoController {
 	public String reservationTopo(Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "4") int s,
-			@RequestParam(name="motCle", defaultValue = "") int mc) {
+			@RequestParam(name="motCle", defaultValue = "0") int mc) {
 
 		Page<ReservationTopo> page = reservationRepository.page( mc , PageRequest.of(p, s));
 

@@ -19,7 +19,7 @@
 			<table class="table">
 				<thead>
 					<tr class="text-primary">
-						<th>Nom</th>
+						<th>Topo</th>
 						<th>Demandeur</th>
 						<th>Date de la demande</th>
 						<th>Proprietaire</th>
@@ -29,7 +29,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="r:${reservation}">
-						<td th:text="${r.topoNom}"></td>
+						<td th:text="${r.topoId}"></td>
 						<td th:text="${r.demandeur}"></td>
 						<td th:text="${r.dateCreation}"></td>
 						<td th:text="${r.utilisateurModif}"></td>

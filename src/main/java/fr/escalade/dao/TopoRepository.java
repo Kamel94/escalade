@@ -20,14 +20,19 @@ public interface TopoRepository extends JpaRepository<Topo, Integer> {
 	
 	List<Topo> findByProprietaireOrderByDisponibilite(String name);
 
-	Page<Topo> findByProprietaireOrderByNom(String name, Pageable pageable);
+	Page<Topo> findByProprietaireOrderByNom(int name, Pageable pageable);
 	
 	//Topo findByNom(String u);
 	
 	Topo findByProprietaireOrderByNom(String dispo);
 	
-	Topo findByProprietaire(String p);
+	Topo findByProprietaire(Integer integer);
 	
 	List<Topo> findByNom(String u);
+
+	//@Query("select p from Topo p where p.nom like :x")
+	Topo findByProprietaireOrderByNom(int i);
+
+	Topo findTopoByNom(String nom);
 
 }

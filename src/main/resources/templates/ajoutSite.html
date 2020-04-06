@@ -19,7 +19,7 @@
 						<div class="form-group">
 							<label class="col-form-label">Auteur : </label> <input
 								class="form-control-xs" type="hidden" name="utilisateurCreateur"
-								th:value="${#httpServletRequest.remoteUser}">
+								th:value="${utilisateur.id}">
 							[[${#httpServletRequest.remoteUser}]] <span class="red"
 								th:errors="${site.utilisateurCreateur}" th:inline="text"></span>
 						</div>
@@ -60,6 +60,19 @@
 								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
 							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
 								class="red" th:errors="${site.dateCreation}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label"></label> <input
+								class="form-control-xs decaler" type="hidden"
+								name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><span
+								class="red" th:errors="${site.dateModif}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label"></label> <input
+								class="form-control-xs" type="hidden" name="utilisateurModif"
+								th:value="${utilisateur.id}"> <span class="red"
+								th:errors="${site.utilisateurModif}" th:inline="text"></span>
 						</div>
 						<div>
 							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>

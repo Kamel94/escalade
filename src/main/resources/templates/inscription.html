@@ -8,73 +8,120 @@
 </head>
 <body>
 	<div layout:fragment="content">
-	<br>
+		<br>
 		<div class="container">
-		<h3><strong>Formulaire d'inscription</strong></h3> <br>
-  <br>
-		<form th:action="@{/enregistrer}" method="post">
-  <div class="form-row">
-  <div class="form-group col-md-6">
-    <label for="inputAddress">Nom</label>
-    <input type="text" class="form-control" name="nom"
-			 th:value="${utilisateur.nom}" placeholder="Votre nom"><span
-			 class="red" th:errors="${utilisateur.nom}" th:inline="text"></span>
-  </div>
-  <div class="form-group col-md-6">
-    <label for="inputAddress2">Prénom</label>
-    <input type="text" class="form-control" name="prenom"
-			 th:value="${utilisateur.prenom}" placeholder="Votre prénom"><span
-			 class="red" th:errors="${utilisateur.prenom}" th:inline="text"></span>
-  </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Pseudo</label>
-      <input type="text" class="form-control" name="pseudo"
-			 th:value="${utilisateur.pseudo}" placeholder="Pseudo"><span
-			 class="red" th:errors="${utilisateur.pseudo}" th:inline="text"></span>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Mot de passe</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Mot de passe"
-      		 name="password" th:value="${utilisateur.password}"><span
-			 class="red" th:errors="${utilisateur.password}" th:inline="text"></span>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" name="email"
-			 th:value="${utilisateur.email}" placeholder="Email"><span
-			 class="red" th:errors="${utilisateur.email}" th:inline="text"></span>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputCity"></label>
-      <input type="hidden" class="form-control" id="inputCity" name="statut"
-			 th:value="'USER'">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Téléphone</label>
-      <input type="text" class="form-control" name="telephone"
-			 th:value="${utilisateur.telephone}" placeholder="Téléphone"><span
-			 class="red" th:errors="${utilisateur.telephone}" th:inline="text"></span>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="inputState">Date</label>
-      	<input type="hidden" class="form-control" name="dateCreation"
-			 th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><br>[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]
-    </div>
-    <div class="form-group col-md-2">
-      <label></label>
-      <input type="hidden" class="form-control" name="compteActif"
-      		 th:value="TRUE">
-    </div>
-  </div>
-  <br>
-  <button type="submit" class="btn btn-info rond-lege">S'inscrire</button>
-  <a class="btn btn-danger rond-lege btn-titre" th:href="@{/accueil}">Annuler</a>
-</form>
-</div>
+			<h3>
+				<strong>Formulaire d'inscription</strong>
+					<span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
+						<label for="inputAddress">Administrateur</label> <input type="hidden"
+							class="form-control" name="utilisateurCreateur" th:value="${u.id}"
+							>[[${#httpServletRequest.remoteUser}]]<span class="red"
+							th:errors="${u.id}" th:inline="text"></span>
+					</span>
+			</h3>
+			<br> <br>
+			<form th:action="@{/enregistrer}" method="post">
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputAddress">Nom</label> <input type="text"
+							class="form-control" name="nom" th:value="${utilisateur.nom}"
+							placeholder="Dupont"><span class="red"
+							th:errors="${utilisateur.nom}" th:inline="text"></span>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputAddress2">Prénom</label> <input type="text"
+							class="form-control" name="prenom"
+							th:value="${utilisateur.prenom}" placeholder="Jean"><span
+							class="red" th:errors="${utilisateur.prenom}" th:inline="text"></span>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Pseudo</label> <input type="text"
+							class="form-control" name="pseudo"
+							th:value="${utilisateur.pseudo}" placeholder="Pseudo"><span
+							class="red" th:errors="${utilisateur.pseudo}" th:inline="text"></span>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputPassword4">Mot de passe</label> <input
+							type="password" class="form-control" id="inputPassword4"
+							placeholder="Mot de passe" name="password"
+							th:value="${utilisateur.password}"><span class="red"
+							th:errors="${utilisateur.password}" th:inline="text"></span>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Email</label> <input type="email"
+							class="form-control" name="email" th:value="${utilisateur.email}"
+							placeholder="Email"><span class="red"
+							th:errors="${utilisateur.email}" th:inline="text"></span>
+					</div>
+					<div th:if="${#httpServletRequest.remoteUser} == null" 
+						 class="form-group col-md-6">
+						<label></label> <input type="hidden"
+							class="form-control" id="statut" name="statut"
+							th:value="'USER'">
+					</div>
+					<div class="form-group col-md-6">
+						<label>Téléphone</label> <input type="text"
+							class="form-control" name="telephone"
+							th:value="${utilisateur.telephone}" placeholder="Téléphone"><span
+							class="red" th:errors="${utilisateur.telephone}" th:inline="text"></span>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label>Date</label> <input type="hidden"
+							class="form-control" name="dateCreation"
+							th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><br>[[${#temporals.format(localDate,
+						'yyyy-MM-dd HH:mm:ss')}]]
+					</div>
+					<div class="form-group col-md-4">
+						<label></label> <input type="hidden"
+							class="form-control" name="dateModif"
+							th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><br>
+					</div>
+					<div class="form-group col-md-2">
+						<label></label> <input type="hidden" class="form-control"
+							name="compteActif" th:value="TRUE">
+					</div>
+					<div th:if="${#httpServletRequest.remoteUser} != null"
+						 class="form-group col-md-2">
+						<label></label> <input type="hidden" class="form-control"
+							name="statut" th:value="MEMBRE">
+					</div>
+					<span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
+						<label for="inputAddress">Administrateur</label> <input type="hidden"
+							class="form-control" name="utilisateurCreateur" th:value="${u.id}"
+							>[[${#httpServletRequest.remoteUser}]]<span class="red"
+							th:errors="${u.id}" th:inline="text"></span>
+					</span>
+					<span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
+						<label for="inputAddress"></label> <input type="hidden"
+							class="form-control" name="utilisateurModif" th:value="${u.id}"
+							><span class="red"
+							th:errors="${u.id}" th:inline="text"></span>
+					</span>
+					<span th:if="${#httpServletRequest.remoteUser == null}" class="form-group col-md-6">
+						<label for="inputAddress"></label> <input type="hidden"
+							class="form-control" name="utilisateurCreateur" th:value="${utilisateur.id}"
+							><span class="red"
+							th:errors="${utilisateur.id}" th:inline="text"></span>
+					</span>
+					<span th:if="${#httpServletRequest.remoteUser == null}" class="form-group col-md-6">
+						<label for="inputAddress"></label> <input type="hidden"
+							class="form-control" name="utilisateurModif" th:value="${utilisateur.id}"
+							><span class="red"
+							th:errors="${utilisateur.id}" th:inline="text"></span>
+					</span>
+				</div>
+				<br>
+				<button type="submit" class="btn btn-info rond-lege">Valider</button>
+				<a  th:if="${#httpServletRequest.remoteUser} != null"
+					class="btn btn-danger rond-lege btn-titre" th:href="@{/admin/utilisateurs}">Annuler</a>
+				<a  th:if="${#httpServletRequest.remoteUser} == null"
+					class="btn btn-danger rond-lege btn-titre" th:href="@{/accueil}">Annuler</a>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

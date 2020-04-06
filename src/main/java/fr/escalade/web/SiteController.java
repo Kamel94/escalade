@@ -56,7 +56,7 @@ public class SiteController {
 	@Autowired
 	private TopoRepository topoRepository;
 
-	@GetMapping(value = "/site")
+	/*@GetMapping(value = "/site")
 	public String site(Model model,      
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
@@ -69,7 +69,7 @@ public class SiteController {
 		Page<Site> pageSites = siteRepository.chercher( "%" + mc + "%", "%" + pays + "%", "%" + region + "%" , secteur, PageRequest.of(p, s));
 		int[] pages = new int[pageSites.getTotalPages()];
 		
-		/*List<Site> site = siteRepository.finById("%" + mc + "%");
+		List<Site> site = siteRepository.finById("%" + mc + "%");
 		Set<Site> mySet = new HashSet<Site>(pageSites.getContent());
 		List<Site> list2 = new ArrayList<Site>(mySet);
 		HashSet set = new HashSet() ;
@@ -78,7 +78,7 @@ public class SiteController {
 		model.addAttribute("site", distinctList);
 		
 		List<Site> site = siteRepository.cherche(id);
-		model.addAttribute("site", site);*/
+		model.addAttribute("site", site);
 		
 		model.addAttribute("listeSites", pageSites.getContent());
 		model.addAttribute("pages", pages);
@@ -90,15 +90,56 @@ public class SiteController {
 		model.addAttribute("nbrSecteur", secteur);
 		
 		return "site";
+	}*/
+
+	@GetMapping("/")
+	public String defaut() {
+		return "redirect:/accueil";
+	}
+
+	@GetMapping("/accueil")
+	public String accueil(Model model, Principal principal, 
+			@RequestParam(name="page", defaultValue = "0") int p,
+			@RequestParam(name="size", defaultValue = "6") int s,
+			@RequestParam(name="nom", defaultValue = "") String nom,
+			@RequestParam(name="pays", defaultValue = "") String pays,
+			@RequestParam(name="region", defaultValue = "") String region,
+			@RequestParam(name="sec", defaultValue = "0") int sec) {
+
+		Page<Site> pageSites = siteRepository.chercher("%" + nom + "%", "%" + pays + "%", "%" + region + "%", sec, PageRequest.of(p, s));
+		model.addAttribute("listeSites", pageSites.getContent());
+		int[] pages = new int[pageSites.getTotalPages()];
+
+		model.addAttribute("pages", pages);
+		model.addAttribute("size", s);
+		model.addAttribute("pageCourante", p);
+		model.addAttribute("nom", nom);
+		model.addAttribute("pays", pays);
+		model.addAttribute("region", region);
+		model.addAttribute("sec", sec);
+		
+		if(principal != null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", utilisateur);
+		} else {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			model.addAttribute("utilisateur", utilisateur);
+		}
+		
+		List<Site> site = siteRepository.findAll();
+		model.addAttribute("site", site);
+		List<Secteur> secteur = secteurRepository.findAll();
+		model.addAttribute("secteur", secteur);
+		return "accueil";
 	}
 	
-	@GetMapping(value="/siteDetail/{id}/{site}")
-	public String site(@PathVariable("id")String id, @PathVariable("site")int idsite, Model model, Principal principal,
+	@GetMapping(value="/siteDetail/{id}")
+	public String site(@PathVariable("id")int id, Model model, Principal principal,
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s) {
-		List<Site> site = siteRepository.findByNom(id);
-		model.addAttribute("site", site);
-		List<Secteur> secteur = secteurRepository.secteur(id);
+		Site site = siteRepository.findById(id).orElse(null);
+		model.addAttribute("s", site);
+		List<Secteur> secteur = secteurRepository.findBySite(id);
 		model.addAttribute("secteur", secteur);
 		
 		Page<Commentaire> commentaire = commentaireRepository.chercher(id, PageRequest.of(p, s));
@@ -114,14 +155,14 @@ public class SiteController {
 		//Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
 		
-		Site si = siteRepository.getOne(idsite);
+		/*Site si = siteRepository.getOne(id);
 		model.addAttribute("si", si);
 		
 		if(si.getTag() == null) {
-			si.setTag("Non officiel");
+			si.setTag(false);
 		}
 
-		siteRepository.save(si);
+		siteRepository.save(si);*/
 		
 		if(principal == null){
 			us.setStatut("VISITEUR");
@@ -136,7 +177,7 @@ public class SiteController {
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		
-		model.addAttribute("commentaire", new Commentaire(idsite));
+		model.addAttribute("commentaire", new Commentaire(id));
 		model.addAttribute("localDate", LocalDateTime.now());
 		
 		return "siteDetail";
@@ -147,12 +188,9 @@ public class SiteController {
 		
 		Site site = siteRepository.getOne(id);
 		model.addAttribute("site", site);
+
+		site.setTag(true);
 		
-		if(site.getTag() == null) {
-			site.setTag("Non officiel");
-		} else if(site.getTag().equals("Non officiel")) {
-			site.setTag("Officiel Les amis de l’escalade");
-		}
 		siteRepository.save(site);
 		return "redirect:/siteDetail/{id}";
 	}
@@ -163,7 +201,7 @@ public class SiteController {
 		Site site = siteRepository.getOne(id);
 		model.addAttribute("site", site);
 		
-		site.setTag("Non officiel");
+		site.setTag(false);
 			
 		siteRepository.save(site);
 		return "redirect:/siteDetail/{id}";
@@ -186,7 +224,10 @@ public class SiteController {
 	 */
 
 	@GetMapping(value="/user/ajoutSite")
-	public String ajoutSite(Model model, String id) {
+	public String ajoutSite(Model model, Principal principal) {
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("site", new Site());
 		model.addAttribute("localDate", LocalDateTime.now());
 		
@@ -205,7 +246,7 @@ public class SiteController {
 	@GetMapping(value="/user/supprimerSite")
 	public String supprimerSite(int id, String motCle, int page, int size) {
 		siteRepository.deleteById(id);
-		return "redirect:/site?page=" + page + "&size=" + size + "&motCle=" + motCle ;
+		return "redirect:/accueil";
 	}
 
 	@RequestMapping(value="/user/enregistrerSite", method=RequestMethod.POST)

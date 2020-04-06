@@ -41,9 +41,9 @@
 							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 						<td><a
 							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
-							th:href="@{/user/demandepret/{id}(id=${t.nom})}"
+							th:href="@{/user/demandepret/{id}(id=${t.id})}"
 							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
-							th:if="${t.emprunteur != t.proprietaire} and ${#httpServletRequest.remoteUser} != ${t.proprietaire}"><i
+							th:if="${t.emprunteur != t.proprietaire} and ${utilisateur.id} != ${t.proprietaire}"><i
 								class="far fa-question-circle"></i>Faire une demande</a></td>
 					</tr>
 

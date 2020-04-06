@@ -17,16 +17,16 @@ public class ReservationTopo implements Serializable {
 	private Integer id;
 	
 	@Column(name = "topo_id")
-	private int topoId;
+	private Integer topoId;
 	
 	@Column(name = "utilisateur_createur")
-	private int demandeur;
+	private Integer demandeur;
 	
 	@Column(name = "reponse_demande")
 	private String reponseDemande;
 
 	@Column(name = "utilisateur_modif")
-	private int utilisateurModif;
+	private Integer utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -39,13 +39,14 @@ public class ReservationTopo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReservationTopo(int topoId, String reponseDemande, int demandeur, int utilisateurModif, Timestamp dateCreation) {
+	public ReservationTopo(Integer topoId, String reponseDemande, Integer demandeur, Integer utilisateurModif, Timestamp dateCreation, Timestamp dateModif) {
 		super();
 		this.topoId = topoId;
 		this.reponseDemande = reponseDemande;
 		this.demandeur = demandeur;
 		this.utilisateurModif = utilisateurModif;
 		this.dateCreation = dateCreation;
+		this.dateModif = dateModif;
 	}
 
 	public String getReponseDemande() {
@@ -56,11 +57,11 @@ public class ReservationTopo implements Serializable {
 		this.reponseDemande = reponseDemande;
 	}
 
-	public int getTopoId() {
+	public Integer getTopoId() {
 		return topoId;
 	}
 
-	public void setTopoId(int topoId) {
+	public void setTopoId(Integer topoId) {
 		this.topoId = topoId;
 	}
 
@@ -72,19 +73,19 @@ public class ReservationTopo implements Serializable {
 		this.id = id;
 	}
 
-	public int getDemandeur() {
+	public Integer getDemandeur() {
 		return demandeur;
 	}
 
-	public void setDemandeur(int demandeur) {
+	public void setDemandeur(Integer demandeur) {
 		this.demandeur = demandeur;
 	}
 
-	public int getUtilisateurModif() {
+	public Integer getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(int utilisateurModif) {
+	public void setUtilisateurModif(Integer utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

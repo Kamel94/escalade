@@ -15,8 +15,8 @@ import fr.escalade.entities.Site;
 
 public interface CommentaireRepository extends JpaRepository<Commentaire, Integer> {
 
-	@Query("select c from Commentaire c where c.site like :x")
-	Page<Commentaire> chercher(@Param("x")String mc, Pageable pageable);
+	@Query("select c from Commentaire c where c.site = :x")
+	Page<Commentaire> chercher(@Param("x")int site, Pageable pageable);
 	
 	
 	@Query("select c from Commentaire c where c.site like :x")

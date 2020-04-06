@@ -31,8 +31,8 @@ public class Topo implements Serializable {
 	
 	/*@ManyToOne
 	@JoinColumn(name="utilisateur_id")*/
-	@Column(length = 30, name = "utilisateur_id")
-	private int proprietaire;
+	@Column( name = "utilisateur_createur", insertable = false, updatable = false)
+	private Integer proprietaire;
 	
 	@Column(length = 500)
 	@Size(min = 1, max = 500)
@@ -47,9 +47,9 @@ public class Topo implements Serializable {
 	@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd", style = "dd-MM-yyyy")
 	private Date parution;
 	
-	private int emprunteur;
+	private Integer emprunteur;
 	
-	private int contact;
+	private Integer contact;
 	
 	@Column(name = "utilisateur_createur")
 	private int utilisateurCreateur;
@@ -63,12 +63,12 @@ public class Topo implements Serializable {
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
 	
-	private int demandeur;
+	private Integer demandeur;
 	
 	@Column(name= "site_id")
-	private int site;
+	private Integer site;
 	
-	/*private Utilisateur utilisateur;
+	private Utilisateur utilisateur;
 	
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
@@ -76,13 +76,13 @@ public class Topo implements Serializable {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
-	}*/
+	}/**/
 
-	public int getEmprunteur() {
+	public Integer getEmprunteur() {
 		return emprunteur;
 	}
 
-	public void setEmprunteur(int emprunteur) {
+	public void setEmprunteur(Integer emprunteur) {
 		this.emprunteur = emprunteur;
 	}
 
@@ -95,7 +95,7 @@ public class Topo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(int proprietaire, String description, String lieu, Date parution, int emprunteur, String disponibilite) {
+	public Topo(Integer proprietaire, String description, String lieu, Date parution, Integer emprunteur, String disponibilite, Integer contact) {
 		super();
 		this.proprietaire = proprietaire;
 		this.description = description;
@@ -103,6 +103,7 @@ public class Topo implements Serializable {
 		this.parution = parution;
 		this.emprunteur = emprunteur;
 		this.disponibilite = disponibilite;
+		this.contact = contact;
 	}
 
 	public String getNom() {
@@ -145,43 +146,43 @@ public class Topo implements Serializable {
 		this.disponibilite = disponibilite;
 	}
 	
-	public int getProprietaire() {
+	public Integer getProprietaire() {
 		return proprietaire;
 	}
 
-	public void setProprietaire(int proprietaire) {
+	public void setProprietaire(Integer proprietaire) {
 		this.proprietaire = proprietaire;
 	}
 
-	public int getDemandeur() {
+	public Integer getDemandeur() {
 		return demandeur;
 	}
 
-	public void setDemandeur(int demandeur) {
+	public void setDemandeur(Integer demandeur) {
 		this.demandeur = demandeur;
 	}
 
-	public int getContact() {
+	public Integer getContact() {
 		return contact;
 	}
 
-	public void setContact(int contact) {
+	public void setContact(Integer contact) {
 		this.contact = contact;
 	}
 
-	public int getUtilisateurCreateur() {
+	public Integer getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(int utilisateurCreateur) {
+	public void setUtilisateurCreateur(Integer utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public int getUtilisateurModif() {
+	public Integer getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(int utilisateurModif) {
+	public void setUtilisateurModif(Integer utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 
@@ -209,11 +210,11 @@ public class Topo implements Serializable {
 		this.id = id;
 	}
 
-	public int getSite() {
+	public Integer getSite() {
 		return site;
 	}
 
-	public void setSite(int site) {
+	public void setSite(Integer site) {
 		this.site = site;
 	}
 

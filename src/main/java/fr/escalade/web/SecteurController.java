@@ -59,9 +59,13 @@ public class SecteurController {
 	}*/
 	
 	@GetMapping(value="/secteur/{id}")
-	public String secteurSite(@PathVariable("id")String id, Model model, Principal principal) {
-		List<Secteur> secteur = secteurRepository.secteur(id);
+	public String secteurSite(@PathVariable("id")int id, Model model, Principal principal) {
+		List<Secteur> secteur = secteurRepository.findBySite(id);
 		model.addAttribute("secteur", secteur);
+		
+		Site site = siteRepository.findById(id).orElse(null);
+		
+		model.addAttribute("site", site);
 
 		Utilisateur u = new Utilisateur();
 		

@@ -18,7 +18,7 @@ layout:decorator="layout">
 				<div class="form-group">
 						<label class="col-form-label">Proprietaire : </label>
 						<input class="form-control-xs" type="hidden" name="proprietaire" th:value="${topo.proprietaire}">
-						[[${topo.proprietaire}]]<span class="red" th:errors="${topo.proprietaire}"></span>
+						[[${utilisateur.pseudo}]]<span class="red" th:errors="${topo.proprietaire}"></span>
 					</div>
 				<div class="form-group">
 						<label class="col-form-label">Nom : </label>
@@ -46,13 +46,12 @@ layout:decorator="layout">
 								class="form-control" name="disponibilite" th:value="${topo.disponibilite}">
 								<option>Disponible</option>
 								<option>Indisponible</option>
-								<option>Demande</option>
 							</select><span class="red"
 								th:errors="${topo.disponibilite}"></span>
 					</div>
 					<div>
 						<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
-						<a class="btn btn-danger rond-lege" th:href="@{/user/listeMesTopos}">Annuler</a>
+						<a class="btn btn-danger rond-lege" th:href="@{/user/topo/{id}(id=${topo.nom})}">Annuler</a>
 					</div>
 				</form>
 			</div>

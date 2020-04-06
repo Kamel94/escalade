@@ -8,9 +8,9 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="container-fluid" th:each="s:${site}">
+		<div class="container-fluid" >
 			<br> <a class="btn btn-info rond-lege" th:href="@{/accueil(page=${pageCourante}, size=${size})}">Retour</a> <br> <br>
-			<h3 th:each="s:${site}">Détail du site</h3>
+			<h3>Détail du site</h3>
 			<br>
 			<table class="centre">
 				<tr th:each="s:${site}">
@@ -29,32 +29,32 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="s:${site}">
+					<tr>
 						<td th:text="${s.nom}"></td>
 						<td th:text="${s.pays}"></td>
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.ville}"></td>
 						<td th:text="${#lists.size(secteur)}"></td>
-						<td th:text="${s.tag == null}? 'Non officiel' : ${s.tag}"
-							th:class="${s.tag} == 'Officiel Les amis de l’escalade'? 'text-success' : 'text-danger'"></td>
+						<td th:text="${s.tag} == false? 'Non officiel' : 'Officiel Les amis de l’escalade'"
+							th:class="${s.tag} == true? 'text-success' : 'text-danger'"></td>
 						<td><a
-							th:class="${s.tag} == 'Non officiel'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+							th:class="${s.tag} == false? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							th:href="@{/membre/tag/{id}(id=${s.id})}"
-							th:if="${utilisateur.statut == 'MEMBRE'} and ${s.tag} == 'Non officiel'">Taguer</a><a
-							th:class="${s.tag} == 'Officiel Les amis de l’escalade'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+							th:if="(${utilisateur.statut == 'MEMBRE'} or ${utilisateur.statut == 'ADMIN'}) and ${s.tag} == false">Taguer</a><a
+							th:class="${s.tag} == true? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							th:href="@{/membre/enleverTag/{id}(id=${s.id})}"
-							th:if="${utilisateur.statut == 'MEMBRE'} and ${s.tag} == 'Officiel Les amis de l’escalade'">Enlever le tag</a></td>
+							th:if="(${utilisateur.statut == 'MEMBRE'} or ${utilisateur.statut == 'ADMIN'}) and ${s.tag} == true">Enlever le tag</a></td>
 						<td><a title="Voir ses secteurs"
 							class="btn btn-info rond-lege"
-							th:href="@{/secteur/{id}(id=${s.nom})}">Voir secteurs</a></td>
+							th:href="@{/secteur/{id}(id=${s.id})}">Voir secteurs</a></td>
 						<td><a class="btn btn-info btn-titre rond-lege"
 							th:if="${#httpServletRequest.remoteUser} != null"
-							th:href="@{/user/modifierSite(id=${s.nom})}">Modifier</a></td>
+							th:href="@{/user/modifierSite(id=${s.id})}">Modifier</a></td>
 						<td><a class="btn btn-danger btn-titre rond-lege"
-							th:if="${#httpServletRequest.remoteUser} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
+							th:if="${utilisateur.id} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
 							th:unless="${#httpServletRequest.remoteUser} == null"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/user/supprimerSite(id=${s.id}, page=${pageCourante}, size=${size}, motCle=${motCle})}">Supprimer</a></td>
+							th:href="@{/user/supprimerSite(id=${s.id})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>

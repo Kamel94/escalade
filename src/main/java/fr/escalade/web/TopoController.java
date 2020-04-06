@@ -78,15 +78,6 @@ public class TopoController {
 		return "topos";
 	}
 
-	@GetMapping(value = "/topos/{id}")
-	public String topoSite(Model model, @PathVariable("id")String id) {
-
-		List<Topo> topos = topoRepository.findByNom(id);
-		model.addAttribute("listeTopos", topos);
-
-		return "topos";
-	}
-
 	@GetMapping(value="/user/ajoutTopo/{id}")
 	public String ajout(Model model, @PathVariable("id")String id) {
 		List<Site> site = siteRepository.findAll();
@@ -98,6 +89,9 @@ public class TopoController {
 	@RequestMapping(value="/user/modifier", method=RequestMethod.GET)
 	public String modifier(Model model, int id) {
 		Topo t = topoRepository.findById(id).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(t.getProprietaire());
+
+		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("topo", t);
 		return "Modif";
 	}
@@ -131,15 +125,43 @@ public class TopoController {
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
 		//List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
 		
-		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName(), PageRequest.of(p, s));
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(utilisateur.getId(), PageRequest.of(p, s));
 		//	model.addAttribute("topos", topos);
 		
+		//model.addAttribute("utilisateur", u);
 		model.addAttribute("topos", topos.getContent());
 		int[] pages = new int[topos.getTotalPages()];
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		return "listemestopos";
+	}
+
+	@GetMapping(value = "/user/topo/{nom}")
+	public String topoId(Model model, Principal principal, @PathVariable("nom")String nom, 
+			@RequestParam(name="page", defaultValue = "0") int p,
+			@RequestParam(name="size", defaultValue = "4") int s,
+			@RequestParam(name="motCle", defaultValue = "") String mc) {
+
+		Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		Topo topo = topoRepository.findTopoByNom(nom);
+		
+		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(u.getId(), PageRequest.of(p, s));
+		model.addAttribute("topos", topos);
+		
+		if(topo.getEmprunteur() != null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(topo.getEmprunteur());
+			model.addAttribute("utilisateur", utilisateur);
+		} else {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
+			model.addAttribute("utilisateur", utilisateur);
+		}
+		
+		model.addAttribute("topo", topo);
+
+		return "topoId";
 	}
 
 	@GetMapping(value="/user/listeMesDemandes")
@@ -196,11 +218,11 @@ public class TopoController {
 
 		if(principal == null) {
 			return "redirect:/login";
-		} else if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == 0) {
+		} else if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
 			Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 			LocalDateTime dateTime = LocalDateTime.now();
 			Utilisateur proprio = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
-			ReservationTopo resa = new ReservationTopo(topo.getId(), "Demande", emprunteur.getId(), topo.getProprietaire(), Timestamp.valueOf(dateTime));
+			ReservationTopo resa = new ReservationTopo(topo.getId(), "Demande", emprunteur.getId(), topo.getProprietaire(), Timestamp.valueOf(dateTime), Timestamp.valueOf(dateTime));
 			//resa.setDemandeur(principal.getName());
 			topo.setEmprunteur(emprunteur.getId());
 			topo.setDemandeur(emprunteur.getId());
@@ -248,9 +270,9 @@ public class TopoController {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
 		
 		topo.setDisponibilite("Disponible");
-		topo.setEmprunteur(0);
-		topo.setDemandeur(0);
-		topo.setContact(0);
+		topo.setEmprunteur(null);
+		topo.setDemandeur(null);
+		topo.setContact(null);
 
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
@@ -269,8 +291,8 @@ public class TopoController {
 		resa.setDateModif(Timestamp.valueOf(dateTime));
 		
 		topo.setDisponibilite("Disponible");
-		topo.setEmprunteur(0);
-		topo.setContact(0);
+		topo.setEmprunteur(null);
+		topo.setContact(null);
 
 		//reservationRepository.save(resa);
 		topoRepository.save(topo);
@@ -280,47 +302,6 @@ public class TopoController {
 	@GetMapping(value = "/user/reserver")
 	public String reserver() {
 		return "reservation";
-	}
-
-	@GetMapping("/")
-	public String defaut() {
-		return "redirect:/accueil";
-	}
-
-	@GetMapping("/accueil")
-	public String accueil(Model model, Principal principal, 
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="nom", defaultValue = "") String nom,
-			@RequestParam(name="pays", defaultValue = "") String pays,
-			@RequestParam(name="region", defaultValue = "") String region,
-			@RequestParam(name="sec", defaultValue = "0") int sec) {
-
-		Page<Site> pageSites = siteRepository.chercher("%" + nom + "%", "%" + pays + "%", "%" + region + "%", sec, PageRequest.of(p, s));
-		model.addAttribute("listeSites", pageSites.getContent());
-		int[] pages = new int[pageSites.getTotalPages()];
-
-		model.addAttribute("pages", pages);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("nom", nom);
-		model.addAttribute("pays", pays);
-		model.addAttribute("region", region);
-		model.addAttribute("sec", sec);
-		
-		if(principal != null) {
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-			model.addAttribute("utilisateur", utilisateur);
-		} else {
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo("visiteur");
-			model.addAttribute("utilisateur", utilisateur);
-		}
-		
-		List<Site> site = siteRepository.findAll();
-		model.addAttribute("site", site);
-		List<Secteur> secteur = secteurRepository.findAll();
-		model.addAttribute("secteur", secteur);
-		return "accueil";
 	}
 
 	@GetMapping("/403")

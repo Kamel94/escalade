@@ -41,7 +41,7 @@ public class Site implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 40)
+	@Column(length = 40, unique = true)
 	@NotNull
 	private String nom;
 	
@@ -61,8 +61,8 @@ public class Site implements Serializable {
 	@NotNull
 	private int nombreSecteur;
 
-	@Column(length = 45)
-	private String tag;
+	@Column()
+	private boolean tag;
 	
 	@Column(name = "utilisateur_createur")
 	private int utilisateurCreateur;
@@ -81,7 +81,7 @@ public class Site implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Site( String pays, String region, String ville, int nombreSecteur, String tag) {
+	public Site( String pays, String region, String ville, int nombreSecteur, boolean tag) {
 		super();
 		this.pays = pays;
 		this.region = region;
@@ -130,12 +130,12 @@ public class Site implements Serializable {
 		this.nombreSecteur = nombreSecteur;
 	}
 
-	public String getTag() {
+	public boolean getTag() {
 		return tag;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTag(boolean b) {
+		this.tag = b;
 	}
 
 	public int getUtilisateurCreateur() {

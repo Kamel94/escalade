@@ -13,7 +13,7 @@
 			<h3>
 				<!-- Lien à créer -->
 				Liste des utilisateurs <a class="btn btn-info btn-titre rond-lege"
-					th:href="@{/ajoutUtilisateur}">Ajouter un utilisateur</a>
+					th:href="@{/inscription}">Ajouter un utilisateur</a>
 			</h3>
 			<br>
 			<table class="table">
@@ -36,10 +36,10 @@
 						<td><a
 							th:class="${u.statut} == 'USER'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							onclick="return confirm('Êtes-vous sûr de votre choix ?')"
-							th:href="@{/rendreMembre/{id}(id=${u.pseudo})}">Rendre membre</a>
+							th:href="@{/rendreMembre/{id}(id=${u.id})}">Rendre membre</a>
 							<a class="btn btn-danger rond-lege"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/supprimerSite(id=${u.pseudo})}">Supprimer</a></td>
+							th:href="@{/supprimerSite(id=${u.id}, page=${pageCourante}, size=${size})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>

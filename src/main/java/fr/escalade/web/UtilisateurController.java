@@ -50,14 +50,22 @@ public class UtilisateurController {
 	}
 
 	@GetMapping(value = "/inscription")
-	public String inscription(Model model) {
+	public String inscription(Model model, Principal principal) {
 
 		List<Utilisateur> utilisateur = utilisateurRepository.findAll();
 		LocalDateTime dateTime = LocalDateTime.now();
 
 		model.addAttribute("utilisateur", new Utilisateur());
 		model.addAttribute("localDate", dateTime);
-
+		
+		if(principal != null) {
+			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("u", u);
+		} else {
+			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			model.addAttribute("u", u);
+		}
+		
 		return "inscription";
 	}
 
@@ -69,7 +77,7 @@ public class UtilisateurController {
 
 		String encryptedPassword = passwordEncoder.encode(utilisateur.getPassword());
 		utilisateur.setPassword(encryptedPassword);
-		utilisateur.setUtilisateurCreateur(utilisateur.getId());
+		//utilisateur.setUtilisateurCreateur(utilisateur.getId());
 
 		utilisateurRepository.save(utilisateur);
 		return "confirmInscription";

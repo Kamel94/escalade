@@ -52,15 +52,14 @@
 				&nbsp; &nbsp;
 			</form>
 		</div>
-		<br> <br>
-		<br> <br>
+		 <br>
 		<div th:each="s:${listeSites}"
 			class="container-fluid bleu col-sm-10 pt-1">
 			<table class="table vert-bleu text-info spacer rond-haut">
 				<tbody class="moitie">
 					<tr>
 						<th>Nom :&nbsp; &nbsp; &nbsp;<a
-							th:href="@{/siteDetail/{id}(id=${s.nom})}"> [[${s.nom}]]</a></th>
+							th:href="@{/siteDetail/{id}(id=${s.id})}"> [[${s.nom}]]</a></th>
 					</tr>
 					<tr>
 						<th>Lieu : &nbsp; &nbsp; &nbsp; [[${s.pays}]]</th>
@@ -68,7 +67,7 @@
 					<tr>
 						<th>Secteurs : &nbsp; &nbsp; &nbsp; [[${s.nombreSecteur}]]</th>
 					<tr>
-						<th>Tag : &nbsp; &nbsp; &nbsp; <span th:text="${s.tag} == true? 'Officiel les amis de l escalade' : 'Non officiel'"></span></th>
+						<th>Tag : &nbsp; &nbsp; &nbsp; <span th:text="${s.tag} == TRUE? 'Officiel les amis de l escalade' : 'Non officiel'"></span></th>
 						<th ></th>
 					</tr>
 				</tbody>
