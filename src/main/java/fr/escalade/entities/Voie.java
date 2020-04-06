@@ -21,16 +21,16 @@ public class Voie implements Serializable {
 	private int numeroVoie;
 	
 	@Column(name = "secteur_id")
-	private int secteurNom;
+	private Integer secteurId;
 	
 	@Column(name = "nombre_longueur")
 	private int nombreLongueur;
 	
 	@Column(name = "utilisateur_createur")
-	private int utilisateurCreateur;
+	private Integer utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private int utilisateurModif;
+	private Integer utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -38,12 +38,12 @@ public class Voie implements Serializable {
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
 	
-	public int getSecteurNom() {
-		return secteurNom;
+	public Integer getSecteurId() {
+		return secteurId;
 	}
 
-	public void setSecteurNom(int secteurNom) {
-		this.secteurNom = secteurNom;
+	public void setSecteurId(Integer secteurId) {
+		this.secteurId = secteurId;
 	}
 	
 	@Column(length = 2 )
@@ -61,9 +61,9 @@ public class Voie implements Serializable {
 		this.cotation = cotation;
 	}
 	
-	public Voie(int secteurNom) {
+	public Voie(Integer secteurId) {
 		super();
-		this.secteurNom = secteurNom;
+		this.secteurId = secteurId;
 	}
 
 	public Integer getId() {
@@ -98,19 +98,19 @@ public class Voie implements Serializable {
 		this.cotation = cotation;
 	}
 
-	public int getUtilisateurCreateur() {
+	public Integer getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(int utilisateurCreateur) {
+	public void setUtilisateurCreateur(Integer utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public int getUtilisateurModif() {
+	public Integer getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(int utilisateurModif) {
+	public void setUtilisateurModif(Integer utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

@@ -79,8 +79,12 @@ public class TopoController {
 	}
 
 	@GetMapping(value="/user/ajoutTopo/{id}")
-	public String ajout(Model model, @PathVariable("id")String id) {
-		List<Site> site = siteRepository.findAll();
+	public String ajout(Model model, @PathVariable("id")int id, Principal principal) {
+		Site site = siteRepository.findById(id).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		model.addAttribute("localDate", LocalDateTime.now());
+		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("site", site);
 		model.addAttribute("topo", new Topo());
 		return "Ajout";
@@ -90,7 +94,10 @@ public class TopoController {
 	public String modifier(Model model, int id) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(t.getProprietaire());
+		Site site = siteRepository.findSiteByNom(t.getNom());
 
+		model.addAttribute("site", site);
+		model.addAttribute("localDate", LocalDateTime.now());
 		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("topo", t);
 		return "Modif";
@@ -110,10 +117,11 @@ public class TopoController {
 	}
 
 	@RequestMapping(value="/user/enregistrer/{id}", method=RequestMethod.POST)
-	public String enregistrer(Model model, @Valid Topo topo, BindingResult bindingResult) {
+	public String enregistrer(Model model,@PathVariable("id")int id, @Valid Topo topo, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "redirect:/user/ajoutTopo/{id}";
 		}
+		model.addAttribute("id", id);
 		topoRepository.save(topo);
 		return "Confirmation";
 	}

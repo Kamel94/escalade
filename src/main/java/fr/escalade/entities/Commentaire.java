@@ -15,20 +15,20 @@ public class Commentaire {
 	private Integer id;
 	
 	@Column(name = "site_id")
-    private int site;
+    private Integer site;
 	
 	@Column(length = 500, name = "commentaire")
 	@Size(min = 1, max = 500)
 	private String comment;
 
-	@Column(name = "utilisateur_createur", length = 15)
-    private int auteur;
+	@Column(name = "utilisateur_createur")
+    private Integer auteur;
 
 	@Column(name = "date_creation")
     private Timestamp date;
 
-	@Column(name = "utilisateur_modif", length = 15)
-	private int utilisateurModif;
+	@Column(name = "utilisateur_modif")
+	private Integer utilisateurModif;
 
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
@@ -38,7 +38,7 @@ public class Commentaire {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Commentaire(int site, String comment, int auteur, Timestamp date) {
+	public Commentaire(Integer site, String comment, Integer auteur, Timestamp date) {
 		super();
 		this.site = site;
 		this.comment = comment;
@@ -46,7 +46,7 @@ public class Commentaire {
 		this.date = date;
 	}
 	
-	public Commentaire(int site) {
+	public Commentaire(Integer site) {
 		super();
 		this.site = site;
 	}
@@ -67,11 +67,11 @@ public class Commentaire {
 		this.comment = comment;
 	}
 
-	public int getAuteur() {
+	public Integer getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(int auteur) {
+    public void setAuteur(Integer auteur) {
         this.auteur = auteur;
     }
 
@@ -83,11 +83,11 @@ public class Commentaire {
         this.date = date;
     }
 
-    public int getSite() {
+    public Integer getSite() {
         return site;
     }
 
-    public void setSite(int site) {
+    public void setSite(Integer site) {
         this.site = site;
     }
 

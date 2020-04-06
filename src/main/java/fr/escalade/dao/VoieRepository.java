@@ -12,10 +12,10 @@ import fr.escalade.entities.Voie;
 
 public interface VoieRepository extends JpaRepository<Voie, Integer> {
 
-	@Query("select v from Voie v where v.secteurNom like :x")
-	Page<Voie> chercher(@Param("x")String mc, Pageable pageable);
+	@Query("select v from Voie v where v.secteurId >= :x")
+	Page<Voie> chercher(@Param("x")int mc, Pageable pageable);
 	
-	@Query("select v from Voie v where v.secteurNom like :x")
-	List<Voie> voie(@Param("x")String nom);
+	
+	List<Voie> findBySecteurId(int secteur);
 
 }

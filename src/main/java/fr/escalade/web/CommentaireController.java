@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.escalade.dao.CommentaireRepository;
+import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
 import fr.escalade.entities.Commentaire;
 import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
+import fr.escalade.entities.Utilisateur;
 
 @Controller
 public class CommentaireController {
@@ -37,6 +39,12 @@ public class CommentaireController {
 
 	@Autowired
 	CommentaireRepository commentaireRepository;
+	
+	@Autowired
+	SiteRepository siteRepository;
+	
+	@Autowired
+	UtilisateurRepository utilisateurRepository;
 
 
 	/* @GetMapping(value = "/user/commentaire")
@@ -67,7 +75,12 @@ public class CommentaireController {
 	}
 
 	@GetMapping(value="/user/ajoutCom/{id}")
-	public String ajoutCom(Model model, @PathVariable("id") int id) {
+	public String ajoutCom(Model model, @PathVariable("id") int id, Principal principal) {
+		Site site = siteRepository.findById(id).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("site", site);
 		model.addAttribute("commentaire", new Commentaire(id));
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "ajoutCom"; 

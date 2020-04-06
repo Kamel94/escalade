@@ -37,7 +37,7 @@ public class SecteurController {
 
 	@Autowired
 	private SecteurRepository secteurRepository;
-	
+
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
@@ -46,7 +46,7 @@ public class SecteurController {
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
-		
+
 		Page<Secteur> listeSecteur = secteurRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
 		model.addAttribute("listeSecteurs", listeSecteur.getContent());
 		int[] listes = new int[listeSecteur.getTotalPages()];
@@ -57,18 +57,18 @@ public class SecteurController {
 
 		return "secteur";
 	}*/
-	
+
 	@GetMapping(value="/secteur/{id}")
 	public String secteurSite(@PathVariable("id")int id, Model model, Principal principal) {
 		List<Secteur> secteur = secteurRepository.findBySite(id);
 		model.addAttribute("secteur", secteur);
-		
+
 		Site site = siteRepository.findById(id).orElse(null);
-		
+
 		model.addAttribute("site", site);
 
 		Utilisateur u = new Utilisateur();
-		
+
 		if(principal == null){
 			u.setStatut("VISITEUR");
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(u.getStatut());
@@ -77,26 +77,35 @@ public class SecteurController {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 			model.addAttribute("utilisateur", utilisateur);
 		}
-		
+
 		return "secteur";
 	}
 
 	@GetMapping(value="/user/ajoutSecteur/{id}")
-	public String ajoutSecteur(Model model, @PathVariable("id")int id) {
-		
+	public String ajoutSecteur(Model model, @PathVariable("id")int id, Principal principal) {
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		Site site = siteRepository.findById(id).orElse(null);
+
+		model.addAttribute("site", site);
+		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("secteur", new Secteur(id));
 		model.addAttribute("localDate", LocalDateTime.now());
-		
+
 		return "ajoutSecteur";
 	}
 
-	@RequestMapping(value="/user/modifierSecteur", method=RequestMethod.GET)
-	public String modifierSecteur(Model model, int id) {
-		
+	@RequestMapping(value="/user/modifierSecteur/{id}", method=RequestMethod.GET)
+	public String modifierSecteur(Model model, @PathVariable("id")int id, Principal principal) {
+
 		Secteur secteur = secteurRepository.findById(id).orElse(null);
+		Site site = siteRepository.findById(secteur.getSite()).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("site", site);
 		model.addAttribute("secteur", secteur);
 		model.addAttribute("localDate", LocalDateTime.now());
-		
+
 		return "modifSecteur";
 	}
 
@@ -106,11 +115,15 @@ public class SecteurController {
 		return "secteur";
 	}
 
-	@RequestMapping(value="/user/enregistrerSecteur", method=RequestMethod.POST)
-	public String enregistrerSecteur(Model model, @Valid Secteur secteur, BindingResult bindingResult) {
+	@RequestMapping(value="/user/enregistrerSecteur/{id}", method=RequestMethod.POST)
+	public String enregistrerSecteur(Model model,@PathVariable("id")int id, @Valid Secteur secteur, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "ajoutSecteur";
 		}
+		Secteur sec = secteurRepository.findById(id).orElse(null);
+		Site site = siteRepository.findById(sec.getSite()).orElse(null);
+
+		model.addAttribute("site", site);
 		secteurRepository.save(secteur);
 		return "confirmationSecteur";
 	}

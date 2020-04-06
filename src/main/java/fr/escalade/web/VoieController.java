@@ -81,12 +81,15 @@ public class VoieController {
 	}*/
 
 	@GetMapping(value="/voie/{site}/{id}")
-	public String secteurSite(@PathVariable("id")String id, Model model, @PathVariable("site")int site,
+	public String secteurSite(@PathVariable("id")int id, Model model, @PathVariable("site")int site,
 			Principal principal) {
-		List<Voie> voie = voieRepository.voie(id);
-		model.addAttribute("voie", voie);
+		List<Voie> voie = voieRepository.findBySecteurId(id);
 		Site sit = siteRepository.findById(site).orElse(null);
+		Secteur secteur = secteurRepository.getOne(id);
+		
+		model.addAttribute("voie", voie);
 		model.addAttribute("site", sit);
+		model.addAttribute("secteur", secteur);
 
 		Utilisateur u = new Utilisateur();
 

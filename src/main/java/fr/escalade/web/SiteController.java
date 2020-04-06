@@ -207,11 +207,14 @@ public class SiteController {
 		return "redirect:/siteDetail/{id}";
 	}
 	
-	@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
-	public String enregistrerCom(Model model, @Valid Commentaire commentaire, BindingResult bindingResult) {
+	@RequestMapping(value="/user/enregistrerCom/{id}", method=RequestMethod.POST)
+	public String enregistrerCom(Model model, @Valid Commentaire commentaire, 
+			@PathVariable("id")int id, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "ajoutCom";
 		}
+		Site site = siteRepository.getOne(id);
+		model.addAttribute("site", site);
 		commentaireRepository.save(commentaire);
 		return "confirmationCom";
 	}

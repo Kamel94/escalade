@@ -1,8 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Erreur</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
 <body>
-<h1>Something went wrong! </h1>
-<h2>Our Engineers are on it</h2>
-<a href="/">Go Home</a>
+	<div layout:fragment="content">
+		<div class="container">
+			<h1>Quelque chose a mal tourné!</h1>
+			<h2>Nous mettons tout en oeuvre pour résoudre le problème</h2>
+			<a class="btn btn-info btn-titre rond-lege" href="/">Retourner à
+				l'accueil</a>
+		</div>
+	</div>
 </body>
 </html>

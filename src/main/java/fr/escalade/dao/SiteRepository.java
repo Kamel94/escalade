@@ -38,5 +38,7 @@ public interface SiteRepository extends JpaRepository<Site, Integer> {
 	List<Site> finById(@Param("x")String id);
 
 	List<Site> findByNom(String nom);
+	
+	Site findSiteByNom(String nom);
 
 }

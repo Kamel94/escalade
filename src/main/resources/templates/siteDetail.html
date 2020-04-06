@@ -10,7 +10,7 @@
 	<div layout:fragment="content">
 		<div class="container-fluid" >
 			<br> <a class="btn btn-info rond-lege" th:href="@{/accueil(page=${pageCourante}, size=${size})}">Retour</a> <br> <br>
-			<h3>Détail du site</h3>
+			<h3>Détail du site [[${s.nom}]]</h3>
 			<br>
 			<table class="centre">
 				<tr th:each="s:${site}">
@@ -60,13 +60,13 @@
 			</table>
 			<a class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser != null}"
-				th:href="@{/user/ajoutTopo/{id}(id=${s.nom})}">Ajouter un topo</a> <a
+				th:href="@{/user/ajoutTopo/{id}(id=${s.id})}">Ajouter un topo</a> <a
 				class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser == null}"
 				th:href="@{/login}">Ajouter un topo</a> <a
 				class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser != null}"
-				th:href="@{/user/ajoutSecteur/{id}(id=${s.nom})}">Ajouter un
+				th:href="@{/user/ajoutSecteur/{id}(id=${s.id})}">Ajouter un
 				secteur</a> <a class=" btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser == null}"
 				th:href="@{/login}">Ajouter un secteur</a> <br>
@@ -88,11 +88,11 @@
 							<td th:text="${c.auteur}"></td>
 							<td th:text="${c.date}"></td>
 							<td><a class="btn btn-info rond-lege"
-								th:if="${#httpServletRequest.remoteUser} == ${c.auteur}"
+								th:if="${utilisateur.id} == ${c.auteur} or ${utilisateur.statut} == 'MEMBRE' or ${utilisateur.statut} == 'ADMIN'"
 								th:href="@{/user/modifierCom(id=${c.id})}">Modifier</a></td>
 							<!-- Enlever 'admin' de l'url supprimerCom -->
 							<td><a class="btn btn-danger rond-lege"
-								th:if="${utilisateur.statut == 'ADMIN'} or (${#httpServletRequest.remoteUser} == ${c.auteur}) "
+								th:if="${utilisateur.statut == 'ADMIN'} or (${utilisateur.id} == ${c.auteur}) "
 								th:unless="${#httpServletRequest.remoteUser} == null "
 								onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 								th:href="@{/user/supprimerCom/{site}(id=${c.id}, site=${c.site})}">Supprimer</a></td>

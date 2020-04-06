@@ -32,17 +32,17 @@ public class Secteur implements Serializable {
 	private Site sit;*/
 	
 	@Column(name = "site_id")
-	private int site;
+	private Integer site;
 	
 	@Column
 	@NotNull
 	private int nombreVoie;
 	
 	@Column(name = "utilisateur_createur")
-	private String utilisateurCreateur;
+	private Integer utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private String utilisateurModif;
+	private Integer utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -55,16 +55,16 @@ public class Secteur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Secteur(int site) {
+	public Secteur(Integer site) {
 		super();
 		this.site = site;
 	}
 
-	public int getSite() {
+	public Integer getSite() {
 		return site;
 	}
 
-	public void setSite(int site) {
+	public void setSite(Integer site) {
 		this.site = site;
 	}
 	
@@ -84,19 +84,19 @@ public class Secteur implements Serializable {
 		this.nom = nom;
 	}
 
-	public String getUtilisateurCreateur() {
+	public Integer getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(String utilisateurCreateur) {
+	public void setUtilisateurCreateur(Integer utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public String getUtilisateurModif() {
+	public Integer getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(Integer utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

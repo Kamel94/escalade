@@ -14,12 +14,17 @@
 			<div class="card-fluid">
 				<div class="card-header">Saisie d'un secteur</div>
 				<div class="card-body">
-					<form th:action="@{/user/enregistrerSecteur}" method="post">
+					<form th:action="@{/user/enregistrerSecteur/{id}(id=${site.id})}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Auteur : </label> <input
 								class="form-control-xs" type="hidden" name="utilisateurCreateur"
-								th:value="${#httpServletRequest.remoteUser}">[[${#httpServletRequest.remoteUser}]] <span
-								class="red" th:errors="${secteur.utilisateurCreateur}" th:inline="text"></span>
+								th:value="${utilisateur.id}">[[${#httpServletRequest.remoteUser}]] <span
+								class="red" th:errors="${utilisateur.id}" th:inline="text"></span>
+						</div>
+						<div> <input
+								class="form-control-xs" type="hidden" name="utilisateurModif"
+								th:value="${utilisateur.id}"> <span
+								class="red" th:errors="${utilisateur.id}" th:inline="text"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Date : </label> <input
@@ -27,10 +32,15 @@
 								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
 								class="red" th:errors="${secteur.dateCreation}" th:inline="text"></span>
 						</div>
+						<div> <input
+								class="form-control-xs" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"> <span
+								class="red" th:errors="${secteur.dateModif}" th:inline="text"></span>
+						</div>
 						<div class="form-group">
 							<label class="col-form-label">Site : </label> <input
 								class="form-control-xs" type="hidden" name="site"
-								th:value="${secteur.site}">[[${secteur.site}]] <span
+								th:value="${secteur.site}">[[${site.nom}]] <span
 								class="red" th:errors="${secteur.site}" th:inline="text"></span>
 						</div>
 						<div class="form-group">

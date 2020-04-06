@@ -16,19 +16,14 @@
 					<label>Auteur : </label>
 					<label th:text="${#httpServletRequest.remoteUser}"></label>
 				</div>
-				<div th:if="${secteur.dateCreation == null}"
-					 class="form-group">
-					<label>Date : </label>
-					<label th:text="${secteur.dateCreation}"></label>
-				</div>
 				<div th:if="${secteur.dateModif != null}"
 					 class="form-group">
-					<label>Date de modification : </label>
+					<label>Date : </label>
 					<label th:text="${secteur.dateModif}"></label>
 				</div>
 				<div class="form-group">
 					<label>Site : </label>
-					<label th:text="${secteur.site}"></label>
+					<label th:text="${site.nom}"></label>
 				</div>
 				<div class="form-group">
 					<label>Nom : </label>
