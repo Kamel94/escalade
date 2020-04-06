@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import fr.escalade.dao.InfoSiteRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.entities.InfoSite;
@@ -22,8 +21,6 @@ public class EscaladeApplication implements CommandLineRunner {
 	@Autowired
 	private SiteRepository siteRepository;
 	
-	@Autowired
-	private InfoSiteRepository infoSiteRepository;
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(EscaladeApplication.class, args);

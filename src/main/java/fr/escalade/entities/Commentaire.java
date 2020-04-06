@@ -14,22 +14,21 @@ public class Commentaire {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "site_nom", length = 30)
-	@Size(min = 1, max = 30)
-    private String site;
+	@Column(name = "site_id")
+    private int site;
 	
-	@Column(length = 500)
+	@Column(length = 500, name = "commentaire")
 	@Size(min = 1, max = 500)
 	private String comment;
 
 	@Column(name = "utilisateur_createur", length = 15)
-    private String auteur;
+    private int auteur;
 
 	@Column(name = "date_creation")
     private Timestamp date;
 
 	@Column(name = "utilisateur_modif", length = 15)
-	private String utilisateurModif;
+	private int utilisateurModif;
 
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
@@ -39,7 +38,7 @@ public class Commentaire {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Commentaire(String site, String comment, String auteur, Timestamp date) {
+	public Commentaire(int site, String comment, int auteur, Timestamp date) {
 		super();
 		this.site = site;
 		this.comment = comment;
@@ -47,7 +46,7 @@ public class Commentaire {
 		this.date = date;
 	}
 	
-	public Commentaire(String site) {
+	public Commentaire(int site) {
 		super();
 		this.site = site;
 	}
@@ -68,11 +67,11 @@ public class Commentaire {
 		this.comment = comment;
 	}
 
-	public String getAuteur() {
+	public int getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(String auteur) {
+    public void setAuteur(int auteur) {
         this.auteur = auteur;
     }
 
@@ -84,19 +83,19 @@ public class Commentaire {
         this.date = date;
     }
 
-    public String getSite() {
+    public int getSite() {
         return site;
     }
 
-    public void setSite(String site) {
+    public void setSite(int site) {
         this.site = site;
     }
 
-	public String getUtilisateurModif() {
+	public int getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(int utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

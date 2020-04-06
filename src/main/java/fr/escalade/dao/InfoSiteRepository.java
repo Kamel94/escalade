@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 
 import fr.escalade.entities.InfoSite;
 
-public interface InfoSiteRepository extends JpaRepository<InfoSite, String> {
+/*public interface InfoSiteRepository extends JpaRepository<InfoSite, String> {
 	
 	@Query("select p from InfoSite p where p.description like :x")
 	Page<InfoSite> chercher(@Param("x")String mc, Pageable pageable);
 	
 	List<InfoSite> findBySite(String nom);
 
-}
+}*/

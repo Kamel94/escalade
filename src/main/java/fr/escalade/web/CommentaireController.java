@@ -67,7 +67,7 @@ public class CommentaireController {
 	}
 
 	@GetMapping(value="/user/ajoutCom/{id}")
-	public String ajoutCom(Model model, @PathVariable("id") String id) {
+	public String ajoutCom(Model model, @PathVariable("id") int id) {
 		model.addAttribute("commentaire", new Commentaire(id));
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "ajoutCom"; 

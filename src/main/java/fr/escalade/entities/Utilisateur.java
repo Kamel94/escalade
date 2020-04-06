@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 
@@ -18,7 +20,10 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = -591498517976957905L;
 
 	@Id
-	@Column(length = 15, name = "identifiant")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column(length = 15, name = "pseudo")
 	private String pseudo;
 	
 	@Email
@@ -40,14 +45,14 @@ public class Utilisateur implements Serializable {
 	@Column(length = 15)
 	private String telephone;
 	
-	@Column(name = "active")
+	@Column(name = "actif")
 	private boolean compteActif;
 	
 	@Column(name = "utilisateur_createur")
-	private String utilisateurCreateur;
+	private int utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private String utilisateurModif;
+	private int utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -136,19 +141,19 @@ public class Utilisateur implements Serializable {
 		this.telephone = telephone;
 	}
 
-	public String getUtilisateurCreateur() {
+	public int getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(String utilisateurCreateur) {
+	public void setUtilisateurCreateur(int utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public String getUtilisateurModif() {
+	public int getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(int utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 
@@ -170,6 +175,14 @@ public class Utilisateur implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

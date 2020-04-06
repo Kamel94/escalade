@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 import com.sun.istack.NotNull;
 
-@Entity
+
 public class InfoSite implements Serializable {
 	
 	@Id

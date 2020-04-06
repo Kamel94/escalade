@@ -22,7 +22,7 @@
 				th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
 		</nav>
 		<p class="text-right text-light titre"
-			th:if="${#httpServletRequest.remoteUser} != null">Salut ami
+			th:if="${#httpServletRequest.remoteUser} != null">Bonjour
 			[[${#httpServletRequest.remoteUser}]] ! &nbsp; &nbsp;</p>
 	</div>
 	<section layout:fragment="content"></section>

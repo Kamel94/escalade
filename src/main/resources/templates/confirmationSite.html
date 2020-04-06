@@ -46,8 +46,13 @@
 					<label>Nombre de secteur : </label>
 					<label th:text="${site.nombreSecteur}"></label>
 				</div>
+				<div class="form-group"
+					 th:if="${site.tag} == null">
+					<label>Tag : </label>
+					<label th:text="${site.tag}"></label>
+				</div>
 				<div class="form-group">
-					<a class="btn btn-primary droite" th:href="@{/site}">Retour à la liste</a>
+					<a class="btn btn-info rond-lege" th:href="@{/accueil}">Retour à la liste</a>
 				</div>
 			</div>
 		</div>

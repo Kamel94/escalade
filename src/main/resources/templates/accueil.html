@@ -10,12 +10,19 @@
 <body class="bleu">
 	<div layout:fragment="content">
 		<div class="bleu">
-			<header> <a
-					class="btn btn-warning btn-titre spacer bord-rond"
-					th:href="@{/topos}">Voir la liste des topos</a>
-				<a class="btn btn-warning dr spacer titre bord-rond" 
-				th:if="${#httpServletRequest.remoteUser} == null"
-				th:href="@{/inscription}" sec:authorize="isAnonymous()">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;S'inscrire &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</a>
+			<header>
+				<a class="btn btn-warning btn-titre spacer bord-rond"
+					th:href="@{/topos}">Voir la liste des topos</a> <a
+					class="btn btn-warning dr spacer titre bord-rond"
+					th:if="${#httpServletRequest.remoteUser} == null"
+					th:href="@{/inscription}" sec:authorize="isAnonymous()">&nbsp;
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;S'inscrire &nbsp; &nbsp; &nbsp;
+					&nbsp;&nbsp; &nbsp;</a> <a
+					class="btn btn-warning dr spacer titre bord-rond"
+					th:if="${utilisateur.statut} == 'ADMIN'"
+					th:href="@{/admin/utilisateurs}" sec:authorize="isAnonymous()">&nbsp;
+					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Voir les utilisateurs &nbsp;
+					&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</a>
 			</header>
 			<h2 class="text-center text-warning p-3 font-italic">
 				<span class="font-weight-light">Bienvenue</span> <b> amis de
@@ -29,6 +36,24 @@
 				un site</a> <br> <br>
 		</div>
 		<br>
+		<div class="">
+			<form class="text-warning form-inline" th:action="@{/accueil}"
+				method="get">
+				<label> &nbsp; Nom : &nbsp;</label> <input class="form-control-sm"
+					type="text" name="nom" th:value="${nom}"> <label>&nbsp;Pays
+					: &nbsp;</label> <input class="form-control-sm" type="text" name="pays"
+					th:value="${pays}"> <label>&nbsp;Region : &nbsp;</label> <input
+					class="form-control-sm" type="text" name="region"
+					th:value="${region}">
+				<label>&nbsp; Secteur : &nbsp;</label>
+					<input class="form-control-sm" type="number" name="sec" th:value="${sec}">
+				&nbsp; &nbsp;
+				<button class="btn text-primary vert-bleu rond-lege">Chercher</button>
+				&nbsp; &nbsp;
+			</form>
+		</div>
+		<br> <br>
+		<br> <br>
 		<div th:each="s:${listeSites}"
 			class="container-fluid bleu col-sm-10 pt-1">
 			<table class="table vert-bleu text-info spacer rond-haut">
@@ -43,7 +68,8 @@
 					<tr>
 						<th>Secteurs : &nbsp; &nbsp; &nbsp; [[${s.nombreSecteur}]]</th>
 					<tr>
-						<th>Tag : &nbsp; &nbsp; &nbsp; [[${s.tag}]]</th>
+						<th>Tag : &nbsp; &nbsp; &nbsp; <span th:text="${s.tag} == true? 'Officiel les amis de l escalade' : 'Non officiel'"></span></th>
+						<th ></th>
 					</tr>
 				</tbody>
 			</table>

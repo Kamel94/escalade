@@ -10,21 +10,6 @@
 	<div layout:fragment="content">
 		<div class="container-fluid">
 			<br>
-			<div class="dr">
-				<form class="form-inline" th:action="@{/site}" method="get">
-					<label>Nom : &nbsp;</label> <input class="form-control-xs"
-						type="text" name="motCle" th:value="${motCle}"> <label>Pays
-						: &nbsp;</label> <input class="form-control-xs" type="text" name="pays"
-						th:value="${pays}"> <label>Region : &nbsp;</label> <input
-						class="form-control-xs" type="text" name="region"
-						th:value="${region}">
-					<!-- <label>Ville : &nbsp;</label>
-					<input class="form-control-xs" type="text" name="i" th:value="${i}"> -->
-					&nbsp; &nbsp;
-					<button class="btn btn-success rond-lege">Chercher</button>
-				</form>
-			</div>
-			<br>
 			<h3>
 				Liste des sites <a class="btn btn-info btn-titre rond-lege"
 					th:href="@{/user/ajoutSite}">Ajouter un site</a>
@@ -46,7 +31,7 @@
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.nombreSecteur}"></td>
 						<td><a class="btn btn-primary rond-lege"
-							th:href="@{/siteDetail/{id}(id=${s.nom})}">Consulter le
+							th:href="@{/siteDetail/{id}/{site}(id=${s.nom}, site=${s.id})}">Consulter le
 								détail</a></td>
 					</tr>
 				</tbody>

@@ -3,6 +3,7 @@ package fr.escalade.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,12 +21,18 @@ import com.sun.istack.NotNull;
 public class Secteur implements Serializable {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	@Column
 	private String nom;
 	
-	/*@OneToMany
-	@JoinColumn(name="site_id")*/
-	@Column(name = "site_nom")
-	private String site;
+	/*@ManyToOne(fetch =FetchType.LAZY)
+	@JoinColumn(name="site_id", nullable = false, insertable = false, updatable = false)
+	private Site sit;*/
+	
+	@Column(name = "site_id")
+	private int site;
 	
 	@Column
 	@NotNull
@@ -48,16 +55,16 @@ public class Secteur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Secteur(String site) {
+	public Secteur(int site) {
 		super();
 		this.site = site;
 	}
 
-	public String getSite() {
+	public int getSite() {
 		return site;
 	}
 
-	public void setSite(String site) {
+	public void setSite(int site) {
 		this.site = site;
 	}
 	
@@ -107,6 +114,14 @@ public class Secteur implements Serializable {
 
 	public void setDateModif(Timestamp dateModif) {
 		this.dateModif = dateModif;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

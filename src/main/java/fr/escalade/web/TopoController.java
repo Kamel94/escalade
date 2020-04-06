@@ -96,7 +96,7 @@ public class TopoController {
 	}
 
 	@RequestMapping(value="/user/modifier", method=RequestMethod.GET)
-	public String modifier(Model model, String id) {
+	public String modifier(Model model, int id) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		model.addAttribute("topo", t);
 		return "Modif";
@@ -110,7 +110,7 @@ public class TopoController {
 	}*/
 
 	@GetMapping(value="/supprimer")
-	public String supprimer(String id) {
+	public String supprimer(int id) {
 		topoRepository.deleteById(id);
 		return "redirect:/listeMesTopos";
 	}
@@ -191,20 +191,20 @@ public class TopoController {
 	}*/
 
 	@GetMapping("/user/demandepret/{id}")
-	public String gererDemandeEmpruntTopo(@PathVariable("id") String id, Principal principal, Model model) {
+	public String gererDemandeEmpruntTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
 
 		if(principal == null) {
 			return "redirect:/login";
-		} else if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == null) {
+		} else if (topo.getDisponibilite().equals("Disponible") && topo.getEmprunteur() == 0) {
 			Utilisateur emprunteur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 			LocalDateTime dateTime = LocalDateTime.now();
-			Utilisateur proprio = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
-			ReservationTopo resa = new ReservationTopo(topo.getNom(), "Demande", principal.getName(), topo.getProprietaire(), Timestamp.valueOf(dateTime));
+			Utilisateur proprio = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
+			ReservationTopo resa = new ReservationTopo(topo.getId(), "Demande", emprunteur.getId(), topo.getProprietaire(), Timestamp.valueOf(dateTime));
 			//resa.setDemandeur(principal.getName());
-			topo.setEmprunteur(emprunteur.getPseudo());
-			topo.setDemandeur(emprunteur.getPseudo());
-			topo.setContact(proprio.getEmail());
+			topo.setEmprunteur(emprunteur.getId());
+			topo.setDemandeur(emprunteur.getId());
+			topo.setContact(proprio.getId());
 			topo.setDisponibilite("Demande");
 			reservationRepository.save(resa);
 		} else {
@@ -214,12 +214,12 @@ public class TopoController {
 	}
 
 	@GetMapping("/user/accepterpret/{id}")
-	public String accepterPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
+	public String accepterPretTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu pour acceptation prêt: " + id));
 		topo.setDisponibilite("Indisponible");
 
 		LocalDateTime dateTime = LocalDateTime.now();
-		ReservationTopo resa = reservationRepository.findByTopoNomAndReponseDemande(id, "Demande");
+		ReservationTopo resa = reservationRepository.findByTopoIdAndReponseDemande(id, "Demande");
 
 		//resa.setUtilisateurModif(topo.getProprietaire());
 		resa.setReponseDemande("Acceptée");
@@ -244,24 +244,24 @@ public class TopoController {
 	}*/
 	
 	@GetMapping("/user/redisponible/{id}")
-	public String redisponible(@PathVariable("id") String id, Principal principal, Model model) {
+	public String redisponible(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
 		
 		topo.setDisponibilite("Disponible");
-		topo.setEmprunteur(null);
-		topo.setDemandeur(null);
-		topo.setContact(null);
+		topo.setEmprunteur(0);
+		topo.setDemandeur(0);
+		topo.setContact(0);
 
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
 	}
 
 	@GetMapping("/user/refuserpret/{id}")
-	public String refuserPretTopo(@PathVariable("id") String id, Principal principal, Model model) {
+	public String refuserPretTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
 		LocalDateTime dateTime = LocalDateTime.now();
 		
-		ReservationTopo resa = reservationRepository.findByTopoNomAndReponseDemande(id, "Demande");
+		ReservationTopo resa = reservationRepository.findByTopoIdAndReponseDemande(id, "Demande");
 
 		model.addAttribute("resa", resa);
 		
@@ -269,8 +269,8 @@ public class TopoController {
 		resa.setDateModif(Timestamp.valueOf(dateTime));
 		
 		topo.setDisponibilite("Disponible");
-		topo.setEmprunteur(null);
-		topo.setContact(null);
+		topo.setEmprunteur(0);
+		topo.setContact(0);
 
 		//reservationRepository.save(resa);
 		topoRepository.save(topo);
@@ -288,22 +288,34 @@ public class TopoController {
 	}
 
 	@GetMapping("/accueil")
-	public String accueil(Model model, 
+	public String accueil(Model model, Principal principal, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc,
+			@RequestParam(name="nom", defaultValue = "") String nom,
 			@RequestParam(name="pays", defaultValue = "") String pays,
-			@RequestParam(name="region", defaultValue = "") String region) {
+			@RequestParam(name="region", defaultValue = "") String region,
+			@RequestParam(name="sec", defaultValue = "0") int sec) {
 
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + pays + "%", "%" + region + "%", PageRequest.of(p, s));
+		Page<Site> pageSites = siteRepository.chercher("%" + nom + "%", "%" + pays + "%", "%" + region + "%", sec, PageRequest.of(p, s));
 		model.addAttribute("listeSites", pageSites.getContent());
 		int[] pages = new int[pageSites.getTotalPages()];
 
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-
+		model.addAttribute("nom", nom);
+		model.addAttribute("pays", pays);
+		model.addAttribute("region", region);
+		model.addAttribute("sec", sec);
+		
+		if(principal != null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("utilisateur", utilisateur);
+		} else {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			model.addAttribute("utilisateur", utilisateur);
+		}
+		
 		List<Site> site = siteRepository.findAll();
 		model.addAttribute("site", site);
 		List<Secteur> secteur = secteurRepository.findAll();

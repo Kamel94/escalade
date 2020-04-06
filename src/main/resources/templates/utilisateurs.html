@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Sites</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br>
+			<h3>
+				<!-- Lien à créer -->
+				Liste des utilisateurs <a class="btn btn-info btn-titre rond-lege"
+					th:href="@{/ajoutUtilisateur}">Ajouter un utilisateur</a>
+			</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Pseudo</th>
+						<th>Email</th>
+						<th>Statut</th>
+						<th>Compte</th>
+						<th>Date d'adhésion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="u:${utilisateur}" th:if="${u.pseudo} != 'visiteur'">
+						<td th:text="${u.pseudo}"></td>
+						<td th:text="${u.email}"></td>
+						<td th:text="${u.statut}"></td>
+						<td th:text="${u.compteActif} == true? 'Actif' : 'Non actif'"></td>
+						<td th:text="${u.dateCreation}"></td>
+						<td><a
+							th:class="${u.statut} == 'USER'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+							onclick="return confirm('Êtes-vous sûr de votre choix ?')"
+							th:href="@{/rendreMembre/{id}(id=${u.pseudo})}">Rendre membre</a>
+							<a class="btn btn-danger rond-lege"
+							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
+							th:href="@{/supprimerSite(id=${u.pseudo})}">Supprimer</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
+					th:each="pa,status:${pages}"><a class="nav-link active"
+					th:href="@{/admin/utilisateurs(page=${status.index}, size=${size})}"
+					th:text="${status.index}"></a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

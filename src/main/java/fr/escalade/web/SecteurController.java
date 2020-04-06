@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.escalade.dao.InfoSiteRepository;
 import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
@@ -79,7 +78,7 @@ public class SecteurController {
 	}
 
 	@GetMapping(value="/user/ajoutSecteur/{id}")
-	public String ajoutSecteur(Model model, @PathVariable("id")String id) {
+	public String ajoutSecteur(Model model, @PathVariable("id")int id) {
 		
 		model.addAttribute("secteur", new Secteur(id));
 		model.addAttribute("localDate", LocalDateTime.now());
@@ -88,7 +87,7 @@ public class SecteurController {
 	}
 
 	@RequestMapping(value="/user/modifierSecteur", method=RequestMethod.GET)
-	public String modifierSecteur(Model model, String id) {
+	public String modifierSecteur(Model model, int id) {
 		
 		Secteur secteur = secteurRepository.findById(id).orElse(null);
 		model.addAttribute("secteur", secteur);
@@ -98,7 +97,7 @@ public class SecteurController {
 	}
 
 	@GetMapping(value="/user/supprimerSecteur")
-	public String supprimerSecteur(String id) {
+	public String supprimerSecteur(int id) {
 		secteurRepository.deleteById(id);
 		return "secteur";
 	}

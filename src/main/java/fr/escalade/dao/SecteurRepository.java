@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
 
-public interface SecteurRepository extends JpaRepository<Secteur, String> {
+public interface SecteurRepository extends JpaRepository<Secteur, Integer> {
 
 	@Query("select s from Secteur s where s.nom like :x")
 	Page<Secteur> chercher(@Param("x")String nom, Pageable pageable);

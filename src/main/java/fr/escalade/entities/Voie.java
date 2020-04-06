@@ -20,17 +20,17 @@ public class Voie implements Serializable {
 	@Column(name = "numero_voie")
 	private int numeroVoie;
 	
-	@Column(name = "secteur_nom")
-	private String secteurNom;
+	@Column(name = "secteur_id")
+	private int secteurNom;
 	
 	@Column(name = "nombre_longueur")
 	private int nombreLongueur;
 	
-	@Column(name = "utilisateur_createur", length = 15)
-	private String utilisateurCreateur;
+	@Column(name = "utilisateur_createur")
+	private int utilisateurCreateur;
 
-	@Column(name = "utilisateur_modif", length = 15)
-	private String utilisateurModif;
+	@Column(name = "utilisateur_modif")
+	private int utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -38,11 +38,11 @@ public class Voie implements Serializable {
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
 	
-	public String getSecteurNom() {
+	public int getSecteurNom() {
 		return secteurNom;
 	}
 
-	public void setSecteurNom(String secteurNom) {
+	public void setSecteurNom(int secteurNom) {
 		this.secteurNom = secteurNom;
 	}
 	
@@ -61,7 +61,7 @@ public class Voie implements Serializable {
 		this.cotation = cotation;
 	}
 	
-	public Voie(String secteurNom) {
+	public Voie(int secteurNom) {
 		super();
 		this.secteurNom = secteurNom;
 	}
@@ -98,19 +98,19 @@ public class Voie implements Serializable {
 		this.cotation = cotation;
 	}
 
-	public String getUtilisateurCreateur() {
+	public int getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(String utilisateurCreateur) {
+	public void setUtilisateurCreateur(int utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public String getUtilisateurModif() {
+	public int getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(int utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

@@ -28,7 +28,7 @@
 						<td th:text="${s.nombreVoie}"></td>
 						<td><a class="btn btn-info rond-lege"
 							th:if="${#httpServletRequest.remoteUser != null}"
-							th:href="@{/user/ajoutVoie/{site}/{nom}(site=${s.site}, nom=${s.nom})}">Ajouter voie</a>
+							th:href="@{/user/ajoutVoie/{site}/{id}(site=${s.site}, id=${s.id})}">Ajouter voie</a>
 							<a class="" th:if="${#httpServletRequest.remoteUser == null}"
 							th:href="@{/login}">S'identifier pour ajouter une voie</a></td>
 						<td><a class="btn btn-success rond-lege"

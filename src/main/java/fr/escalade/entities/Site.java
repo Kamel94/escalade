@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,9 +26,9 @@ import fr.escalade.dao.SecteurRepository;
 
 @Entity
 public class Site implements Serializable {
-	
-	/*@OneToMany(mappedBy="site", fetch=FetchType.LAZY)
-	private Collection<Secteur> secteurs;
+
+	/*@OneToMany(mappedBy = "sit", orphanRemoval = true, cascade = CascadeType.REMOVE)
+	private Set<Secteur> secteurs;
 
 	public Collection<Secteur> getTopos() {
 		return secteurs;
@@ -36,8 +37,10 @@ public class Site implements Serializable {
 	public void setTopos(Collection<Secteur> secteurs) {
 		this.secteurs = secteurs;
 	}*/
-	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	@Column(length = 40)
 	@NotNull
 	private String nom;
@@ -62,10 +65,10 @@ public class Site implements Serializable {
 	private String tag;
 	
 	@Column(name = "utilisateur_createur")
-	private String utilisateurCreateur;
+	private int utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private String utilisateurModif;
+	private int utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -135,19 +138,19 @@ public class Site implements Serializable {
 		this.tag = tag;
 	}
 
-	public String getUtilisateurCreateur() {
+	public int getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(String utilisateurCreateur) {
+	public void setUtilisateurCreateur(int utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public String getUtilisateurModif() {
+	public int getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(int utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 
@@ -166,4 +169,14 @@ public class Site implements Serializable {
 	public void setDateModif(Timestamp dateModif) {
 		this.dateModif = dateModif;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	
 }

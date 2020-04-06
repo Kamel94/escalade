@@ -15,13 +15,15 @@
 				<div class="card-header">Modification d'un site</div>
 				<div class="card-body">
 					<form th:action="@{/user/enregistrerSite}" method="post">
-						<div class="form-group">
-							<label class="col-form-label">Créateur : </label> 
+						<div class="form-group"
+							 th:if="${site.utilisateurCreateur} != null">
+							<label class="col-form-label">Ajouté par : </label> 
 							<input class="form-control-xs" type="hidden" name="utilisateurCreateur"
 								th:value="${site.utilisateurCreateur}"> [[${site.utilisateurCreateur}]]
 								<span class="red" th:errors="${site.utilisateurCreateur}" th:inline="text"></span>
 						</div>
-						<div class="form-group">
+						<div class="form-group"
+							 th:if="${site.dateCreation} != null">
 							<label class="col-form-label">Date de création : </label> <input
 								class="form-control-xs decaler" type="hidden" name="dateCreation"
 								th:value="${site.dateCreation}"> [[${site.dateCreation}]] <span class="red"
@@ -71,9 +73,15 @@
 							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
 								class="red" th:errors="${site.dateModif}"></span>
 						</div>
+						<div class="form-group">
+							<label class="col-form-label"></label> <input
+								class="form-control-xs" type="hidden" name="tag"
+								th:value="${site.tag}"> <span class="red"
+								th:errors="${site.tag}"></span>
+						</div>
 						<div>
-							<button type="submit" class="btn btn-primary">Enregistrer</button>
-							<a class="btn btn-danger btn-titre"
+							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+							<a class="btn btn-danger btn-titre rond-lege"
 								th:href="@{/siteDetail/{id}(id=${site.nom})}">Annuler</a>
 						</div>
 					</form>

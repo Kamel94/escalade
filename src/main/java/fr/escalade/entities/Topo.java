@@ -21,7 +21,9 @@ import com.sun.istack.NotNull;
 @Entity
 public class Topo implements Serializable {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	@Column(length = 70)
 	@NotNull
 	@Size(min = 1, max = 70)
@@ -29,8 +31,8 @@ public class Topo implements Serializable {
 	
 	/*@ManyToOne
 	@JoinColumn(name="utilisateur_id")*/
-	@Column(length = 30, name = "utilisateur_identifiant")
-	private String proprietaire;
+	@Column(length = 30, name = "utilisateur_id")
+	private int proprietaire;
 	
 	@Column(length = 500)
 	@Size(min = 1, max = 500)
@@ -45,15 +47,15 @@ public class Topo implements Serializable {
 	@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd", style = "dd-MM-yyyy")
 	private Date parution;
 	
-	private String emprunteur;
+	private int emprunteur;
 	
-	private String contact;
+	private int contact;
 	
 	@Column(name = "utilisateur_createur")
-	private String utilisateurCreateur;
+	private int utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private String utilisateurModif;
+	private int utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -61,9 +63,12 @@ public class Topo implements Serializable {
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
 	
-	private String demandeur;
+	private int demandeur;
 	
-	private Utilisateur utilisateur;
+	@Column(name= "site_id")
+	private int site;
+	
+	/*private Utilisateur utilisateur;
 	
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
@@ -71,13 +76,13 @@ public class Topo implements Serializable {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
-	}
+	}*/
 
-	public String getEmprunteur() {
+	public int getEmprunteur() {
 		return emprunteur;
 	}
 
-	public void setEmprunteur(String emprunteur) {
+	public void setEmprunteur(int emprunteur) {
 		this.emprunteur = emprunteur;
 	}
 
@@ -90,7 +95,7 @@ public class Topo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(String proprietaire, String description, String lieu, Date parution, String emprunteur, String disponibilite) {
+	public Topo(int proprietaire, String description, String lieu, Date parution, int emprunteur, String disponibilite) {
 		super();
 		this.proprietaire = proprietaire;
 		this.description = description;
@@ -140,43 +145,43 @@ public class Topo implements Serializable {
 		this.disponibilite = disponibilite;
 	}
 	
-	public String getProprietaire() {
+	public int getProprietaire() {
 		return proprietaire;
 	}
 
-	public void setProprietaire(String proprietaire) {
+	public void setProprietaire(int proprietaire) {
 		this.proprietaire = proprietaire;
 	}
 
-	public String getDemandeur() {
+	public int getDemandeur() {
 		return demandeur;
 	}
 
-	public void setDemandeur(String demandeur) {
+	public void setDemandeur(int demandeur) {
 		this.demandeur = demandeur;
 	}
 
-	public String getContact() {
+	public int getContact() {
 		return contact;
 	}
 
-	public void setContact(String contact) {
+	public void setContact(int contact) {
 		this.contact = contact;
 	}
 
-	public String getUtilisateurCreateur() {
+	public int getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(String utilisateurCreateur) {
+	public void setUtilisateurCreateur(int utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public String getUtilisateurModif() {
+	public int getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(int utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 
@@ -194,6 +199,22 @@ public class Topo implements Serializable {
 
 	public void setDateModif(Timestamp dateModif) {
 		this.dateModif = dateModif;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public int getSite() {
+		return site;
+	}
+
+	public void setSite(int site) {
+		this.site = site;
 	}
 
 }

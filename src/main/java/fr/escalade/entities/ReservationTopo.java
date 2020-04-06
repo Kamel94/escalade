@@ -16,17 +16,17 @@ public class ReservationTopo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "topo_nom")
-	private String topoNom;
+	@Column(name = "topo_id")
+	private int topoId;
 	
 	@Column(name = "utilisateur_createur")
-	private String demandeur;
+	private int demandeur;
 	
 	@Column(name = "reponse_demande")
 	private String reponseDemande;
 
 	@Column(name = "utilisateur_modif")
-	private String utilisateurModif;
+	private int utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -39,9 +39,9 @@ public class ReservationTopo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReservationTopo(String topoNom, String reponseDemande, String demandeur, String utilisateurModif, Timestamp dateCreation) {
+	public ReservationTopo(int topoId, String reponseDemande, int demandeur, int utilisateurModif, Timestamp dateCreation) {
 		super();
-		this.topoNom = topoNom;
+		this.topoId = topoId;
 		this.reponseDemande = reponseDemande;
 		this.demandeur = demandeur;
 		this.utilisateurModif = utilisateurModif;
@@ -56,12 +56,12 @@ public class ReservationTopo implements Serializable {
 		this.reponseDemande = reponseDemande;
 	}
 
-	public String getTopoNom() {
-		return topoNom;
+	public int getTopoId() {
+		return topoId;
 	}
 
-	public void setTopoNom(String topoNom) {
-		this.topoNom = topoNom;
+	public void setTopoId(int topoId) {
+		this.topoId = topoId;
 	}
 
 	public Integer getId() {
@@ -72,19 +72,19 @@ public class ReservationTopo implements Serializable {
 		this.id = id;
 	}
 
-	public String getDemandeur() {
+	public int getDemandeur() {
 		return demandeur;
 	}
 
-	public void setDemandeur(String demandeur) {
+	public void setDemandeur(int demandeur) {
 		this.demandeur = demandeur;
 	}
 
-	public String getUtilisateurModif() {
+	public int getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(String utilisateurModif) {
+	public void setUtilisateurModif(int utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

@@ -52,6 +52,9 @@ public class SiteController {
 
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
+	
+	@Autowired
+	private TopoRepository topoRepository;
 
 	@GetMapping(value = "/site")
 	public String site(Model model,      
@@ -60,11 +63,10 @@ public class SiteController {
 			@RequestParam(name="motCle", defaultValue = "") String mc,
 			@RequestParam(name="pays", defaultValue = "") String pays,
 			@RequestParam(name="region", defaultValue = "") String region,
-			@RequestParam(name="i", defaultValue = "0") int i,
+			@RequestParam(name="nbrSecteur", defaultValue = "0") int secteur,
 			Principal principal) {
 
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", "%" + pays + "%", "%" + region + "%", PageRequest.of(p, s));
-		model.addAttribute("listeSites", pageSites.getContent());
+		Page<Site> pageSites = siteRepository.chercher( "%" + mc + "%", "%" + pays + "%", "%" + region + "%" , secteur, PageRequest.of(p, s));
 		int[] pages = new int[pageSites.getTotalPages()];
 		
 		/*List<Site> site = siteRepository.finById("%" + mc + "%");
@@ -78,26 +80,26 @@ public class SiteController {
 		List<Site> site = siteRepository.cherche(id);
 		model.addAttribute("site", site);*/
 		
+		model.addAttribute("listeSites", pageSites.getContent());
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		model.addAttribute("motCle", mc);
 		model.addAttribute("pays", pays);
 		model.addAttribute("region", region);
+		model.addAttribute("nbrSecteur", secteur);
 		
 		return "site";
 	}
 	
-	@GetMapping(value="/siteDetail/{id}")
-	public String site(@PathVariable("id")String id, Model model, Principal principal,
+	@GetMapping(value="/siteDetail/{id}/{site}")
+	public String site(@PathVariable("id")String id, @PathVariable("site")int idsite, Model model, Principal principal,
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "6") int s) {
 		List<Site> site = siteRepository.findByNom(id);
 		model.addAttribute("site", site);
 		List<Secteur> secteur = secteurRepository.secteur(id);
 		model.addAttribute("secteur", secteur);
-		
-		Site sit = siteRepository.findById(id).orElse(null);
 		
 		Page<Commentaire> commentaire = commentaireRepository.chercher(id, PageRequest.of(p, s));
 		model.addAttribute("liste", commentaire);
@@ -112,7 +114,7 @@ public class SiteController {
 		//Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
 		
-		Site si = siteRepository.getOne(id);
+		Site si = siteRepository.getOne(idsite);
 		model.addAttribute("si", si);
 		
 		if(si.getTag() == null) {
@@ -134,14 +136,14 @@ public class SiteController {
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		
-		model.addAttribute("commentaire", new Commentaire(id));
+		model.addAttribute("commentaire", new Commentaire(idsite));
 		model.addAttribute("localDate", LocalDateTime.now());
 		
 		return "siteDetail";
 	}
 	
-	@GetMapping(value="/admin/tag/{id}")
-	public String tag(Model model, @PathVariable("id")String id) {
+	@GetMapping(value="/membre/tag/{id}")
+	public String tag(Model model, @PathVariable("id")int id) {
 		
 		Site site = siteRepository.getOne(id);
 		model.addAttribute("site", site);
@@ -151,6 +153,18 @@ public class SiteController {
 		} else if(site.getTag().equals("Non officiel")) {
 			site.setTag("Officiel Les amis de l’escalade");
 		}
+		siteRepository.save(site);
+		return "redirect:/siteDetail/{id}";
+	}
+	
+	@GetMapping(value="/membre/enleverTag/{id}")
+	public String enleverTag(Model model, @PathVariable("id")int id) {
+		
+		Site site = siteRepository.getOne(id);
+		model.addAttribute("site", site);
+		
+		site.setTag("Non officiel");
+			
 		siteRepository.save(site);
 		return "redirect:/siteDetail/{id}";
 	}
@@ -180,7 +194,7 @@ public class SiteController {
 	}
 
 	@RequestMapping(value="/user/modifierSite", method=RequestMethod.GET)
-	public String modifierSite(Model model, String id) {
+	public String modifierSite(Model model, int id) {
 		Site site = siteRepository.findById(id).orElse(null);
 		model.addAttribute("site", site);
 		model.addAttribute("localDate", LocalDateTime.now());
@@ -189,7 +203,7 @@ public class SiteController {
 	}
 
 	@GetMapping(value="/user/supprimerSite")
-	public String supprimerSite(String id, String motCle, int page, int size) {
+	public String supprimerSite(int id, String motCle, int page, int size) {
 		siteRepository.deleteById(id);
 		return "redirect:/site?page=" + page + "&size=" + size + "&motCle=" + motCle ;
 	}

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.escalade.dao.InfoSiteRepository;
 import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
@@ -82,7 +81,7 @@ public class VoieController {
 	}*/
 
 	@GetMapping(value="/voie/{site}/{id}")
-	public String secteurSite(@PathVariable("id")String id, Model model, @PathVariable("site")String site,
+	public String secteurSite(@PathVariable("id")String id, Model model, @PathVariable("site")int site,
 			Principal principal) {
 		List<Voie> voie = voieRepository.voie(id);
 		model.addAttribute("voie", voie);
@@ -103,8 +102,8 @@ public class VoieController {
 		return "voie";
 	}
 
-	@GetMapping(value="/user/ajoutVoie/{site}/{nom}")
-	public String ajoutVoie(Model model, Voie voie, @PathVariable("site")String site, @PathVariable("nom")String nom) {
+	@GetMapping(value="/user/ajoutVoie/{site}/{id}")
+	public String ajoutVoie(Model model, Voie voie, @PathVariable("site")int site, @PathVariable("id")int nom) {
 
 		model.addAttribute("voie", new Voie(nom));
 		Site sit = siteRepository.findById(site).orElse(null);
@@ -114,7 +113,7 @@ public class VoieController {
 	}
 
 	@RequestMapping(value="/user/modifierVoie/{site}/{nom}", method=RequestMethod.GET)
-	public String modifierVoie(Model model, int id, @PathVariable("site")String site) {
+	public String modifierVoie(Model model, int id, @PathVariable("site")int site) {
 		Voie voie = voieRepository.findById(id).orElse(null);
 		model.addAttribute("voie", voie);
 		Site sit = siteRepository.findById(site).orElse(null);
@@ -124,7 +123,7 @@ public class VoieController {
 	}
 
 	@GetMapping(value="/admin/supprimerVoie/{site}/{nom}/{id}")
-	public String supprimerVoie(Model model, @PathVariable("id")int id, @PathVariable("site")String site) {
+	public String supprimerVoie(Model model, @PathVariable("id")int id, @PathVariable("site")int site) {
 		voieRepository.deleteById(id);
 		Site sit = siteRepository.findById(site).orElse(null);
 		model.addAttribute("site", sit);
@@ -132,7 +131,7 @@ public class VoieController {
 	}
 
 	@RequestMapping(value="/user/enregistrerVoie/{site}", method=RequestMethod.POST)
-	public String enregistrerVoie(Model model, @Valid Voie voie, BindingResult bindingResult, @PathVariable("site")String site) {
+	public String enregistrerVoie(Model model, @Valid Voie voie, BindingResult bindingResult, @PathVariable("site")int site) {
 
 		Site sit = siteRepository.findById(site).orElse(null);
 		if(bindingResult.hasErrors()) { 
