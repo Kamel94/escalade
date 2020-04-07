@@ -9,10 +9,13 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container-fluid">
-			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3">
-				Mes demandes<a class="btn btn-info btn-titre rond-lege"
-					th:href="@{/topos}">Retourner sur la liste des topos</a>
-			</h3>
+			<a class="btn btn-info btn-titre rond-lege"
+				title="Retourner sur la liste de mes demandes"
+				th:href="@{/user/listeMesDemandes}">Liste de
+				mes demandes</a>
+			<h3 sec:authorize="isAuthenticated()" class="my-3 p-3">Ma
+				demande du topo [[${topo.nom}]]</h3>
+			<br>
 
 			<div class="container-fluid">
 				<div class="row">
@@ -23,20 +26,27 @@
 									<th scope="col">Topo</th>
 									<th scope="col">Parution</th>
 									<th scope="col">Région</th>
-									<th scope="col">Statut de la demande</th>
+									<th scope="col">Propriétaire</th>
+									<th scope="col">Réponse</th>
+									<th scope="col">Contact</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="topo : ${topos}" 
+								<tr
 									th:if=" (${utilisateur.id} != ${topo.proprietaire} and ${topo.demandeur} == ${utilisateur.id} )">
 									<td th:text="${topo.nom}"></td>
 									<td th:text="${topo.parution}"></td>
 									<td th:text="${topo.lieu}"></td>
-									<td><a
-							class="btn btn-info rond-lege"
-							th:href="@{/user/statutDemande/{id}(id=${topo.id})}"
-							th:if="${topo.emprunteur != topo.proprietaire} and ${utilisateur.id} != ${topo.proprietaire}"><i
-								class="far fa-question-circle"></i>Voir ma demande</a></td>
+									<td th:text="${u.pseudo}"></td>
+									<th:block th:switch="${topo.disponibilite}">
+										<td th:case="Demande"
+											th:utext="'Attente de la réponse du propriétaire'"></td>
+										<td th:case="Indisponible" th:utext="'Acceptée'"></td>
+										<td th:case="Disponible" th:utext="'Refusée'"></td>
+									</th:block>
+									<th:block th:switch="${topo.disponibilite}">
+										<td th:case="Indisponible" th:utext="${u.email}"></td>
+									</th:block>
 							</tbody>
 						</table>
 						<div class="container">

@@ -100,17 +100,33 @@ public class UtilisateurController {
 	}
 
 	@GetMapping(value = "/rendreMembre/{id}")
-	public String rendreMembre(Model model, Principal principal, @PathVariable("id")int id) {
+	public String rendreMembre(Model model, Principal principal, @PathVariable("id")int id, int page, int size) {
 
 		Utilisateur utilisateur = utilisateurRepository.findById(id).orElse(null);
+		Utilisateur admin = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 		
 		utilisateur.setStatut("MEMBRE");
 		utilisateur.setDateModif(Timestamp.valueOf(LocalDateTime.now()));
-		utilisateur.setUtilisateurModif(utilisateur.getId());
+		utilisateur.setUtilisateurModif(admin.getId());
 		
 		utilisateurRepository.save(utilisateur);
 		
-		return "redirect:/admin/utilisateurs";
+		return "redirect:/admin/utilisateurs?page=" + page + "&size=" + size;
+	}
+	
+	@GetMapping(value = "/rendreUser/{id}")
+	public String rendreUser(Model model, Principal principal, @PathVariable("id")int id, int page, int size) {
+
+		Utilisateur utilisateur = utilisateurRepository.findById(id).orElse(null);
+		Utilisateur admin = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		utilisateur.setStatut("USER");
+		utilisateur.setDateModif(Timestamp.valueOf(LocalDateTime.now()));
+		utilisateur.setUtilisateurModif(admin.getId());
+		
+		utilisateurRepository.save(utilisateur);
+		
+		return "redirect:/admin/utilisateurs?page=" + page + "&size=" + size;
 	}
 
 	@GetMapping(value="/supprimerUtilisateur")

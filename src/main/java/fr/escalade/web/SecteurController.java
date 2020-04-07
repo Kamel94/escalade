@@ -120,8 +120,8 @@ public class SecteurController {
 		if(bindingResult.hasErrors()) {
 			return "ajoutSecteur";
 		}
-		Secteur sec = secteurRepository.findById(id).orElse(null);
-		Site site = siteRepository.findById(sec.getSite()).orElse(null);
+		//Secteur sec = secteurRepository.findById(id).orElse(null);
+		Site site = siteRepository.findById(id).orElse(null);
 
 		model.addAttribute("site", site);
 		secteurRepository.save(secteur);

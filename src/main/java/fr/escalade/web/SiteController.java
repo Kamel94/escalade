@@ -55,43 +55,7 @@ public class SiteController {
 	
 	@Autowired
 	private TopoRepository topoRepository;
-
-	/*@GetMapping(value = "/site")
-	public String site(Model model,      
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc,
-			@RequestParam(name="pays", defaultValue = "") String pays,
-			@RequestParam(name="region", defaultValue = "") String region,
-			@RequestParam(name="nbrSecteur", defaultValue = "0") int secteur,
-			Principal principal) {
-
-		Page<Site> pageSites = siteRepository.chercher( "%" + mc + "%", "%" + pays + "%", "%" + region + "%" , secteur, PageRequest.of(p, s));
-		int[] pages = new int[pageSites.getTotalPages()];
-		
-		List<Site> site = siteRepository.finById("%" + mc + "%");
-		Set<Site> mySet = new HashSet<Site>(pageSites.getContent());
-		List<Site> list2 = new ArrayList<Site>(mySet);
-		HashSet set = new HashSet() ;
-        set.addAll(list2) ;
-        ArrayList distinctList = new ArrayList(set);
-		model.addAttribute("site", distinctList);
-		
-		List<Site> site = siteRepository.cherche(id);
-		model.addAttribute("site", site);
-		
-		model.addAttribute("listeSites", pageSites.getContent());
-		model.addAttribute("pages", pages);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-		model.addAttribute("pays", pays);
-		model.addAttribute("region", region);
-		model.addAttribute("nbrSecteur", secteur);
-		
-		return "site";
-	}*/
-
+	
 	@GetMapping("/")
 	public String defaut() {
 		return "redirect:/accueil";
@@ -247,7 +211,7 @@ public class SiteController {
 	}
 
 	@GetMapping(value="/user/supprimerSite")
-	public String supprimerSite(int id, String motCle, int page, int size) {
+	public String supprimerSite(int id) {
 		siteRepository.deleteById(id);
 		return "redirect:/accueil";
 	}

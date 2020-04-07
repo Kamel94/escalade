@@ -81,14 +81,14 @@ public class VoieController {
 	}*/
 
 	@GetMapping(value="/voie/{site}/{id}")
-	public String secteurSite(@PathVariable("id")int id, Model model, @PathVariable("site")int site,
+	public String secteurSite(@PathVariable("id")int secteurId, Model model, @PathVariable("site")int siteId,
 			Principal principal) {
-		List<Voie> voie = voieRepository.findBySecteurId(id);
-		Site sit = siteRepository.findById(site).orElse(null);
-		Secteur secteur = secteurRepository.getOne(id);
+		List<Voie> voie = voieRepository.findBySecteurId(secteurId);
+		Site site = siteRepository.findById(siteId).orElse(null);
+		Secteur secteur = secteurRepository.getOne(secteurId);
 		
 		model.addAttribute("voie", voie);
-		model.addAttribute("site", sit);
+		model.addAttribute("site", site);
 		model.addAttribute("secteur", secteur);
 
 		Utilisateur u = new Utilisateur();
@@ -106,44 +106,61 @@ public class VoieController {
 	}
 
 	@GetMapping(value="/user/ajoutVoie/{site}/{id}")
-	public String ajoutVoie(Model model, Voie voie, @PathVariable("site")int site, @PathVariable("id")int nom) {
+	public String ajoutVoie(Model model, Voie voie, @PathVariable("site")int site, @PathVariable("id")int id,
+			Principal principal) {
 
-		model.addAttribute("voie", new Voie(nom));
 		Site sit = siteRepository.findById(site).orElse(null);
+		Secteur secteur = secteurRepository.findById(id).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("secteur", secteur);
+		model.addAttribute("voie", new Voie(id));
 		model.addAttribute("site", sit);
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "ajoutVoie";
 	}
 
-	@RequestMapping(value="/user/modifierVoie/{site}/{nom}", method=RequestMethod.GET)
-	public String modifierVoie(Model model, int id, @PathVariable("site")int site) {
+	@RequestMapping(value="/user/modifierVoie/{site}/{secteur}/{id}", method=RequestMethod.GET)
+	public String modifierVoie(Model model, @PathVariable("id")int id, @PathVariable("site")int siteId,
+			@PathVariable("secteur")int secteurId, Principal principal) {
+		
 		Voie voie = voieRepository.findById(id).orElse(null);
+		Site site = siteRepository.findById(siteId).orElse(null);
+		Secteur secteur = secteurRepository.findById(secteurId).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("secteur", secteur);
 		model.addAttribute("voie", voie);
-		Site sit = siteRepository.findById(site).orElse(null);
-		model.addAttribute("site", sit);
+		model.addAttribute("site", site);
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "modifVoie";
 	}
 
-	@GetMapping(value="/admin/supprimerVoie/{site}/{nom}/{id}")
+	@GetMapping(value="/supprimerVoie/{site}/{secteur}/{id}")
 	public String supprimerVoie(Model model, @PathVariable("id")int id, @PathVariable("site")int site) {
 		voieRepository.deleteById(id);
 		Site sit = siteRepository.findById(site).orElse(null);
 		model.addAttribute("site", sit);
-		return "redirect:/voie/{site}/{nom}" ;
+		return "redirect:/voie/{site}/{secteur}" ;
 	}
 
-	@RequestMapping(value="/user/enregistrerVoie/{site}", method=RequestMethod.POST)
-	public String enregistrerVoie(Model model, @Valid Voie voie, BindingResult bindingResult, @PathVariable("site")int site) {
+	@RequestMapping(value="/user/enregistrerVoie/{site}/{secteur}", method=RequestMethod.POST)
+	public String enregistrerVoie(Model model, @Valid Voie voie, BindingResult bindingResult, 
+			@PathVariable("site")int siteId, @PathVariable("secteur")int secteurId) {
 
-		Site sit = siteRepository.findById(site).orElse(null);
+		Site site = siteRepository.findById(siteId).orElse(null);
+		Secteur secteur = secteurRepository.findById(secteurId).orElse(null);
+		
 		if(bindingResult.hasErrors()) { 
-			model.addAttribute("site", sit);
+			model.addAttribute("site", site);
 			model.addAttribute("localDate", LocalDateTime.now());
 			return "ajoutVoie"; 
 		}
 
-		model.addAttribute("site", sit);
+		model.addAttribute("secteur", secteur);
+		model.addAttribute("site", site);
 		voieRepository.save(voie);
 		return "confirmationVoie";
 	}

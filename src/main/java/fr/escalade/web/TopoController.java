@@ -51,6 +51,26 @@ public class TopoController {
 
 	@Autowired
 	private ReservationTopoRepository reservationRepository;
+	
+	private String contact;
+	
+	private String proprio;
+
+	public String getProprio() {
+		return proprio;
+	}
+
+	public void setProprio(String proprio) {
+		this.proprio = proprio;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
 
 	@GetMapping(value = "/topos")
 	public String topos(Principal principal, Model model, 
@@ -103,13 +123,6 @@ public class TopoController {
 		return "Modif";
 	}
 
-	/*@RequestMapping(value="/user/commentaire", method=RequestMethod.GET)
-	public String commentaire(Model model, String id) {
-		Topo t = topoRepository.findById(id).orElse(null);
-		model.addAttribute("topo", t);
-		return "commentaire";
-	}*/
-
 	@GetMapping(value="/supprimer")
 	public String supprimer(int id) {
 		topoRepository.deleteById(id);
@@ -136,9 +149,7 @@ public class TopoController {
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 		
 		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(utilisateur.getId(), PageRequest.of(p, s));
-		//	model.addAttribute("topos", topos);
 		
-		//model.addAttribute("utilisateur", u);
 		model.addAttribute("topos", topos.getContent());
 		int[] pages = new int[topos.getTotalPages()];
 		model.addAttribute("pages", pages);
@@ -180,7 +191,11 @@ public class TopoController {
 
 		Page<Topo> topos = topoRepository.findAll(PageRequest.of(p, s));
 		int[] pages = new int[topos.getTotalPages()];
-		
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+
+		model.addAttribute("proprietaire", getProprio());
+		model.addAttribute("contact", getContact());
+		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("topos", topos.getContent());
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
@@ -189,36 +204,21 @@ public class TopoController {
 
 		return "listeMesDemandes";
 	}
-	
-	/*@GetMapping(value="/user/contact/{nom}")
-	public String contact(@PathVariable("nom")String nom, Model model, 
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "10") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc) {
-		
-		Page<Topo> topos = topoRepository.findAll(PageRequest.of(p, s));
-		int[] pages = new int[topos.getTotalPages()];
-		
-		Topo topo = topoRepository.findByProprietaireOrderByNom(principal.getName());
-		model.addAttribute("tp", topo);
 
-		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
+	@GetMapping(value="/user/statutDemande/{id}")
+	public String statutDemande(Principal principal, Model model,
+			@PathVariable("id")int id) {
+
+		Topo topo = topoRepository.findById(id).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		Utilisateur u = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
+		
+		model.addAttribute("u", u);
 		model.addAttribute("utilisateur", utilisateur);
-		
-		model.addAttribute("topos", topos.getContent());
-		model.addAttribute("pages", pages);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-		
-		Topo topo = topoRepository.findById(nom).orElse(null);
-		model.addAttribute("tp", topo);
-		
-		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(topo.getProprietaire());
-		model.addAttribute("utilisateur", utilisateur);
-		
-		return "contact";
-	}*/
+		model.addAttribute("topo", topo);
+
+		return "statutDemande";
+	}
 
 	@GetMapping("/user/demandepret/{id}")
 	public String gererDemandeEmpruntTopo(@PathVariable("id") int id, Principal principal, Model model) {
@@ -231,11 +231,16 @@ public class TopoController {
 			LocalDateTime dateTime = LocalDateTime.now();
 			Utilisateur proprio = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
 			ReservationTopo resa = new ReservationTopo(topo.getId(), "Demande", emprunteur.getId(), topo.getProprietaire(), Timestamp.valueOf(dateTime), Timestamp.valueOf(dateTime));
-			//resa.setDemandeur(principal.getName());
+			
 			topo.setEmprunteur(emprunteur.getId());
 			topo.setDemandeur(emprunteur.getId());
-			topo.setContact(proprio.getId());
 			topo.setDisponibilite("Demande");
+
+			setContact(null);
+			setProprio(null);
+			setContact(proprio.getEmail());
+			setProprio(proprio.getPseudo());
+			
 			reservationRepository.save(resa);
 		} else {
 		}
@@ -280,7 +285,7 @@ public class TopoController {
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
 		topo.setDemandeur(null);
-		topo.setContact(null);
+		setContact(null);
 
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
@@ -300,7 +305,7 @@ public class TopoController {
 		
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
-		topo.setContact(null);
+		setContact(null);
 
 		//reservationRepository.save(resa);
 		topoRepository.save(topo);

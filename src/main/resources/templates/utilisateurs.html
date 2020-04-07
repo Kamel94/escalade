@@ -11,7 +11,6 @@
 		<div class="container-fluid">
 			<br>
 			<h3>
-				<!-- Lien à créer -->
 				Liste des utilisateurs <a class="btn btn-info btn-titre rond-lege"
 					th:href="@{/inscription}">Ajouter un utilisateur</a>
 			</h3>
@@ -31,13 +30,17 @@
 						<td th:text="${u.pseudo}"></td>
 						<td th:text="${u.email}"></td>
 						<td th:text="${u.statut}"></td>
-						<td th:text="${u.compteActif} == true? 'Actif' : 'Non actif'"></td>
+						<td th:text="${u.compteActif} == true? 'Actif' : 'Inactif'"></td>
 						<td th:text="${u.dateCreation}"></td>
-						<td><a
-							th:class="${u.statut} == 'USER'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+						<td><a th:if="${u.statut} == 'USER'"
+							th:class="${u.statut} == 'USER'? 'btn btn-info rond-lege'"
 							onclick="return confirm('Êtes-vous sûr de votre choix ?')"
-							th:href="@{/rendreMembre/{id}(id=${u.id})}">Rendre membre</a>
-							<a class="btn btn-danger rond-lege"
+							th:href="@{/rendreMembre/{id}(id=${u.id}, page=${pageCourante}, size=${size})}">Rendre membre</a>
+							<a th:if="${u.statut} == 'MEMBRE'"
+							th:class="${u.statut} == 'MEMBRE'? 'btn btn-info rond-lege'"
+							onclick="return confirm('Êtes-vous sûr de votre choix ?')"
+							th:href="@{/rendreUser/{id}(id=${u.id}, page=${pageCourante}, size=${size})}">&nbsp; Rendre user &nbsp;</a></td>
+						<td><a class="btn btn-danger rond-lege"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 							th:href="@{/supprimerSite(id=${u.id}, page=${pageCourante}, size=${size})}">Supprimer</a></td>
 					</tr>

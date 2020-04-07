@@ -12,25 +12,17 @@
 		<div class="card">
 			<div class="card-header">Confirmation</div>
 			<div class="card-body">
-				<div th:if="${voie.utilisateurModif == null}" class="form-group">
+				<div class="form-group">
 					<label>Auteur : </label>
-					<label th:text="${voie.utilisateurCreateur}"></label>
+					<label th:text="${#httpServletRequest.remoteUser}"></label>
 				</div>
-				<div th:if="${voie.utilisateurModif != null}" class="form-group">
-					<label>Auteur : </label>
-					<label th:text="${voie.utilisateurModif}"></label>
-				</div>
-				<div th:if="${voie.dateCreation != null}" class="form-group">
-					<label>Date : </label>
-					<label th:text="${voie.dateCreation}"></label>
-				</div>
-				<div th:if="${voie.dateCreation == null}" class="form-group">
+				<div class="form-group">
 					<label>Date : </label>
 					<label th:text="${voie.dateModif}"></label>
 				</div>
 				<div class="form-group">
 					<label>Nom du secteur : </label>
-					<label th:text="${voie.secteurNom}"></label>
+					<label th:text="${secteur.nom}"></label>
 				</div>
 				<div class="form-group">
 					<label>Numéro de voie : </label>
@@ -45,7 +37,7 @@
 					<label th:text="${voie.cotation}"></label>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-info rond-lege droite" th:href="@{/secteur/{site}(site=${site.nom})}">Retour à la liste</a>
+					<a class="btn btn-info rond-lege droite" th:href="@{/voie/{site}/{secteur}(site=${site.id}, secteur=${secteur.id})}">Retour à la liste</a>
 				</div>
 			</div>
 		</div>

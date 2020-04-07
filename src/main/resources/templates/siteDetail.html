@@ -8,8 +8,10 @@
 </head>
 <body>
 	<div layout:fragment="content">
-		<div class="container-fluid" >
-			<br> <a class="btn btn-info rond-lege" th:href="@{/accueil(page=${pageCourante}, size=${size})}">Retour</a> <br> <br>
+		<div class="container-fluid">
+			<br> <a class="btn btn-info rond-lege"
+				th:href="@{/accueil(page=${pageCourante}, size=${size})}">Retour</a>
+			<br> <br>
 			<h3>Détail du site [[${s.nom}]]</h3>
 			<br>
 			<table class="centre">
@@ -35,7 +37,8 @@
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.ville}"></td>
 						<td th:text="${#lists.size(secteur)}"></td>
-						<td th:text="${s.tag} == false? 'Non officiel' : 'Officiel Les amis de l’escalade'"
+						<td
+							th:text="${s.tag} == false? 'Non officiel' : 'Officiel Les amis de l’escalade'"
 							th:class="${s.tag} == true? 'text-success' : 'text-danger'"></td>
 						<td><a
 							th:class="${s.tag} == false? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
@@ -43,7 +46,8 @@
 							th:if="(${utilisateur.statut == 'MEMBRE'} or ${utilisateur.statut == 'ADMIN'}) and ${s.tag} == false">Taguer</a><a
 							th:class="${s.tag} == true? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
 							th:href="@{/membre/enleverTag/{id}(id=${s.id})}"
-							th:if="(${utilisateur.statut == 'MEMBRE'} or ${utilisateur.statut == 'ADMIN'}) and ${s.tag} == true">Enlever le tag</a></td>
+							th:if="(${utilisateur.statut == 'MEMBRE'} or ${utilisateur.statut == 'ADMIN'}) and ${s.tag} == true">Enlever
+								le tag</a></td>
 						<td><a title="Voir ses secteurs"
 							class="btn btn-info rond-lege"
 							th:href="@{/secteur/{id}(id=${s.id})}">Voir secteurs</a></td>
@@ -51,7 +55,7 @@
 							th:if="${#httpServletRequest.remoteUser} != null"
 							th:href="@{/user/modifierSite(id=${s.id})}">Modifier</a></td>
 						<td><a class="btn btn-danger btn-titre rond-lege"
-							th:if="${utilisateur.id} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' "
+							th:if="${utilisateur.id} == ${s.utilisateurCreateur} or ${utilisateur.statut} == 'ADMIN' or ${utilisateur.statut} == 'MEMBRE' "
 							th:unless="${#httpServletRequest.remoteUser} == null"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 							th:href="@{/user/supprimerSite(id=${s.id})}">Supprimer</a></td>
@@ -69,8 +73,7 @@
 				th:href="@{/user/ajoutSecteur/{id}(id=${s.id})}">Ajouter un
 				secteur</a> <a class=" btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser == null}"
-				th:href="@{/login}">Ajouter un secteur</a> <br>
-			<br>
+				th:href="@{/login}">Ajouter un secteur</a> <br> <br>
 			<div>
 				<h3>Liste des commentaires</h3>
 				<br> <br>
@@ -100,56 +103,13 @@
 					</tbody>
 				</table>
 			</div>
-			<a  class="btn btn-info rond-lege"
+			<a class="btn btn-info rond-lege"
 				th:if="${#httpServletRequest.remoteUser} == null"
-				th:href="@{/login}"> Ajouter un commentaire</a>
-			<a class="btn btn-info btn-titre rond-lege"
+				th:href="@{/login}"> Ajouter un commentaire</a> <a
+				class="btn btn-info btn-titre rond-lege"
 				th:if="${#httpServletRequest.remoteUser} != null"
 				th:href="@{/user/ajoutCom/{id}(id=${commentaire.site})}">Ajouter
-				un commentaire</a>
-
-			<!-- <div class="card-header" th:if="${#httpServletRequest.remoteUser != null}? true"><i
-								class="far fa-question-circle"></i>
-								Saisir un commentaire</div>
-			<div class="card-header" th:unless="${#httpServletRequest.remoteUser != null}? true"><i
-								class="far fa-question-circle"></i>
-								Veuillez vous connecter ou vous inscrire pour saisir un commentaire</div>
-			<div class="card-body">
-				<form th:action="@{/user/enregistrerCom}" method="post" >
-					<div class="form-group">
-							<label class="col-form-label"> Site : </label> <select
-								class="form-control" name="site" th:value="${commentaire.site}">
-								<option>[[${commentaire.site}]]</option>
-							</select>
-								<span class="red" th:errors="${commentaire.site}" th:inline="text"></span>
-						</div>
-					<div class="form-group">
-						<label class="col-form-label">Date : </label> <br>
-						[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
-							class="red" th:errors="${commentaire.date}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Auteur : </label> <br>
-						[[${#httpServletRequest.remoteUser}]] <span class="red"
-							th:errors="${commentaire.auteur}">[[${#httpServletRequest.remoteUser}]]</span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Commentaire : </label> <br>
-						<textarea class="decaler" rows="5" cols="25"
-							th:field="${commentaire.comment}" placeholder="Votre Commentaire"></textarea>
-						<input class="form-control-xs p-3" type="text" name="comment" placeholder="Votre Commentaire"
-								th:value="${commentaire.comment}">
-						<span class="red" th:errors="${commentaire.comment}"
-							th:inline="text"></span>
-					</div>
-					<div>
-						<button type="submit" class="btn btn-primary">Enregistrer</button>
-					</div>
-				</form>
-			</div>
-		</div>
-		(page=${status.index}, size=${size}, motCle=${motCle}) -->
-			<br> <br> <br>
+				un commentaire</a> <br> <br> <br>
 			<div class="container">
 				<ul class="nav nav-pills">
 					<li class="nav-item"

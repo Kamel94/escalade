@@ -14,12 +14,12 @@
 			<div class="card-fluid">
 				<div class="card-header">Saisie d'une voie</div>
 				<div class="card-body">
-					<form th:action="@{/user/enregistrerVoie/{site}(site=${site.nom})}" method="post">
+					<form th:action="@{/user/enregistrerVoie/{site}/{secteur}(site=${site.id}, secteur=${secteur.id})}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Auteur : </label> <input
 								class="form-control-xs" type="hidden" name="utilisateurCreateur"
-								th:value="${#httpServletRequest.remoteUser}">[[${#httpServletRequest.remoteUser}]] <span
-								class="red" th:errors="${voie.utilisateurCreateur}" th:inline="text"></span>
+								th:value="${utilisateur.id}">[[${#httpServletRequest.remoteUser}]] <span
+								class="red" th:errors="${utilisateur.id}" th:inline="text"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Date : </label> <input
@@ -27,11 +27,21 @@
 								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
 								class="red" th:errors="${voie.dateCreation}" th:inline="text"></span>
 						</div>
+						<div><input
+								class="form-control-xs" type="hidden" name="utilisateurModif"
+								th:value="${utilisateur.id}"><span
+								class="red" th:errors="${utilisateur.id}" th:inline="text"></span>
+						</div>
+						<div> <input
+								class="form-control-xs" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"><span
+								class="red" th:errors="${voie.dateModif}" th:inline="text"></span>
+						</div>
 						<div class="form-group">
 							<label class="col-form-label">Nom du secteur : </label> <input
-								class="form-control-xs" type="hidden" name="secteurNom"
-								th:value="${voie.secteurNom}">[[${voie.secteurNom}]] <span
-								class="red" th:errors="${voie.secteurNom}" th:inline="text"></span>
+								class="form-control-xs" type="hidden" name="secteurId"
+								th:value="${voie.secteurId}">[[${secteur.nom}]] <span
+								class="red" th:errors="${voie.secteurId}" th:inline="text"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Numéro de voie : </label> <input

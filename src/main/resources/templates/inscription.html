@@ -23,36 +23,36 @@
 			<form th:action="@{/enregistrer}" method="post">
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="inputAddress">Nom</label> <input type="text"
+						<label>Nom <span class="text-danger">*</span></label> <input type="text"
 							class="form-control" name="nom" th:value="${utilisateur.nom}"
-							placeholder="Dupont"><span class="red"
+							placeholder="Dupont" required><span class="red"
 							th:errors="${utilisateur.nom}" th:inline="text"></span>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="inputAddress2">Prénom</label> <input type="text"
+						<label>Prénom <span class="text-danger">*</span></label> <input type="text"
 							class="form-control" name="prenom"
-							th:value="${utilisateur.prenom}" placeholder="Jean"><span
+							th:value="${utilisateur.prenom}" placeholder="Jean" required><span
 							class="red" th:errors="${utilisateur.prenom}" th:inline="text"></span>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="inputEmail4">Pseudo</label> <input type="text"
+						<label>Pseudo <span class="text-danger">*</span></label> <input type="text"
 							class="form-control" name="pseudo"
-							th:value="${utilisateur.pseudo}" placeholder="Pseudo"><span
+							th:value="${utilisateur.pseudo}" placeholder="Pseudo" required><span
 							class="red" th:errors="${utilisateur.pseudo}" th:inline="text"></span>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="inputPassword4">Mot de passe</label> <input
+						<label>Mot de passe <span class="text-danger">*</span></label> <input
 							type="password" class="form-control" id="inputPassword4"
 							placeholder="Mot de passe" name="password"
-							th:value="${utilisateur.password}"><span class="red"
+							th:value="${utilisateur.password}" required><span class="red"
 							th:errors="${utilisateur.password}" th:inline="text"></span>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="inputEmail4">Email</label> <input type="email"
+						<label>Email <span class="text-danger">*</span></label> <input type="email"
 							class="form-control" name="email" th:value="${utilisateur.email}"
-							placeholder="Email"><span class="red"
+							placeholder="dupont@exemple.com" required><span class="red"
 							th:errors="${utilisateur.email}" th:inline="text"></span>
 					</div>
 					<div th:if="${#httpServletRequest.remoteUser} == null" 
@@ -90,25 +90,26 @@
 							name="statut" th:value="MEMBRE">
 					</div>
 					<span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
-						<label for="inputAddress">Administrateur</label> <input type="hidden"
+						<label>Administrateur</label> <input type="hidden"
 							class="form-control" name="utilisateurCreateur" th:value="${u.id}"
 							>[[${#httpServletRequest.remoteUser}]]<span class="red"
 							th:errors="${u.id}" th:inline="text"></span>
 					</span>
-					<span th:if="${#httpServletRequest.remoteUser != null}" class="form-group col-md-6">
-						<label for="inputAddress"></label> <input type="hidden"
-							class="form-control" name="utilisateurModif" th:value="${u.id}"
+					<span th:if="${#httpServletRequest.remoteUser != null}">
+						 <input type="hidden"
+							 name="utilisateurModif" th:value="${u.id}"
 							><span class="red"
 							th:errors="${u.id}" th:inline="text"></span>
 					</span>
-					<span th:if="${#httpServletRequest.remoteUser == null}" class="form-group col-md-6">
-						<label for="inputAddress"></label> <input type="hidden"
-							class="form-control" name="utilisateurCreateur" th:value="${utilisateur.id}"
+					<span th:if="${#httpServletRequest.remoteUser == null}">
+						 <input type="hidden"
+							 name="utilisateurCreateur" th:value="${utilisateur.id}"
 							><span class="red"
 							th:errors="${utilisateur.id}" th:inline="text"></span>
 					</span>
-					<span th:if="${#httpServletRequest.remoteUser == null}" class="form-group col-md-6">
-						<label for="inputAddress"></label> <input type="hidden"
+					<span class="text-danger form-control border-white">* Champs obligatoire</span>
+					<span th:if="${#httpServletRequest.remoteUser == null}">
+						 <input type="hidden"
 							class="form-control" name="utilisateurModif" th:value="${utilisateur.id}"
 							><span class="red"
 							th:errors="${utilisateur.id}" th:inline="text"></span>

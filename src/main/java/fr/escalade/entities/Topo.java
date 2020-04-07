@@ -49,8 +49,6 @@ public class Topo implements Serializable {
 	
 	private Integer emprunteur;
 	
-	private Integer contact;
-	
 	@Column(name = "utilisateur_createur")
 	private int utilisateurCreateur;
 
@@ -67,16 +65,6 @@ public class Topo implements Serializable {
 	
 	@Column(name= "site_id")
 	private Integer site;
-	
-	private Utilisateur utilisateur;
-	
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}/**/
 
 	public Integer getEmprunteur() {
 		return emprunteur;
@@ -95,7 +83,7 @@ public class Topo implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Topo(Integer proprietaire, String description, String lieu, Date parution, Integer emprunteur, String disponibilite, Integer contact) {
+	public Topo(Integer proprietaire, String description, String lieu, Date parution, Integer emprunteur, String disponibilite) {
 		super();
 		this.proprietaire = proprietaire;
 		this.description = description;
@@ -103,7 +91,6 @@ public class Topo implements Serializable {
 		this.parution = parution;
 		this.emprunteur = emprunteur;
 		this.disponibilite = disponibilite;
-		this.contact = contact;
 	}
 
 	public String getNom() {
@@ -160,14 +147,6 @@ public class Topo implements Serializable {
 
 	public void setDemandeur(Integer demandeur) {
 		this.demandeur = demandeur;
-	}
-
-	public Integer getContact() {
-		return contact;
-	}
-
-	public void setContact(Integer contact) {
-		this.contact = contact;
 	}
 
 	public Integer getUtilisateurCreateur() {
