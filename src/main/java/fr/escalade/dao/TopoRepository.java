@@ -14,22 +14,22 @@ import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
 
 public interface TopoRepository extends JpaRepository<Topo, Integer> {
-	
+
 	@Query("select p from Topo p where p.nom like :x")
 	Page<Topo> chercher(@Param("x")String mc, Pageable pageable);
 
 	//List<Topo> findByProprietaireOrderByNom(String name);
-	
+
 	List<Topo> findByProprietaireOrderByDisponibilite(String name);
 
 	Page<Topo> findByProprietaireOrderByNom(int name, Pageable pageable);
-	
+
 	//Topo findByNom(String u);
-	
+
 	Topo findByProprietaireOrderByNom(String dispo);
-	
+
 	Topo findByProprietaire(Integer integer);
-	
+
 	List<Topo> findByNom(String u);
 
 	//@Query("select p from Topo p where p.nom like :x")
@@ -37,6 +37,12 @@ public interface TopoRepository extends JpaRepository<Topo, Integer> {
 
 	Topo findTopoByNom(String nom);
 
-	Optional<Site> findBySite(int id);
+	Topo findBySite(int id);
+
+	//@Query("select t from Topo t where t.site = :x")
+	List<Topo> findTopoBySite(int site);
+
+	//@Query("select id, site from Topo p where p.nom like :x")
+	//List<Topo> findTopoBySiteAndNom(int site, String nom);
 
 }

@@ -51,9 +51,9 @@ public class TopoController {
 
 	@Autowired
 	private ReservationTopoRepository reservationRepository;
-	
+
 	private String contact;
-	
+
 	private String proprio;
 
 	public String getProprio() {
@@ -88,7 +88,7 @@ public class TopoController {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 			model.addAttribute("utilisateur", utilisateur);
 		}
-		
+
 		model.addAttribute("listeTopos", pageTopos.getContent());
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
@@ -102,7 +102,7 @@ public class TopoController {
 	public String ajout(Model model, @PathVariable("id")int id, Principal principal) {
 		Site site = siteRepository.findById(id).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-		
+
 		model.addAttribute("localDate", LocalDateTime.now());
 		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("site", site);
@@ -145,17 +145,45 @@ public class TopoController {
 			@RequestParam(name="size", defaultValue = "4") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
 		//List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
-		
+
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-		
+
 		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(utilisateur.getId(), PageRequest.of(p, s));
-		
+
 		model.addAttribute("topos", topos.getContent());
 		int[] pages = new int[topos.getTotalPages()];
 		model.addAttribute("pages", pages);
 		model.addAttribute("size", s);
 		model.addAttribute("pageCourante", p);
 		return "listemestopos";
+	}
+
+	@GetMapping(value = "/topoSite/{id}")
+	public String topoParSite(Model model, Principal principal, @PathVariable("id")int id) {
+
+		Topo topo = topoRepository.findById(id).orElse(null);
+		Site site = siteRepository.findById(topo.getSite()).orElse(null);
+
+		if(principal == null) {
+			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			model.addAttribute("u", u);
+		} else {
+			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("u", u);
+		}
+
+		if(topo.getEmprunteur() != null) {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(topo.getEmprunteur());
+			model.addAttribute("utilisateur", utilisateur);
+		} else {
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
+			model.addAttribute("utilisateur", utilisateur);
+		}
+
+		model.addAttribute("site", site);
+		model.addAttribute("t", topo);
+
+		return "topoSite";
 	}
 
 	@GetMapping(value = "/user/topo/{nom}")
@@ -166,10 +194,10 @@ public class TopoController {
 
 		Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 		Topo topo = topoRepository.findTopoByNom(nom);
-		
+
 		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(u.getId(), PageRequest.of(p, s));
 		model.addAttribute("topos", topos);
-		
+
 		if(topo.getEmprunteur() != null) {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(topo.getEmprunteur());
 			model.addAttribute("utilisateur", utilisateur);
@@ -177,7 +205,7 @@ public class TopoController {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
 			model.addAttribute("utilisateur", utilisateur);
 		}
-		
+
 		model.addAttribute("topo", topo);
 
 		return "topoId";
@@ -212,7 +240,7 @@ public class TopoController {
 		Topo topo = topoRepository.findById(id).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 		Utilisateur u = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
-		
+
 		model.addAttribute("u", u);
 		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("topo", topo);
@@ -231,7 +259,7 @@ public class TopoController {
 			LocalDateTime dateTime = LocalDateTime.now();
 			Utilisateur proprio = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
 			ReservationTopo resa = new ReservationTopo(topo.getId(), "Demande", emprunteur.getId(), topo.getProprietaire(), Timestamp.valueOf(dateTime), Timestamp.valueOf(dateTime));
-			
+
 			topo.setEmprunteur(emprunteur.getId());
 			topo.setDemandeur(emprunteur.getId());
 			topo.setDisponibilite("Demande");
@@ -240,7 +268,7 @@ public class TopoController {
 			setProprio(null);
 			setContact(proprio.getEmail());
 			setProprio(proprio.getPseudo());
-			
+
 			reservationRepository.save(resa);
 		} else {
 		}
@@ -264,12 +292,12 @@ public class TopoController {
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
 	}
-	
+
 	/*@GetMapping("/user/refuser/{id}")
 	public String refuserPret(@PathVariable("id") String id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
-		
-		
+
+
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
 
@@ -277,11 +305,11 @@ public class TopoController {
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
 	}*/
-	
+
 	@GetMapping("/user/redisponible/{id}")
 	public String redisponible(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
-		
+
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
 		topo.setDemandeur(null);
@@ -295,14 +323,14 @@ public class TopoController {
 	public String refuserPretTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
 		LocalDateTime dateTime = LocalDateTime.now();
-		
+
 		ReservationTopo resa = reservationRepository.findByTopoIdAndReponseDemande(id, "Demande");
 
 		model.addAttribute("resa", resa);
-		
+
 		resa.setReponseDemande("Refusée");
 		resa.setDateModif(Timestamp.valueOf(dateTime));
-		
+
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
 		setContact(null);

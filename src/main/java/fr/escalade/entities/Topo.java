@@ -1,6 +1,8 @@
 package fr.escalade.entities;
 
+import java.awt.Image;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
@@ -34,8 +37,8 @@ public class Topo implements Serializable {
 	@Column( name = "utilisateur_createur", insertable = false, updatable = false)
 	private Integer proprietaire;
 	
-	@Column(length = 500)
-	@Size(min = 1, max = 500)
+	@Column(length = 1000)
+	@Size(min = 1, max = 1000)
 	private String description;
 	
 	@Column(length = 100)
@@ -50,10 +53,10 @@ public class Topo implements Serializable {
 	private Integer emprunteur;
 	
 	@Column(name = "utilisateur_createur")
-	private int utilisateurCreateur;
+	private Integer utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private int utilisateurModif;
+	private Integer utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;

@@ -66,10 +66,15 @@ public class CommentaireController {
 	}*/
 
 	@GetMapping(value = "/commentaire/{id}")
-	public String commentaire(Model model, @PathVariable("id")String id) {
+	public String commentaire(Model model, @PathVariable("id")int id, 
+			@RequestParam(name="page", defaultValue = "0") int p,
+			@RequestParam(name="size", defaultValue = "6") int s) {
 
-		List<Commentaire> commentaire = commentaireRepository.findAll(id);
+		Page<Commentaire> commentaire = commentaireRepository.chercher(id, PageRequest.of(p, s) );
+		
 		model.addAttribute("liste", commentaire);
+		model.addAttribute("size", s);
+		model.addAttribute("pageCourante", p);
 
 		return "commentaire";
 	}
@@ -86,9 +91,15 @@ public class CommentaireController {
 		return "ajoutCom"; 
 	}
 
-	@RequestMapping(value="/user/modifierCom", method=RequestMethod.GET)
-	public String modifierCom(Model model, int id) {
+	@RequestMapping(value="/user/modifierCom/{site}", method=RequestMethod.GET)
+	public String modifierCom(Model model, @PathVariable("site")int siteId, 
+			Principal principal, int id) {
 		Commentaire commentaire = commentaireRepository.findById(id).orElse(null);
+		Site site = siteRepository.findById(siteId).orElse(null);
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("site", site);
 		model.addAttribute("commentaire", commentaire);
 		model.addAttribute("localDate", LocalDateTime.now());
 		return "modifCom"; 
@@ -100,13 +111,16 @@ public class CommentaireController {
 		return "redirect:/siteDetail/{site}";
 	}
 
-	/*@RequestMapping(value="/user/enregistrerCom", method=RequestMethod.POST)
-	public String enregistrerCom(Model model, @Valid Commentaire commentaire, BindingResult bindingResult) {
+	@RequestMapping(value="/user/enregistrerCom/{id}", method=RequestMethod.POST)
+	public String enregistrerCom(Model model, @Valid Commentaire commentaire, 
+			@PathVariable("id")int id, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "ajoutCom";
 		}
+		Site site = siteRepository.getOne(id);
+		model.addAttribute("site", site);
 		commentaireRepository.save(commentaire);
 		return "confirmationCom";
-	}*/
+	}
 
 }

@@ -27,58 +27,18 @@
 											<th scope="col">Topo (<span
 												th:text="${#lists.size(topos)}"></span>)
 											</th>
-											<th scope="col">Parution</th>
-											<th scope="col">Région</th>
-											<!-- <th scope="col">Propriétaire</th> -->
 											<th scope="col">Disponibilité</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="topo : ${topos}">
 											<td th:text="${topo.nom}"></td>
-											<td th:text="${topo.parution}"></td>
-											<td th:text="${topo.lieu}"></td>
-											<!-- <td th:text="${topo.proprietaire}"></td> -->
 											<td
 												th:text="${topo.disponibilite} == 'Redisponible'? 'Disponible' : ${topo.disponibilite}"
 												th:class="${topo.disponibilite} != 'Indisponible'? 'text-success' : 'text-danger'"></td>
-											<td><a class="btn btn-info rond-lege" th:href="@{/user/topo/{nom}(nom=${topo.nom})}">Informations</a></td>
-											<!-- <th:block th:switch="${topo.disponibilite}">
-												<td th:case="Demande"
-													th:utext="${topo.emprunteur != null}? ${topo.emprunteur} : ''"></td>
-												<td th:case="Disponible"
-													th:utext="${topo.emprunteur != null}? ${topo.emprunteur} : 'Aucun'"></td>
-												<td th:case="Redisponible"
-													th:utext="${topo.emprunteur != null} ? ${topo.emprunteur} : 'Aucun' "></td>
-												<td th:case="Indisponible"
-													th:utext="${topo.emprunteur != null}? ${topo.emprunteur} : ''"></td>
-
-												<td><a class="btn btn-info rond-lege"
-													th:href="@{/user/modifier(id=${topo.id})}">Modifier</a></td>
-												<td><a class="btn btn-danger rond-lege"
-													onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-													th:href="@{/supprimer(id=${topo.id})}">Supprimer</a></td>
-
-											</th:block>
-
 											<td><a class="btn btn-info rond-lege"
-												th:href="@{/user/redisponible/{id}(id=${topo.nom})}"
-												sec:authorize="hasAuthority('user')"
-												th:if="${topo.disponibilite == 'Indisponible'}"
-												title="Rendre disponible le topo">Rendre disponible</a></td>
-												
-											<td><a class="btn btn-success rond-lege"
-												th:href="@{/user/accepterpret/{id}(id=${topo.nom})}"
-												sec:authorize="hasAuthority('user')"
-												th:if="${topo.disponibilite == 'Demande'}"
-												title="Accepter le prêt">Accepter</a></td>
-												
-											<td><a class="btn btn-danger rond-lege"
-												th:href="@{/user/refuserpret/{id}(id=${topo.nom})}"
-												sec:authorize="hasAuthority('user')"
-												th:if="${topo.disponibilite == 'Demande'}"
-												title="Refuser le prêt">Refuser</a></td> -->
-										</tr> 
+												th:href="@{/user/topo/{nom}(nom=${topo.nom})}">Informations</a></td>
+										</tr>
 									</tbody>
 								</table>
 								<div class="container">

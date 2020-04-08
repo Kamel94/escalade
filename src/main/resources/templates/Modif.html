@@ -1,61 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorator="layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
 <head>
 <meta charset="UTF-8">
 <title>Modif</title>
-	<link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 	<div layout:fragment="content">
-	<div class="col-8 spacer">
-		<div class="card">
-			<div class="card-header">Modification d'un topo</div>
-			<div class="card-body">
-				<form th:action="@{/user/enregistrer/{id}(id=${topo.id})}" method="post">
-						<div> <input
-								class="form-control-xs" type="hidden" name="id"
+		<div class="col-8 spacer">
+			<div class="card">
+				<div class="card-header">Modification d'un topo</div>
+				<div class="card-body">
+					<form th:action="@{/user/enregistrer/{id}(id=${topo.id})}"
+						method="post">
+						<div>
+							<input class="form-control-xs" type="hidden" name="id"
 								th:value="${topo.id}"><span class="red"
 								th:errors="${topo.id}"></span>
 						</div>
-						<div> <input
-								class="form-control-xs" type="hidden" name="site"
+						<div>
+							<input class="form-control-xs" type="hidden" name="site"
 								th:value="${topo.site}"><span class="red"
 								th:errors="${topo.site}"></span>
 						</div>
-						<div> <input
-								class="form-control-xs" type="hidden" name="dateCreation"
+						<div>
+							<input class="form-control-xs" type="hidden" name="dateCreation"
 								th:value="${topo.dateCreation}"><span class="red"
 								th:errors="${topo.dateCreation}"></span>
 						</div>
-				<div class="form-group">
-						<label class="col-form-label">Proprietaire : </label>
-						<input class="form-control-xs" type="hidden" name="proprietaire" th:value="${topo.proprietaire}">
-						[[${utilisateur.pseudo}]]<span class="red" th:errors="${topo.proprietaire}"></span>
-					</div>
+						<div class="form-group">
+							<label class="col-form-label">Proprietaire : </label> <input
+								class="form-control-xs" type="hidden" name="proprietaire"
+								th:value="${topo.proprietaire}">
+							[[${utilisateur.pseudo}]]<span class="red"
+								th:errors="${topo.proprietaire}"></span>
+						</div>
 						<div class="form-group">
 							<label class="col-form-label">Date : </label> <input
 								class="form-control-xs" type="hidden" name="dateModif"
-								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}"> [[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]<span class="red"
-								th:errors="${topo.dateModif}"></span>
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]<span
+								class="red" th:errors="${topo.dateModif}"></span>
 						</div>
-				<div class="form-group">
-						<label class="col-form-label">Nom : </label>
-						<input class="form-control-xs" type="text" name="nom" th:value="${topo.nom}">
-						<span class="red" th:errors="${topo.nom}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Description : </label>
-						<textarea class="form-control-xs" rows="5" cols="25" name="description" th:field="${topo.description}">
-						</textarea><span class="red" th:errors="${topo.description}"></span>
-					</div>
-					<div class="form-group">
-						<label class="col-form-label">Lieu : </label>
-						<input class="form-control-xs" type="text" name="lieu" th:value="${topo.lieu}">
-						<span class="red" th:errors="${topo.lieu}"></span>
-					</div>
+						<div class="form-group">
+							<label class="col-form-label">Nom : </label> <input
+								class="form-control-xs" type="text" name="nom"
+								th:value="${topo.nom}"> <span class="red"
+								th:errors="${topo.nom}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Description : </label>
+							<textarea class="form-control-xs" rows="5" cols="25"
+								name="description" th:field="${topo.description}">
+						</textarea>
+							<span class="red" th:errors="${topo.description}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Lieu : </label> <input
+								class="form-control-xs" type="text" name="lieu"
+								th:value="${topo.lieu}"> <span class="red"
+								th:errors="${topo.lieu}"></span>
+						</div>
 						<div class="form-group">
 							<label class="col-form-label">Parution : </label> <input
 								class="form-control-xs" type="date" name="parution"
@@ -64,30 +72,32 @@ layout:decorator="layout">
 						</div>
 						<div class="form-group">
 							<label for="exampleFormControlSelect1">Disponibilité</label> <select
-								class="form-control" name="disponibilite" th:value="${topo.disponibilite}">
+								class="form-control" name="disponibilite"
+								th:value="${topo.disponibilite}">
 								<option>Disponible</option>
 								<option>Indisponible</option>
-							</select><span class="red"
-								th:errors="${topo.disponibilite}"></span>
-					</div>
-						<div> <input
-								class="form-control-xs" type="hidden" name="utilisateurCreateur"
-								th:value="${topo.utilisateurCreateur}"> <span class="red"
-								th:errors="${topo.utilisateurCreateur}"></span>
+							</select><span class="red" th:errors="${topo.disponibilite}"></span>
 						</div>
-						<div> <input
-								class="form-control-xs" type="hidden" name="utilisateurModif"
-								th:value="${topo.utilisateurModif}"> <span class="red"
-								th:errors="${topo.utilisateurModif}"></span>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurCreateur"
+								th:value="${topo.utilisateurCreateur}"> <span
+								class="red" th:errors="${topo.utilisateurCreateur}"></span>
 						</div>
-					<div>
-						<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
-						<a class="btn btn-danger rond-lege" th:href="@{/user/topo/{id}(id=${topo.nom})}">Annuler</a>
-					</div>
-				</form>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurModif" th:value="${topo.utilisateurModif}">
+							<span class="red" th:errors="${topo.utilisateurModif}"></span>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+							<a class="btn btn-danger rond-lege"
+								th:href="@{/user/topo/{id}(id=${topo.nom})}">Annuler</a>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

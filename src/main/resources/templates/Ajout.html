@@ -12,63 +12,65 @@
 	<div layout:fragment="content">
 		<div class="col-8 spacer">
 			<div class="card-fluid">
-				<div class="card-header">Saisie d'un topo du site [[${site.nom}]]</div>
+				<div class="card-header">Saisie d'un topo du site
+					[[${site.nom}]]</div>
 				<div class="card-body">
 					<form th:action="@{/user/enregistrer/{id}(id=${id})}" method="post">
 						<div class="form-group">
 							<label class="col-form-label">Propriétaire : </label> <input
 								class="form-control-xs" type="hidden" name="proprietaire"
-								th:value="${utilisateur.id}"> [[${#httpServletRequest.remoteUser}]]<span
-								class="red" th:errors="${topo.proprietaire}" th:inline="text"></span>
-						</div>
-						<div class="form-group"><label class="col-form-label">Date création : </label>
-						<input class="form-control-xs" type="hidden" name="dateCreation" th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
-							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]	<span class="red"
-								th:errors="${topo.dateCreation}"></span> 
-						</div>
-						<div>
-						<input class="form-control-xs" type="hidden" name="dateModif" th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
-								<span class="red"
-								th:errors="${topo.dateModif}"></span> 
-						</div>
-						<div><input
-								class="form-control-xs" type="hidden" name="site" th:value="${site.id}">
-								<span class="red"
-								th:errors="${site.id}"></span> 
-						</div>
-						<div><input
-								class="form-control-xs" type="hidden" name="utilisateurCreateur" th:value="${utilisateur.id}">
-								<span class="red"
-								th:errors="${utilisateur.id}"></span> 
-						</div>
-						<div><input
-								class="form-control-xs" type="hidden" name="utilisateurModif" th:value="${utilisateur.id}">
-								<span class="red"
-								th:errors="${utilisateur.id}"></span> 
-						</div>
-						<div><input
-								class="form-control-xs" type="hidden" name="utilisateurModif" th:value="${utilisateur.id}">
-								<span class="red"
-								th:errors="${utilisateur.id}"></span> 
+								th:value="${utilisateur.id}">
+							[[${#httpServletRequest.remoteUser}]]<span class="red"
+								th:errors="${topo.proprietaire}" th:inline="text"></span>
 						</div>
 						<div class="form-group">
-						<label for="exampleFormControlSelect1">Nom : </label><input
-								class="form-control-xs" type="hidden" name="nom" th:value="${site.nom}">
-								[[${site.nom}]]
-								<span class="red"
-								th:errors="${topo.nom}"></span> 
+							<label class="col-form-label">Date création : </label> <input
+								class="form-control-xs" type="hidden" name="dateCreation"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]] <span
+								class="red" th:errors="${topo.dateCreation}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+							<span class="red" th:errors="${topo.dateModif}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden" name="site"
+								th:value="${site.id}"> <span class="red"
+								th:errors="${site.id}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurCreateur" th:value="${utilisateur.id}">
+							<span class="red" th:errors="${utilisateur.id}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurModif" th:value="${utilisateur.id}"> <span
+								class="red" th:errors="${utilisateur.id}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurModif" th:value="${utilisateur.id}"> <span
+								class="red" th:errors="${utilisateur.id}"></span>
+						</div>
+						<div class="form-group">
+							<label>Nom : </label><input class="form-control-xs" type="text"
+								name="nom" th:value="${topo.nom}"> <span class="red"
+								th:errors="${topo.nom}"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Lieu : </label> <input
 								class="form-control-xs" type="hidden" name="lieu"
-								th:value="${site.pays}"> [[${site.pays}]] <span class="red"
-								th:errors="${topo.lieu}"></span>
+								th:value="${site.pays}"> [[${site.pays}]] <span
+								class="red" th:errors="${topo.lieu}"></span>
 						</div>
 						<div class="form-group">
-							<label class="col-form-label">Description : </label> <textarea
-								class="form-control-xs decaler" rows="5" cols="25" name="description"
-								th:value="${topo.description}"> </textarea><span class="red"
-								th:errors="${topo.description}"></span>
+							<label class="col-form-label">Description : </label>
+							<textarea class="form-control-xs decaler" rows="5" cols="25"
+								name="description" th:value="${topo.description}"> </textarea>
+							<span class="red" th:errors="${topo.description}"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Parution : </label> <input
@@ -77,16 +79,16 @@
 								th:errors="${topo.parution}"></span>
 						</div>
 						<div class="form-group">
-							<label>Disponibilité</label> <select
-								class="form-control-sm" name="disponibilite" th:value="${topo.disponibilite}">
+							<label>Disponibilité</label> <select class="form-control-sm"
+								name="disponibilite" th:value="${topo.disponibilite}">
 								<option>Disponible</option>
 								<option>Indisponible</option>
-							</select><span class="red"
-								th:errors="${topo.disponibilite}"></span>
+							</select><span class="red" th:errors="${topo.disponibilite}"></span>
 						</div>
 						<div>
 							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
-							<a class="btn btn-danger btn-titre rond-lege" th:href="@{/siteDetail/{id}(id=${site.id})}">Annuler</a>
+							<a class="btn btn-danger btn-titre rond-lege"
+								th:href="@{/siteDetail/{id}(id=${site.id})}">Annuler</a>
 						</div>
 					</form>
 				</div>

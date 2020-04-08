@@ -26,25 +26,18 @@
 					<tr class="text-primary">
 						<th>Nom</th>
 						<th>Description</th>
-						<th>Lieu</th>
-						<th>Parution</th>
 						<th>Disponibilité</th>
+						<th>Plus d'infos ou faire un emprunt</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="t:${listeTopos}">
 						<td th:text="${t.nom}"></td>
 						<td th:text="${t.description}"></td>
-						<td th:text="${t.lieu}"></td>
-						<td th:text="${t.parution}"></td>
 						<td th:text="${t.disponibilite}"
 							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
-						<td><a
-							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
-							th:href="@{/user/demandepret/{id}(id=${t.id})}"
-							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Annuler un emprunt'"
-							th:if="${t.emprunteur != t.proprietaire} and ${utilisateur.id} != ${t.proprietaire}"><i
-								class="far fa-question-circle"></i>Faire une demande</a></td>
+						<td><a class="btn btn-info rond-lege"
+							th:href="@{/topoSite/{id}(id=${t.id})}"> Informations</a></td>
 					</tr>
 				</tbody>
 			</table>

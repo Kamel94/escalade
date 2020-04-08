@@ -22,7 +22,6 @@
 			<table class="table">
 				<thead>
 					<tr class="text-primary">
-						<th>Nom</th>
 						<th>Pays</th>
 						<th>Région</th>
 						<th>Ville</th>
@@ -32,7 +31,6 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td th:text="${s.nom}"></td>
 						<td th:text="${s.pays}"></td>
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.ville}"></td>
@@ -59,6 +57,13 @@
 							th:unless="${#httpServletRequest.remoteUser} == null"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 							th:href="@{/user/supprimerSite(id=${s.id})}">Supprimer</a></td>
+					</tr>
+					<tr>
+						<th>Liste des topos associés à ce spot</th>
+					</tr>
+					<tr th:each="t:${topo}">
+						<td><a th:href="@{/topoSite/{id}(id=${t.id})}"
+							th:if="${t.nom} != null" th:text="${t.nom}"></a></td>
 					</tr>
 				</tbody>
 			</table>
@@ -88,14 +93,13 @@
 					<tbody>
 						<tr th:each="c:${liste}">
 							<td th:text="${c.comment}"></td>
-							<td th:text="${c.auteur}"></td>
+							<td th:text="${c.auteur.pseudo}"></td>
 							<td th:text="${c.date}"></td>
 							<td><a class="btn btn-info rond-lege"
-								th:if="${utilisateur.id} == ${c.auteur} or ${utilisateur.statut} == 'MEMBRE' or ${utilisateur.statut} == 'ADMIN'"
-								th:href="@{/user/modifierCom(id=${c.id})}">Modifier</a></td>
-							<!-- Enlever 'admin' de l'url supprimerCom -->
+								th:if="${utilisateur.pseudo} == ${c.auteur.pseudo} or ${utilisateur.statut} == 'MEMBRE' or ${utilisateur.statut} == 'ADMIN'"
+								th:href="@{/user/modifierCom/{site}(site=${c.site}, id=${c.id})}">Modifier</a></td>
 							<td><a class="btn btn-danger rond-lege"
-								th:if="${utilisateur.statut == 'ADMIN'} or (${utilisateur.id} == ${c.auteur}) "
+								th:if="${utilisateur.statut == 'ADMIN'} or (${utilisateur.pseudo} == ${c.auteur.pseudo}) "
 								th:unless="${#httpServletRequest.remoteUser} == null "
 								onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 								th:href="@{/user/supprimerCom/{site}(id=${c.id}, site=${c.site})}">Supprimer</a></td>

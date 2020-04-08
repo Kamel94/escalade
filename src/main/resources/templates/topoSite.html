@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Topos</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br> <br>
+			<h3>
+				Topo [[${t.nom}]] <a class="btn btn-info btn-titre rond-lege"
+					th:href="@{/topos}">Liste des topos</a>
+			</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Spot associé</th>
+						<th>Description</th>
+						<th>Lieu</th>
+						<th>Parution</th>
+						<th>Disponibilité</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${site.nom}"></td>
+						<td th:text="${t.description}"></td>
+						<td th:text="${t.lieu}"></td>
+						<td th:text="${t.parution}"></td>
+						<td th:text="${t.disponibilite}"
+							th:class="${t.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
+						<td><a
+							th:class="${t.disponibilite} == 'Disponible'? 'btn btn-info rond-lege' : 'btn btn-danger rond-lege disabled'"
+							th:href="@{/user/demandepret/{id}(id=${t.id})}"
+							th:title="${t.emprunteur == null}? 'Demander un emprunt' : 'Déjà réservé'"
+							th:if="${t.emprunteur != t.proprietaire} and ${u.id} != ${t.proprietaire}">Faire
+								une demande</a></td>
+					</tr>
+				</tbody>
+				<tr>
+					<td></td>
+				</tr>
+			</table>
+			<a class="btn btn-info rond-lege"
+				th:href="@{/siteDetail/{id}(id=${t.site})}">Aller vers le site
+				associé</a>
+		</div>
+	</div>
+</body>
+</html>
