@@ -1,14 +1,13 @@
 package fr.escalade.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Commentaire {
+public class Commentaire implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

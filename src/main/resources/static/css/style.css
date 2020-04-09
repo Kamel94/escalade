@@ -1,76 +1,76 @@
-
 /* ---------------------------------------- Couleur ---------------------------------------- */
-
-.red{
+.red {
 	color: red;
 }
 
 /* ---------------------------------- Couleur arrière-plan ---------------------------------- */
-
-.bleu{
+.bleu {
 	background-color: #025E84;
 }
 
-.vert-bleu{
+.vert-bleu {
 	background-color: #C9E1DB;
 }
 
 /* ----------------------------------------- Bords ----------------------------------------- */
-
-.bord-rond{
+.bord-rond {
 	border-radius: 50%;
 }
 
-.rond-haut{
+.rond-haut {
 	border-radius: 32.5px 32.5px 0 0;
 }
 
-.rond-lege{
+.rond-lege {
 	border-radius: 32.5px 32.5px 32.5px 32.5px;
 }
 
 /* --------------------------------------- Placement --------------------------------------- */
-
-.spacer{
+.spacer {
 	margin-top: 20px;
 }
 
-.dr{
+.dr {
 	float: right;
 }
 
-.g{
+.g {
 	float: left;
 }
 
-.decaler{
+.center-div {
+	margin-left: 25%;
+	margin-top: 15%;
+}
+
+.decaler {
 	margin-right: 510px;
 }
 
-.centre{
+.centre {
 	margin-left: 20%;
 }
 
-.btn-titre{
+.btn-titre {
 	margin-left: 25px;
 }
 
-.decaler-droite{
+.decaler-droite {
 	margin-left: 700px;
 }
 
-.decaler-dr{
+.decaler-dr {
 	margin-left: 510px;
 }
 
-.titre{
+.titre {
 	margin-right: 25px;
 }
 
-.inscription{
+.inscription {
 	margin-right: 20px;
 }
 
-.moitie{
+.moitie {
 	width: "15px";
 }

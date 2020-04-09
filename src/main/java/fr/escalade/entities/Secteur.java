@@ -3,41 +3,31 @@ package fr.escalade.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.sun.istack.NotNull;
 
 @Entity
 public class Secteur implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column
 	private String nom;
-	
-	/*@ManyToOne(fetch =FetchType.LAZY)
-	@JoinColumn(name="site_id", nullable = false, insertable = false, updatable = false)
-	private Site sit;*/
-	
+
 	@Column(name = "site_id")
 	private Integer site;
-	
+
 	@Column
 	@NotNull
 	private int nombreVoie;
-	
+
 	@Column(name = "utilisateur_createur")
 	private Integer utilisateurCreateur;
 
@@ -67,7 +57,7 @@ public class Secteur implements Serializable {
 	public void setSite(Integer site) {
 		this.site = site;
 	}
-	
+
 	public int getNombreVoie() {
 		return nombreVoie;
 	}

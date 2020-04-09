@@ -2,20 +2,13 @@ package fr.escalade.web;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,13 +23,11 @@ import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
-import fr.escalade.dao.VoieRepository;
 import fr.escalade.entities.Commentaire;
 import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
-import fr.escalade.entities.Voie;
 
 @Controller
 public class SiteController {
@@ -97,6 +88,9 @@ public class SiteController {
 		return "accueil";
 	}
 
+	/*
+	 * Affiche le détail d'un site.
+	 */
 	@GetMapping(value="/siteDetail/{id}")
 	public String site(@PathVariable("id")int id, Model model, Principal principal,
 			@RequestParam(name="page", defaultValue = "0") int p,
@@ -113,7 +107,6 @@ public class SiteController {
 		int[] pages = new int[commentaire.getTotalPages()];
 
 		Utilisateur us = new Utilisateur();
-		List<Utilisateur> u = utilisateurRepository.findAll();
 
 		if(principal == null){
 			us.setStatut("VISITEUR");
@@ -134,6 +127,9 @@ public class SiteController {
 		return "siteDetail";
 	}
 
+	/*
+	 * Permet à un membre de taguer un site.
+	 */
 	@GetMapping(value="/membre/tag/{id}")
 	public String tag(Model model, @PathVariable("id")int id) {
 
@@ -146,6 +142,9 @@ public class SiteController {
 		return "redirect:/siteDetail/{id}";
 	}
 
+	/*
+	 * Permet à un membre de retire le tag d'un site.
+	 */
 	@GetMapping(value="/membre/enleverTag/{id}")
 	public String enleverTag(Model model, @PathVariable("id")int id) {
 

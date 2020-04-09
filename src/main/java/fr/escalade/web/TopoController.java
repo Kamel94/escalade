@@ -3,17 +3,12 @@ package fr.escalade.web;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,12 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.escalade.dao.ReservationTopoRepository;
-import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
 import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
 import fr.escalade.entities.ReservationTopo;
-import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
 import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
@@ -44,34 +37,14 @@ public class TopoController {
 	private SiteRepository siteRepository;
 
 	@Autowired
-	private SecteurRepository secteurRepository;
-
-	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
 	@Autowired
 	private ReservationTopoRepository reservationRepository;
 
-	private String contact;
-
-	private String proprio;
-
-	public String getProprio() {
-		return proprio;
-	}
-
-	public void setProprio(String proprio) {
-		this.proprio = proprio;
-	}
-
-	public String getContact() {
-		return contact;
-	}
-
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
-
+	/*
+	 * Affiche la liste des topos.
+	 */
 	@GetMapping(value = "/topos")
 	public String topos(Principal principal, Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
@@ -139,12 +112,14 @@ public class TopoController {
 		return "Confirmation";
 	}
 
+	/*
+	 * Affiche la liste des topos d'un utilisateur.
+	 */
 	@GetMapping(value="/user/listeMesTopos")
 	public String listeToposDunUtilisateur(Principal principal, Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "4") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
-		//List<Topo> topos = topoRepository.findByProprietaireOrderByNom(principal.getName());
 
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
@@ -158,6 +133,9 @@ public class TopoController {
 		return "listemestopos";
 	}
 
+	/*
+	 * Permet d'afficher toutes les informations d'un topo et de pouvoir se rediriger vers le site associé.
+	 */
 	@GetMapping(value = "/topoSite/{id}")
 	public String topoParSite(Model model, Principal principal, @PathVariable("id")int id) {
 
@@ -186,6 +164,10 @@ public class TopoController {
 		return "topoSite";
 	}
 
+	/*
+	 * Permet de voir si il y a une demande d'emprunt sur un des topos de l'utilisateur connecté, 
+	 * de pouvoir accepter ou refuser la demande et de pouvoir rendre disponible le topo une fois l'emprunt terminé.
+	 */
 	@GetMapping(value = "/user/topo/{nom}")
 	public String topoId(Model model, Principal principal, @PathVariable("nom")String nom, 
 			@RequestParam(name="page", defaultValue = "0") int p,
@@ -211,6 +193,9 @@ public class TopoController {
 		return "topoId";
 	}
 
+	/*
+	 * Permet de voir toutes les demandes d'emprunt de topo effectuées par l'utilisateur connecté.
+	 */
 	@GetMapping(value="/user/listeMesDemandes")
 	public String listeMesDemandes(Principal principal, Model model, 
 			@RequestParam(name="page", defaultValue = "0") int p,
@@ -221,8 +206,6 @@ public class TopoController {
 		int[] pages = new int[topos.getTotalPages()];
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
-		model.addAttribute("proprietaire", getProprio());
-		model.addAttribute("contact", getContact());
 		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("topos", topos.getContent());
 		model.addAttribute("pages", pages);
@@ -233,6 +216,10 @@ public class TopoController {
 		return "listeMesDemandes";
 	}
 
+	/*
+	 * Permet d'avoir plus d'information sur le statut d'une demande d'emprunt sur un topo
+	 * et de pouvoir avoir le contact si la demande est acceptée.
+	 */
 	@GetMapping(value="/user/statutDemande/{id}")
 	public String statutDemande(Principal principal, Model model,
 			@PathVariable("id")int id) {
@@ -248,6 +235,9 @@ public class TopoController {
 		return "statutDemande";
 	}
 
+	/*
+	 * Permet de faire une demande de prêt d'un topo.
+	 */
 	@GetMapping("/user/demandepret/{id}")
 	public String gererDemandeEmpruntTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
@@ -264,11 +254,6 @@ public class TopoController {
 			topo.setDemandeur(emprunteur.getId());
 			topo.setDisponibilite("Demande");
 
-			setContact(null);
-			setProprio(null);
-			setContact(proprio.getEmail());
-			setProprio(proprio.getPseudo());
-
 			reservationRepository.save(resa);
 		} else {
 		}
@@ -276,6 +261,9 @@ public class TopoController {
 		return "redirect:/topos";
 	}
 
+	/*
+	 * Permet d'accepter le prêt
+	 */
 	@GetMapping("/user/accepterpret/{id}")
 	public String accepterPretTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu pour acceptation prêt: " + id));
@@ -284,7 +272,6 @@ public class TopoController {
 		LocalDateTime dateTime = LocalDateTime.now();
 		ReservationTopo resa = reservationRepository.findByTopoIdAndReponseDemande(id, "Demande");
 
-		//resa.setUtilisateurModif(topo.getProprietaire());
 		resa.setReponseDemande("Acceptée");
 		resa.setDateModif(Timestamp.valueOf(dateTime));
 
@@ -293,19 +280,9 @@ public class TopoController {
 		return "redirect:/user/listeMesTopos";
 	}
 
-	/*@GetMapping("/user/refuser/{id}")
-	public String refuserPret(@PathVariable("id") String id, Principal principal, Model model) {
-		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
-
-
-		topo.setDisponibilite("Disponible");
-		topo.setEmprunteur(null);
-
-		//reservationRepository.save(resa);
-		topoRepository.save(topo);
-		return "redirect:/user/listeMesTopos";
-	}*/
-
+	/*
+	 * Permet de rendre disponible le topo.
+	 */
 	@GetMapping("/user/redisponible/{id}")
 	public String redisponible(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
@@ -313,12 +290,14 @@ public class TopoController {
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
 		topo.setDemandeur(null);
-		setContact(null);
 
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
 	}
 
+	/*
+	 * Permet de refuser le prêt
+	 */
 	@GetMapping("/user/refuserpret/{id}")
 	public String refuserPretTopo(@PathVariable("id") int id, Principal principal, Model model) {
 		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
@@ -333,16 +312,9 @@ public class TopoController {
 
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);
-		setContact(null);
 
-		//reservationRepository.save(resa);
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
-	}
-
-	@GetMapping(value = "/user/reserver")
-	public String reserver() {
-		return "reservation";
 	}
 
 	@GetMapping("/403")

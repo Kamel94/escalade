@@ -1,8 +1,6 @@
 package fr.escalade.entities;
 
-import java.awt.Image;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -11,9 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,27 +26,24 @@ public class Topo implements Serializable {
 	@NotNull
 	@Size(min = 1, max = 70)
 	private String nom;
-	
-	/*@ManyToOne
-	@JoinColumn(name="utilisateur_id")*/
+
 	@Column( name = "utilisateur_createur", insertable = false, updatable = false)
 	private Integer proprietaire;
-	
+
 	@Column(length = 1000)
 	@Size(min = 1, max = 1000)
 	private String description;
-	
+
 	@Column(length = 100)
 	@Size(min = 1, max = 100)
 	private String lieu;
-	
+
 	@Column(name = "date_parution")
-	/*@Size(min = 1, max = 70)*/
 	@DateTimeFormat(iso = ISO.DATE, pattern = "yyyy-MM-dd", style = "dd-MM-yyyy")
 	private Date parution;
-	
+
 	private Integer emprunteur;
-	
+
 	@Column(name = "utilisateur_createur")
 	private Integer utilisateurCreateur;
 
@@ -63,19 +55,11 @@ public class Topo implements Serializable {
 
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
-	
+
 	private Integer demandeur;
-	
+
 	@Column(name= "site_id")
 	private Integer site;
-
-	public Integer getEmprunteur() {
-		return emprunteur;
-	}
-
-	public void setEmprunteur(Integer emprunteur) {
-		this.emprunteur = emprunteur;
-	}
 
 	@Column(length = 70)
 	@Size(min = 1, max = 70)
@@ -135,13 +119,21 @@ public class Topo implements Serializable {
 	public void setDisponibilite(String disponibilite) {
 		this.disponibilite = disponibilite;
 	}
-	
+
 	public Integer getProprietaire() {
 		return proprietaire;
 	}
 
 	public void setProprietaire(Integer proprietaire) {
 		this.proprietaire = proprietaire;
+	}
+
+	public Integer getEmprunteur() {
+		return emprunteur;
+	}
+
+	public void setEmprunteur(Integer emprunteur) {
+		this.emprunteur = emprunteur;
 	}
 
 	public Integer getDemandeur() {

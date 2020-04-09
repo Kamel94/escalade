@@ -31,10 +31,6 @@
 				<div class="form-group">
 					<label>Date : </label> <label th:text="${utilisateur.dateCreation}"></label>
 				</div>
-				<!-- <div th:if="${utilisateur.dateModif != null}" class="form-group">
-					<label>Date de modification : </label> <label
-						th:text="${utilisateur.dateModif}"></label>
-				</div> -->
 				<div class="form-group">
 					<a  th:if="${#httpServletRequest.remoteUser} == null"
 						class="btn btn-info droite rond-lege" th:href="@{/accueil}">Retourner

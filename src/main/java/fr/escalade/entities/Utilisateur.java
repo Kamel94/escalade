@@ -9,23 +9,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Utilisateur implements Serializable {
 
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -591498517976957905L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(length = 15, name = "pseudo")
 	private String pseudo;
-	
+
 	@Email
 	@Column(length = 50, unique = true)
 	private String email;
@@ -35,24 +32,25 @@ public class Utilisateur implements Serializable {
 
 	@Column(length = 30)
 	private String prenom;
-	
+
 	@Column(length = 50)
+	@Size(min = 8)
 	private String password;
-	
+
 	@Column(length = 6)
 	private String statut;
 
 	@Column(length = 15)
 	private String telephone;
-	
+
 	@Column(name = "actif")
 	private boolean compteActif;
-	
+
 	@Column(name = "utilisateur_createur")
-	private int utilisateurCreateur;
+	private Integer utilisateurCreateur;
 
 	@Column(name = "utilisateur_modif")
-	private int utilisateurModif;
+	private Integer utilisateurModif;
 
 	@Column(name = "date_creation")
 	private Timestamp dateCreation;
@@ -66,7 +64,7 @@ public class Utilisateur implements Serializable {
 	}
 
 	public Utilisateur(String nom, String prenom, String pseudo, String password, String statut,
-			 String niveau, String telephone, boolean compteActif) {
+			String niveau, String telephone, boolean compteActif) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -141,19 +139,19 @@ public class Utilisateur implements Serializable {
 		this.telephone = telephone;
 	}
 
-	public int getUtilisateurCreateur() {
+	public Integer getUtilisateurCreateur() {
 		return utilisateurCreateur;
 	}
 
-	public void setUtilisateurCreateur(int utilisateurCreateur) {
+	public void setUtilisateurCreateur(Integer utilisateurCreateur) {
 		this.utilisateurCreateur = utilisateurCreateur;
 	}
 
-	public int getUtilisateurModif() {
+	public Integer getUtilisateurModif() {
 		return utilisateurModif;
 	}
 
-	public void setUtilisateurModif(int utilisateurModif) {
+	public void setUtilisateurModif(Integer utilisateurModif) {
 		this.utilisateurModif = utilisateurModif;
 	}
 

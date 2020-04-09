@@ -9,11 +9,9 @@ import org.springframework.data.repository.query.Param;
 import fr.escalade.entities.ReservationTopo;
 
 public interface ReservationTopoRepository extends JpaRepository<ReservationTopo, Integer> {
-	
+
 	@Query("select r from ReservationTopo r where r.topoId >= :x")
 	Page<ReservationTopo> page(@Param("x")int topo, Pageable pageable);
-	
-	ReservationTopo findByUtilisateurModif(int topo);
 
 	ReservationTopo findByTopoIdAndReponseDemande(int id, String string);
 

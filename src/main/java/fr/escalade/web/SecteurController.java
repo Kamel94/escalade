@@ -1,9 +1,7 @@
 package fr.escalade.web;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -21,12 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.escalade.dao.SecteurRepository;
 import fr.escalade.dao.SiteRepository;
-import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
-import fr.escalade.entities.InfoSite;
 import fr.escalade.entities.Secteur;
 import fr.escalade.entities.Site;
-import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
 
 @Controller
@@ -41,26 +36,15 @@ public class SecteurController {
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
 
-	/*@GetMapping(value = "/secteur")
-	public String secteur(Model model, 
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc) {
-
-		Page<Secteur> listeSecteur = secteurRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-		model.addAttribute("listeSecteurs", listeSecteur.getContent());
-		int[] listes = new int[listeSecteur.getTotalPages()];
-		model.addAttribute("secteur", listes);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-
-		return "secteur";
-	}*/
-
+	/*
+	 * Permet d'afficher la liste des secteurs pour un site.
+	 */
 	@GetMapping(value="/secteur/{id}")
-	public String secteurSite(@PathVariable("id")int id, Model model, Principal principal) {
-		List<Secteur> secteur = secteurRepository.findBySite(id);
+	public String secteurSite(@PathVariable("id")int id, Model model, Principal principal,
+			@RequestParam(name = "page", defaultValue = "0")int p,
+			@RequestParam(name = "size", defaultValue = "5")int s) {
+
+		Page<Secteur> secteur = secteurRepository.findBySite(id, PageRequest.of(p, s));
 		model.addAttribute("secteur", secteur);
 
 		Site site = siteRepository.findById(id).orElse(null);
@@ -100,7 +84,7 @@ public class SecteurController {
 		Secteur secteur = secteurRepository.findById(id).orElse(null);
 		Site site = siteRepository.findById(secteur.getSite()).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-		
+
 		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("site", site);
 		model.addAttribute("secteur", secteur);
@@ -120,31 +104,12 @@ public class SecteurController {
 		if(bindingResult.hasErrors()) {
 			return "ajoutSecteur";
 		}
-		//Secteur sec = secteurRepository.findById(id).orElse(null);
+
 		Site site = siteRepository.findById(id).orElse(null);
 
 		model.addAttribute("site", site);
 		secteurRepository.save(secteur);
 		return "confirmationSecteur";
 	}
-
-	/*@GetMapping(value = "/informations")
-	public String informationsSites(Model model, 
-			@RequestParam(name="page", defaultValue = "0") int p,
-			@RequestParam(name="size", defaultValue = "6") int s,
-			@RequestParam(name="motCle", defaultValue = "") String mc, 
-			@RequestParam int id) {
-
-		Page<Site> pageSites = siteRepository.chercher("%" + mc + "%", PageRequest.of(p, s));
-
-		model.addAttribute("listeSites", pageSites.getContent());
-		int[] pages = new int[pageSites.getTotalPages()];
-		model.addAttribute("pages", pages);
-		model.addAttribute("size", s);
-		model.addAttribute("pageCourante", p);
-		model.addAttribute("motCle", mc);
-		model.addAttribute("id", id);
-		return "informations";
-	}*/
 
 }

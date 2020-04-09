@@ -1,26 +1,12 @@
 package fr.escalade;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import fr.escalade.dao.SiteRepository;
-import fr.escalade.dao.TopoRepository;
-import fr.escalade.entities.InfoSite;
-import fr.escalade.entities.Site;
-import fr.escalade.entities.Topo;
-
 @SpringBootApplication
 public class EscaladeApplication implements CommandLineRunner {
-	
-	@Autowired
-	private TopoRepository topoRepository;
-	
-	@Autowired
-	private SiteRepository siteRepository;
-	
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(EscaladeApplication.class, args);

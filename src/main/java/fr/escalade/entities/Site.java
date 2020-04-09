@@ -2,68 +2,45 @@ package fr.escalade.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
-
-import org.springframework.ui.Model;
 
 import com.sun.istack.NotNull;
-
-import fr.escalade.dao.SecteurRepository;
 
 @Entity
 public class Site implements Serializable {
 
-	/*@OneToMany(mappedBy = "sit", orphanRemoval = true, cascade = CascadeType.REMOVE)
-	private Set<Secteur> secteurs;
-
-	public Collection<Secteur> getTopos() {
-		return secteurs;
-	}
-
-	public void setTopos(Collection<Secteur> secteurs) {
-		this.secteurs = secteurs;
-	}*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(length = 40, unique = true)
 	@NotNull
 	private String nom;
-	
+
 	@Column(length = 30)
 	@NotNull
 	private String pays;
-	
+
 	@Column(length = 30)
 	@NotNull
 	private String region;
-	
+
 	@Column(length = 30)
 	@NotNull
 	private String ville;
-	
+
 	@Column(name = "nombre_secteur")
 	@NotNull
 	private int nombreSecteur;
 
 	@Column()
 	private boolean tag;
-	
+
 	@Column(name = "utilisateur_createur")
 	private int utilisateurCreateur;
 
@@ -178,5 +155,5 @@ public class Site implements Serializable {
 		this.id = id;
 	}
 
-	
+
 }

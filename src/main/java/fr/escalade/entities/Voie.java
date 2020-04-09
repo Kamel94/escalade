@@ -8,24 +8,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 public class Voie implements Serializable {
-	
+
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "numero_voie")
 	private int numeroVoie;
-	
+
 	@Column(name = "secteur_id")
 	private Integer secteurId;
-	
+
 	@Column(name = "nombre_longueur")
 	private int nombreLongueur;
-	
+
 	@Column(name = "utilisateur_createur")
 	private Integer utilisateurCreateur;
 
@@ -37,7 +36,7 @@ public class Voie implements Serializable {
 
 	@Column(name = "date_modif")
 	private Timestamp dateModif;
-	
+
 	public Integer getSecteurId() {
 		return secteurId;
 	}
@@ -45,7 +44,7 @@ public class Voie implements Serializable {
 	public void setSecteurId(Integer secteurId) {
 		this.secteurId = secteurId;
 	}
-	
+
 	@Column(length = 2 )
 	@Size(min = 1, max = 2)
 	private String cotation;
@@ -60,7 +59,7 @@ public class Voie implements Serializable {
 		this.nombreLongueur = nombreLongueur;
 		this.cotation = cotation;
 	}
-	
+
 	public Voie(Integer secteurId) {
 		super();
 		this.secteurId = secteurId;

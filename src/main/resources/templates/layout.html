@@ -15,9 +15,10 @@
 		<nav class="navbar navbar-light">
 			<a class="navbar-brand text-light" th:href="@{/accueil}">Accueil</a>
 			<a th:if="${#httpServletRequest.remoteUser} != null"
+				onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?')"
 				class="btn btn-info rond-lege" th:href="@{/logout}" th:inline="text">
-				Se déconecter [[${#httpServletRequest.remoteUser}]]</a> 
-				<a class="btn btn-info rond-lege"
+				Se déconecter [[${#httpServletRequest.remoteUser}]]</a> <a
+				class="btn btn-info rond-lege"
 				th:if="${#httpServletRequest.remoteUser} == null"
 				th:href="@{/login}" sec:authorize="isAnonymous()">S'identifier</a>
 		</nav>

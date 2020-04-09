@@ -11,17 +11,17 @@ import javax.persistence.Id;
 
 @Entity
 public class ReservationTopo implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "topo_id")
 	private Integer topoId;
-	
+
 	@Column(name = "utilisateur_createur")
 	private Integer demandeur;
-	
+
 	@Column(name = "reponse_demande")
 	private String reponseDemande;
 
