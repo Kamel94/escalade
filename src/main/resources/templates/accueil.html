@@ -44,15 +44,14 @@
 					: &nbsp;</label> <input class="form-control-sm" type="text" name="pays"
 					th:value="${pays}"> <label>&nbsp;Region : &nbsp;</label> <input
 					class="form-control-sm" type="text" name="region"
-					th:value="${region}">
-				<label>&nbsp; Secteur : &nbsp;</label>
-					<input class="form-control-sm" type="number" name="sec" th:value="${sec}">
-				&nbsp; &nbsp;
+					th:value="${region}"> <label>&nbsp; Secteur :
+					&nbsp;</label> <input class="form-control-sm" type="number" name="sec"
+					th:value="${sec}"> &nbsp; &nbsp;
 				<button class="btn text-primary vert-bleu rond-lege">Chercher</button>
 				&nbsp; &nbsp;
 			</form>
 		</div>
-		 <br>
+		<br>
 		<div th:each="s:${listeSites}"
 			class="container-fluid bleu col-sm-10 pt-1">
 			<table class="table vert-bleu text-info spacer rond-haut">
@@ -67,8 +66,9 @@
 					<tr>
 						<th>Secteurs : &nbsp; &nbsp; &nbsp; [[${s.nombreSecteur}]]</th>
 					<tr>
-						<th>Tag : &nbsp; &nbsp; &nbsp; <span th:text="${s.tag} == TRUE? 'Officiel les amis de l escalade' : 'Non officiel'"></span></th>
-						<th ></th>
+						<th>Tag : &nbsp; &nbsp; &nbsp; <span
+							th:text="${s.tag} == TRUE? 'Officiel les amis de l escalade' : 'Non officiel'"></span></th>
+						<th></th>
 					</tr>
 				</tbody>
 			</table>

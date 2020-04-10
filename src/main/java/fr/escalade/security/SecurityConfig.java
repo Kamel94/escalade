@@ -37,14 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		/*http.formLogin().defaultSuccessUrl("/accueil").and().logout().invalidateHttpSession(true)
-		.logoutSuccessUrl("/accueil")
-		.and().sessionManagement().maximumSessions(1).expiredUrl("/login");*/
-
 		http.csrf().disable()
 		.authorizeRequests().antMatchers("/").permitAll()
-		.and().formLogin().loginPage("/login").defaultSuccessUrl("/accueil").failureUrl("/login?error=true").permitAll()
-		.and().logout().deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/login");
+		.and()
+		.formLogin()
+			.loginPage("/login")
+			.defaultSuccessUrl("/accueil")
+			.failureUrl("/login?error=true").permitAll()
+		.and()
+		.logout()
+			.deleteCookies("JSESSIONID")
+			.clearAuthentication(true)
+			.invalidateHttpSession(true)
+			.logoutUrl("/logout")
+			.logoutSuccessUrl("/login")
+		.and()
+		.sessionManagement()
+		.maximumSessions(1)
+		.expiredUrl("/login");
 
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
 		http.authorizeRequests().antMatchers("/membre/*").hasAnyRole("ADMIN", "MEMBRE");

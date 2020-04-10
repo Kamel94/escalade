@@ -34,7 +34,7 @@
 						<td th:text="${s.pays}"></td>
 						<td th:text="${s.region}"></td>
 						<td th:text="${s.ville}"></td>
-						<td th:text="${#lists.size(secteur)}"></td>
+						<td th:text="${s.nombreSecteur}"></td>
 						<td
 							th:text="${s.tag} == false? 'Non officiel' : 'Officiel Les amis de l’escalade'"
 							th:class="${s.tag} == true? 'text-success' : 'text-danger'"></td>
