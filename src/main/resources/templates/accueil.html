@@ -20,9 +20,12 @@
 					&nbsp;&nbsp; &nbsp;</a> <a
 					class="btn btn-warning dr spacer titre bord-rond"
 					th:if="${utilisateur.statut} == 'ADMIN'"
-					th:href="@{/admin/utilisateurs}" sec:authorize="isAnonymous()">&nbsp;
-					&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Voir les utilisateurs &nbsp;
-					&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</a>
+					th:href="@{/admin/utilisateurs}"> &nbsp; &nbsp; &nbsp;Voir les
+					utilisateurs &nbsp; &nbsp;</a> <a
+					class="btn btn-warning dr spacer titre bord-rond"
+					th:if="${utilisateur.statut} == 'ADMIN'"
+					th:href="@{/user/compte}"> &nbsp; &nbsp; &nbsp; &nbsp;
+					Mon compte &nbsp; &nbsp; &nbsp; &nbsp;</a>
 			</header>
 			<h2 class="text-center text-warning p-3 font-italic">
 				<span class="font-weight-light">Bienvenue</span> <b> amis de

@@ -12,8 +12,7 @@
 	<div layout:fragment="content">
 		<div class="col-8 spacer">
 			<div class="card-fluid">
-				<div class="card-header">Saisie d'un topo du site
-					[[${site.nom}]]</div>
+				<div class="card-header">Saisie d'un topo du site</div>
 				<div class="card-body">
 					<form th:action="@{/user/enregistrer/{id}(id=${id})}" method="post">
 						<div class="form-group">

@@ -42,7 +42,7 @@
 							th:href="@{/rendreUser/{id}(id=${u.id}, page=${pageCourante}, size=${size})}">&nbsp; Rendre user &nbsp;</a></td>
 						<td><a class="btn btn-danger rond-lege"
 							onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
-							th:href="@{/supprimerSite(id=${u.id}, page=${pageCourante}, size=${size})}">Supprimer</a></td>
+							th:href="@{/supprimerUtilisateur(id=${u.id}, page=${pageCourante}, size=${size})}">Supprimer</a></td>
 					</tr>
 				</tbody>
 			</table>

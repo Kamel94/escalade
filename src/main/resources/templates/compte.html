@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Sites</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container-fluid">
+			<br>
+			<h3>
+				Mon compte <a class="btn btn-info btn-titre rond-lege"
+					th:if="${#httpServletRequest.remoteUser} != null"
+					th:href="@{/user/modifierCompte(id=${u.id})}">Modifier</a> <a
+					class="btn btn-danger rond-lege btn-titre"
+					onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')"
+					th:href="@{/supprimerCompte(id=${u.id})}">Supprimer</a>
+			</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr class="text-primary">
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Pseudo</th>
+						<th>Email</th>
+						<th>Statut</th>
+						<th>Date d'adhésion</th>
+						<th>Nombre de topo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${u.nom}"></td>
+						<td th:text="${u.prenom}"></td>
+						<td th:text="${u.pseudo}"></td>
+						<td th:text="${u.email}"></td>
+						<td th:text="${u.statut}"></td>
+						<td th:text="${u.dateCreation}"></td>
+						<td><span>[[${#lists.size(topo)}]]</span><a
+							class="btn btn-info btn-titre rond-lege"
+							th:href="@{/user/listeMesTopos}">Voir mes topos</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="container">
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:class="${pageCourante}==${status.index}?'nav-link active':'nav-link'"
+					th:each="pa,status:${pages}"><a class="nav-link active"
+					th:href="@{/admin/utilisateurs(page=${status.index}, size=${size})}"
+					th:text="${status.index}"></a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

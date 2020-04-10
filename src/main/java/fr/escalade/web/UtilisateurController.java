@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.escalade.dao.TopoRepository;
 import fr.escalade.dao.UtilisateurRepository;
+import fr.escalade.entities.Site;
+import fr.escalade.entities.Topo;
 import fr.escalade.entities.Utilisateur;
 
 @Controller
@@ -29,6 +32,9 @@ public class UtilisateurController {
 
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
+
+	@Autowired
+	private TopoRepository topoRepository;
 
 	@Autowired 
 	PasswordEncoder passwordEncoder;
@@ -64,7 +70,7 @@ public class UtilisateurController {
 	}
 
 	/*
-	 * méthode permettant d'enregistrer l'inscription ou 
+	 * méthode qui permet d'enregistrer l'inscription ou 
 	 * de renvoyer vers le formulaire d'inscription en cas d'erreur.
 	 */
 	@RequestMapping(value="/enregistrer", method=RequestMethod.POST)
@@ -81,7 +87,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * méthode permettant d'afficher la liste de tous les utilisateurs à l'administrateur.
+	 * méthode qui permet d'afficher la liste de tous les utilisateurs à l'administrateur.
 	 */
 	@GetMapping(value = "/admin/utilisateurs")
 	public String pageDesUtilisateurs(Model model,      
@@ -100,7 +106,24 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * méthode permettant à l'administrateur de rendre membre un utilisateur.
+	 * méthode qui permet d'afficher le compte d'un utilisateur connecté.
+	 */
+	@GetMapping(value = "/user/compte")
+	public String compteUtilisateur(Model model, Principal principal,      
+			@RequestParam(name="page", defaultValue = "0") int p,
+			@RequestParam(name="size", defaultValue = "5") int s) {
+
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+		Page<Topo> topo = topoRepository.findTopoByProprietaire(utilisateur.getId(), PageRequest.of(p, s));
+		
+		model.addAttribute("topo", topo.getContent());
+		model.addAttribute("u", utilisateur);
+
+		return "compte";
+	}
+
+	/**
+	 * méthode qui permet à l'administrateur de rendre membre un utilisateur.
 	 */
 	@GetMapping(value = "/rendreMembre/{id}")
 	public String rendreMembre(Model model, Principal principal, @PathVariable("id")int id, int page, int size) {
@@ -118,7 +141,7 @@ public class UtilisateurController {
 	}
 
 	/**
-	 * méthode permettant à l'administrateur de rendre utilisateur un membre.
+	 * méthode qui permet à l'administrateur de rendre utilisateur un membre.
 	 */
 	@GetMapping(value = "/rendreUser/{id}")
 	public String rendreUser(Model model, Principal principal, @PathVariable("id")int id, int page, int size) {
@@ -135,10 +158,36 @@ public class UtilisateurController {
 		return "redirect:/admin/utilisateurs?page=" + page + "&size=" + size;
 	}
 
+	@RequestMapping(value="/user/modifierCompte", method=RequestMethod.GET)
+	public String modifierCompte(Model model, int id, Principal principal) {
+		
+		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+
+		model.addAttribute("utilisateur", utilisateur);
+		model.addAttribute("localDate", LocalDateTime.now());
+
+		return "modifCompte"; 
+	}
+
+	@RequestMapping(value="/user/enregistrerCompte", method=RequestMethod.POST)
+	public String enregistrerCompte(Model model, @Valid Utilisateur utilisateur, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "ajoutSite";
+		}
+		utilisateurRepository.save(utilisateur);
+		return "confirmationCompte";
+	}
+
 	@GetMapping(value="/supprimerUtilisateur")
 	public String supprimerUtilisateur(int id, int page, int size) {
 		utilisateurRepository.deleteById(id);
 		return "redirect:/admin/utilisateurs?page=" + page + "&size=" + size;
+	}
+
+	@GetMapping(value="/supprimerCompte")
+	public String supprimerCompte(int id) {
+		utilisateurRepository.deleteById(id);
+		return "redirect:/accueil";
 	}
 
 	@GetMapping(value = "/login")

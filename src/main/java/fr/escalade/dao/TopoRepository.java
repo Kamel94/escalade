@@ -17,6 +17,8 @@ public interface TopoRepository extends JpaRepository<Topo, Integer> {
 
 	Page<Topo> findByProprietaireOrderByNom(int name, Pageable pageable);
 
+	Page<Topo> findTopoByProprietaire(int id, Pageable pageable);
+	
 	Topo findTopoByNom(String nom);
 
 	List<Topo> findTopoBySite(int site);

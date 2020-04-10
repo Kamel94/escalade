@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="UTF-8">
+<title>Modification</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="col-8 spacer">
+			<div class="card">
+				<div class="card-header">Modification de son compte</div>
+				<div class="card-body">
+					<form th:action="@{/user/enregistrer(id=${utilisateur.id})}"
+						method="post">
+						<div>
+							<input class="form-control-xs" type="hidden" name="id"
+								th:value="${utilisateur.id}"><span class="red"
+								th:errors="${utilisateur.id}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Nom : </label>
+							<input class="form-control-xs" type="text" name="nom"
+								th:value="${utilisateur.nom}"><span class="red"
+								th:errors="${utilisateur.nom}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Prénom : </label>
+							<input class="form-control-xs" type="text" name="prenom"
+								th:value="${utilisateur.prenom}"><span class="red"
+								th:errors="${utilisateur.prenom}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Pseudo : </label> <input
+								class="form-control-xs" type="text" name="pseudo"
+								th:value="${utilisateur.pseudo}"><span class="red"
+								th:errors="${utilisateur.pseudo}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Mot de passe : </label> <input
+								class="form-control-xs" type="password" name="password"
+								th:value="${utilisateur.password}"><span class="red"
+								th:errors="${utilisateur.password}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Email : </label> <input
+								class="form-control-xs" type="email" name="email"
+								th:value="${utilisateur.email}"> <span class="red"
+								th:errors="${utilisateur.email}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Date : </label> <input
+								class="form-control-xs" type="hidden" name="dateModif"
+								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
+							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]<span
+								class="red" th:errors="${utilisateur.dateModif}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="dateCreation"
+								th:value="${utilisateur.dateCreation}"> <span
+								class="red" th:errors="${utilisateur.dateCreation}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurCreateur"
+								th:value="${utilisateur.utilisateurCreateur}"> <span
+								class="red" th:errors="${utilisateur.utilisateurCreateur}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="utilisateurModif" th:value="${utilisateur.utilisateurModif}">
+							<span class="red" th:errors="${utilisateur.utilisateurModif}"></span>
+						</div>
+						<div>
+							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>
+							<a class="btn btn-danger rond-lege"
+								th:href="@{/user/compte(id=${utilisateur.id})}">Annuler</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
