@@ -23,7 +23,7 @@
 					th:href="@{/admin/utilisateurs}"> &nbsp; &nbsp; &nbsp;Voir les
 					utilisateurs &nbsp; &nbsp;</a> <a
 					class="btn btn-warning dr spacer titre bord-rond"
-					th:if="${utilisateur.statut} == 'ADMIN'"
+					th:if="${utilisateur.statut} != 'VISITEUR'"
 					th:href="@{/user/compte}"> &nbsp; &nbsp; &nbsp; &nbsp;
 					Mon compte &nbsp; &nbsp; &nbsp; &nbsp;</a>
 			</header>

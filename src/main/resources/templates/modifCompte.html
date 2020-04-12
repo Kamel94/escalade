@@ -14,12 +14,18 @@
 			<div class="card">
 				<div class="card-header">Modification de son compte</div>
 				<div class="card-body">
-					<form th:action="@{/user/enregistrer(id=${utilisateur.id})}"
+					<form th:action="@{/user/enregistrerCompte(id=${utilisateur.id})}"
 						method="post">
 						<div>
 							<input class="form-control-xs" type="hidden" name="id"
 								th:value="${utilisateur.id}"><span class="red"
 								th:errors="${utilisateur.id}"></span>
+						</div>
+						<div class="form-group">
+							<label class="col-form-label">Pseudo : </label> <input
+								class="form-control-xs" type="hidden" name="pseudo"
+								th:value="${utilisateur.pseudo}">[[${utilisateur.pseudo}]]<span class="red"
+								th:errors="${utilisateur.pseudo}"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Nom : </label>
@@ -32,12 +38,6 @@
 							<input class="form-control-xs" type="text" name="prenom"
 								th:value="${utilisateur.prenom}"><span class="red"
 								th:errors="${utilisateur.prenom}"></span>
-						</div>
-						<div class="form-group">
-							<label class="col-form-label">Pseudo : </label> <input
-								class="form-control-xs" type="text" name="pseudo"
-								th:value="${utilisateur.pseudo}"><span class="red"
-								th:errors="${utilisateur.pseudo}"></span>
 						</div>
 						<div class="form-group">
 							<label class="col-form-label">Mot de passe : </label> <input
@@ -56,7 +56,7 @@
 								class="form-control-xs" type="hidden" name="dateModif"
 								th:value="${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}">
 							[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]<span
-								class="red" th:errors="${utilisateur.dateModif}"></span>
+								class="red" th:errors="${utilisateur.dateModif}">[[${#temporals.format(localDate, 'yyyy-MM-dd HH:mm:ss')}]]</span>
 						</div>
 						<div>
 							<input class="form-control-xs" type="hidden"
@@ -72,8 +72,20 @@
 						</div>
 						<div>
 							<input class="form-control-xs" type="hidden"
-								name="utilisateurModif" th:value="${utilisateur.utilisateurModif}">
-							<span class="red" th:errors="${utilisateur.utilisateurModif}"></span>
+								name="utilisateurModif" th:value="${utilisateur.id}">
+							<span class="red" th:errors="${utilisateur.id}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="statut"
+								th:value="${utilisateur.statut}"> <span
+								class="red" th:errors="${utilisateur.statut}"></span>
+						</div>
+						<div>
+							<input class="form-control-xs" type="hidden"
+								name="compteActif"
+								th:value="${utilisateur.compteActif}"> <span
+								class="red" th:errors="${utilisateur.compteActif}"></span>
 						</div>
 						<div>
 							<button type="submit" class="btn btn-info rond-lege">Enregistrer</button>

@@ -40,7 +40,7 @@
 						<td th:text="${u.statut}"></td>
 						<td th:text="${u.dateCreation}"></td>
 						<td><span>[[${#lists.size(topo)}]]</span><a
-							class="btn btn-info btn-titre rond-lege"
+							class="${#lists.size(topo)} != null ?btn btn-info btn-titre rond-lege : btn btn-info btn-titre rond-lege disabled"
 							th:href="@{/user/listeMesTopos}">Voir mes topos</a></td>
 					</tr>
 				</tbody>

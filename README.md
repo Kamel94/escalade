@@ -21,14 +21,53 @@ Les scripts SQL présents dans src/main/resources/Scripts permettent de créer u
 
 * Création des tables : 
     
-    * db_escalade.sql
+    * script_table.sql
 
 * Alimentation des données : 
     
     * jeu_de_donnees.sql
 
-Le SGBD (Système de Gestion de Base de Données) configuré dans ce projet est postgreSQL, si vous utilisez un autre SGBD il faudra alors changer la configuration dans le fichier "application.properties" qui se trouve dans le chemin src/resources application.properties .
+Le SGBD (Système de Gestion de Base de Données) configuré dans ce projet est postgreSQL, si vous utilisez aussi postgreSQL, il faudra alors, pour pouvoir connecter l'application à la base de données, changer :
 
+1. le nom de base de données, que vous souhaitez utiliser
+2. le nom de l'utilisateur 
+3. le mot de passe 
+
+dans le fichier "application.properties" qui se trouve dans le chemin src/main/resources/application.properties comme illustré dans l'image suivante.
+
+![40% center](image_config/configuration_postgres.png)
+
+Si vous utilisez un autre SGBD, il faudra alors, pour pouvoir connecter l'application à la base de données, changer :
+
+1. le nom de base de données, que vous souhaitez utiliser
+2. le nom de l'utilisateur 
+3. le mot de passe 
+4. le "spring.datasource.driver-class-name"
+5. le "spring.jpa.properties.hibernate.dialect"
+
+dans le fichier "application.properties" qui se trouve dans le chemin src/main/resources/application.properties comme illustré dans l'image suivante.
+
+![40% center](image_config/configuration_autre.png)
+
+Une fois l'application démarrée vous pourrez vous connecter via les utilisateurs enregistrés dans le jeu de données fourni plutôt, il faudra utiliser les identifiants et mots de passe suivant :
+
+Pour un ADMIN :
+
+* identifiant = ponpon
+* mot de passe = jean
+* statut = ADMIN
+
+Pour un MEMBRE :
+
+* identifiant = memer56
+* mot de passe = robert
+* statut = MEMBRE
+
+Pour un USER :
+
+* identifiant = riri
+* mot de passe = patrick
+* statut = USER
 ------------------------
 
 ## Installation et déploiement

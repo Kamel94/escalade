@@ -172,8 +172,11 @@ public class UtilisateurController {
 	@RequestMapping(value="/user/enregistrerCompte", method=RequestMethod.POST)
 	public String enregistrerCompte(Model model, @Valid Utilisateur utilisateur, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
-			return "ajoutSite";
+			model.addAttribute("localDate", LocalDateTime.now());
+			return "modifCompte";
 		}
+		String encryptedPassword = passwordEncoder.encode(utilisateur.getPassword());
+		utilisateur.setPassword(encryptedPassword);
 		utilisateurRepository.save(utilisateur);
 		return "confirmationCompte";
 	}
@@ -187,7 +190,7 @@ public class UtilisateurController {
 	@GetMapping(value="/supprimerCompte")
 	public String supprimerCompte(int id) {
 		utilisateurRepository.deleteById(id);
-		return "redirect:/accueil";
+		return "redirect:/logout";
 	}
 
 	@GetMapping(value = "/login")

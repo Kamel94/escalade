@@ -25,13 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		BCryptPasswordEncoder bc = getBC();
-
 		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery("select pseudo as principal, password as credentials, actif from utilisateur where pseudo=?")
 		.authoritiesByUsernameQuery("select pseudo as principal, statut as role from utilisateur where pseudo=?")
 		.rolePrefix("ROLE_")
 		.passwordEncoder(getBC());
-
 	}
 
 	@Override
@@ -60,12 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/membre/*").hasAnyRole("ADMIN", "MEMBRE");
 		http.authorizeRequests().antMatchers("/user/*").hasAnyRole("ADMIN", "MEMBRE", "USER");
 		http.exceptionHandling().accessDeniedPage("/403");
-
 	}
 
 	@Bean(name = "bc")
 	BCryptPasswordEncoder getBC() {
 		return new BCryptPasswordEncoder();
 	}
-
 }
