@@ -7,11 +7,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.5.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
+	<!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr</groupId>
 	<artifactId>escalade</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>escalade</name>
 	<description>Les amis de l'escalade</description>
 

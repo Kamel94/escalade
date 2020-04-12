@@ -8,10 +8,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>Veuillez vous connecter</title>
-<!--     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/> -->
-<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
 	<div class="col-12 spacer">
@@ -34,9 +33,9 @@
 					<button class="btn btn-info rond-lege" type="submit">&nbsp;
 						Se connecter &nbsp; &nbsp;</button>
 					<a class="btn btn-danger btn-titre rond-lege" th:href="@{/accueil}">Retourner
-						à l'accueil</a>
-					<a class="btn dr btn-info btn-titre rond-lege" th:href="@{/inscription}">S'inscrire</a>
-						<small class="form-text text-muted dr pt-3">Pas de compte ?</small>
+						à l'accueil</a> <a class="btn dr btn-info btn-titre rond-lege"
+						th:href="@{/inscription}">S'inscrire</a> <small
+						class="form-text text-muted dr pt-3">Pas de compte ?</small>
 				</form>
 			</div>
 		</div>

@@ -17,7 +17,9 @@ Il est possible aussi, pour des utilisateurs connectés, d'ajouter des topos, de
 
 ## Base de données
 
-Les scripts SQL présents dans src/main/resources/Scripts permettent de créer une base de données avec un jeu de données.
+Les scripts SQL présents dans src/main/resources/script_sql permettent de créer les tables d'une base de données avec un jeu de données.
+
+Exécutez les scripts, après avoir créé une base de données, dans cet ordre :
 
 * Création des tables : 
     
@@ -29,8 +31,10 @@ Les scripts SQL présents dans src/main/resources/Scripts permettent de créer u
 
 Le SGBD (Système de Gestion de Base de Données) configuré dans ce projet est postgreSQL, si vous utilisez aussi postgreSQL, il faudra alors, pour pouvoir connecter l'application à la base de données, changer :
 
-1. le nom de base de données, que vous souhaitez utiliser
+1. le nom de la base de données, que vous souhaitez utiliser
+
 2. le nom de l'utilisateur 
+
 3. le mot de passe 
 
 dans le fichier "application.properties" qui se trouve dans le chemin src/main/resources/application.properties comme illustré dans l'image suivante.
@@ -39,17 +43,21 @@ dans le fichier "application.properties" qui se trouve dans le chemin src/main/r
 
 Si vous utilisez un autre SGBD, il faudra alors, pour pouvoir connecter l'application à la base de données, changer :
 
-1. le nom de base de données, que vous souhaitez utiliser
-2. le nom de l'utilisateur 
-3. le mot de passe 
+1. l'url de la base de données, que vous souhaitez utiliser
+
+2. le nom de l'utilisateur
+
+3. le mot de passe
+
 4. le "spring.datasource.driver-class-name"
+
 5. le "spring.jpa.properties.hibernate.dialect"
 
 dans le fichier "application.properties" qui se trouve dans le chemin src/main/resources/application.properties comme illustré dans l'image suivante.
 
 ![40% center](image_config/configuration_autre.png)
 
-Une fois l'application démarrée vous pourrez vous connecter via les utilisateurs enregistrés dans le jeu de données fourni plutôt, il faudra utiliser les identifiants et mots de passe suivant :
+Une fois l'application démarrée, vous pourrez vous connecter via les utilisateurs enregistrés dans le jeu de données fourni, il faudra utiliser les identifiants et mots de passe suivant :
 
 Pour un ADMIN :
 
@@ -68,6 +76,7 @@ Pour un USER :
 * identifiant = riri
 * mot de passe = patrick
 * statut = USER
+
 ------------------------
 
 ## Installation et déploiement
@@ -82,13 +91,21 @@ L'application peut être déployée de deux façons:
 
 ### Déploiement sans conteneur web
 
-* Clonez le projet Github
+* récuperez le projet Github en copiant ce lien : https://github.com/Kamel94/escalade.git
 
-* Exécutez la ligne de commande :
+* ouvrez le terminal ou la console, placez-vous dans le dossier où vous voulez déposer le projet
+
+* clonez le projet Github en exécutant cette commande : 
+
+    * git clone https://github.com/Kamel94/escalade.git
+
+* placez-vous dans le dossier escalade
+
+* exécutez la ligne de commande :
 
     * mvn clean package spring-boot:run
 
-* Ouvrez un navigateur web avec l'adresse :
+* ouvrez un navigateur web avec l'adresse :
 
     * http://localhost:8080
 
@@ -96,12 +113,26 @@ L'application peut être déployée de deux façons:
 
 ## Déploiement dans un conteneur Web
 
-Générez un package au format WAR dans le répertoire target avec la commande :
+#### Version Tomcat utilisée dans ce projet : Tomcat 9
 
-* mvn clean package
+Générez un package au format WAR dans le répertoire target avec la méthode suivante :
 
-* Placez le package (war) dans le répertoire webapps d'un conteneur web (type Tomcat)
+* récuperez le projet Github en copiant ce lien : https://github.com/Kamel94/escalade.git
 
-* Avec un Tomcat déployé en local, utilisez l'URL suivant dans un navigateur web :
+* ouvrez le terminal ou la console, placez-vous dans le dossier où vous voulez déposer le projet
 
-    * http://localhost:8080/escalade-0.0.1-SNAPSHOT.war
+* clonez le projet Github en exécutant cette commande : 
+
+    * git clone https://github.com/Kamel94/escalade.git
+
+* placez-vous dans le dossier escalade
+
+* exécutez la commande : mvn clean package
+
+* ouvrez le dossier target
+
+* placez le fichier "ecalade.war" dans le répertoire webapps d'un conteneur web (type Tomcat)
+
+* avec un Tomcat déployé en local, utilisez l'URL qui suit dans un navigateur web :
+
+    * http://localhost:8080/escalade/accueil
