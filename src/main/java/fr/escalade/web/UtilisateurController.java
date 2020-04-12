@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,8 @@ public class UtilisateurController {
 
 	@Autowired 
 	PasswordEncoder passwordEncoder;
+	
+	private static final Logger logger = LoggerFactory.getLogger(UtilisateurController.class);
 
 	/*
 	 * Permet de crypter le mot de passe d'un nouvel utilisateur inscrit.
@@ -76,9 +80,11 @@ public class UtilisateurController {
 	@RequestMapping(value="/enregistrer", method=RequestMethod.POST)
 	public String enregistrer(Model model, @Valid Utilisateur utilisateur, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
+			logger.warn("Erreur lors de l'inscription " + bindingResult.getFieldError());
 			return "redirect:/inscription";
 		}
 
+		logger.info("Utilisateur ajouté");
 		String encryptedPassword = passwordEncoder.encode(utilisateur.getPassword());
 		utilisateur.setPassword(encryptedPassword);
 
@@ -129,6 +135,7 @@ public class UtilisateurController {
 	public String rendreMembre(Model model, Principal principal, @PathVariable("id")int id, int page, int size) {
 
 		Utilisateur utilisateur = utilisateurRepository.findById(id).orElse(null);
+		logger.info("Utilisateur : " + utilisateur.getPseudo() + " est devenu MEMBRE.");
 		Utilisateur admin = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
 		utilisateur.setStatut("MEMBRE");
@@ -147,6 +154,7 @@ public class UtilisateurController {
 	public String rendreUser(Model model, Principal principal, @PathVariable("id")int id, int page, int size) {
 
 		Utilisateur utilisateur = utilisateurRepository.findById(id).orElse(null);
+		logger.info("Utilisateur : " + utilisateur.getPseudo() + " est devenu USER.");
 		Utilisateur admin = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
 		utilisateur.setStatut("USER");
@@ -183,12 +191,14 @@ public class UtilisateurController {
 
 	@GetMapping(value="/supprimerUtilisateur")
 	public String supprimerUtilisateur(int id, int page, int size) {
+		logger.info("Supression de l'utilisateur : " + id);
 		utilisateurRepository.deleteById(id);
 		return "redirect:/admin/utilisateurs?page=" + page + "&size=" + size;
 	}
 
 	@GetMapping(value="/supprimerCompte")
 	public String supprimerCompte(int id) {
+		logger.info("Supression de l'utilisateur : " + id);
 		utilisateurRepository.deleteById(id);
 		return "redirect:/logout";
 	}

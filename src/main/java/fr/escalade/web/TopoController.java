@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +43,8 @@ public class TopoController {
 
 	@Autowired
 	private ReservationTopoRepository reservationRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(TopoController.class);
 
 	/*
 	 * Affiche la liste des topos.
@@ -73,6 +77,7 @@ public class TopoController {
 
 	@GetMapping(value="/user/ajoutTopo/{id}")
 	public String ajout(Model model, @PathVariable("id")int id, Principal principal) {
+		logger.info("Ajout d'un topo par : " + principal.getName());
 		Site site = siteRepository.findById(id).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 
@@ -84,10 +89,11 @@ public class TopoController {
 	}
 
 	@RequestMapping(value="/user/modifier", method=RequestMethod.GET)
-	public String modifier(Model model, int id) {
+	public String modifier(Model model, int id, Principal principal) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(t.getProprietaire());
 		Site site = siteRepository.findSiteByNom(t.getNom());
+		logger.info("Le topo" + t.getId() + " a été modifié par : " + utilisateur.getPseudo());
 
 		model.addAttribute("site", site);
 		model.addAttribute("localDate", LocalDateTime.now());
@@ -98,6 +104,7 @@ public class TopoController {
 
 	@GetMapping(value="/supprimer")
 	public String supprimer(int id) {
+		logger.info("Le topo avec l'id : " + id + " a été supprimé");
 		topoRepository.deleteById(id);
 		return "redirect:/listeMesTopos";
 	}
@@ -105,6 +112,7 @@ public class TopoController {
 	@RequestMapping(value="/user/enregistrer/{id}", method=RequestMethod.POST)
 	public String enregistrer(Model model,@PathVariable("id")int id, @Valid Topo topo, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
+			logger.warn("Erreur lors de l'ajout du topo. Erreur : " + bindingResult.getFieldError());
 			return "redirect:/user/ajoutTopo/{id}";
 		}
 		model.addAttribute("id", id);
@@ -240,7 +248,7 @@ public class TopoController {
 	 */
 	@GetMapping("/user/demandepret/{id}")
 	public String gererDemandeEmpruntTopo(@PathVariable("id") int id, Principal principal, Model model) {
-		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu : " + id));
+		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu : " + id));
 
 		if(principal == null) {
 			return "redirect:/login";
@@ -250,6 +258,8 @@ public class TopoController {
 			Utilisateur proprio = utilisateurRepository.findUtilisateurById(topo.getProprietaire());
 			ReservationTopo resa = new ReservationTopo(topo.getId(), "Demande", emprunteur.getId(), topo.getProprietaire(), Timestamp.valueOf(dateTime), Timestamp.valueOf(dateTime));
 
+			logger.info(emprunteur.getPseudo() + " a demandé un prêt pour le topo n° : " + topo.getId() + " à " + proprio.getPseudo());
+			
 			topo.setEmprunteur(emprunteur.getId());
 			topo.setDemandeur(emprunteur.getId());
 			topo.setDisponibilite("Demande");
@@ -266,7 +276,7 @@ public class TopoController {
 	 */
 	@GetMapping("/user/accepterpret/{id}")
 	public String accepterPretTopo(@PathVariable("id") int id, Principal principal, Model model) {
-		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Nom topo inconnu pour acceptation prêt: " + id));
+		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour acceptation prêt: " + id));
 		topo.setDisponibilite("Indisponible");
 
 		LocalDateTime dateTime = LocalDateTime.now();
@@ -285,7 +295,7 @@ public class TopoController {
 	 */
 	@GetMapping("/user/redisponible/{id}")
 	public String redisponible(@PathVariable("id") int id, Principal principal, Model model) {
-		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour refus de prêt: " + id));
+		Topo topo = topoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identifiant topo inconnu pour rendre disponible: " + id));
 
 		topo.setDisponibilite("Disponible");
 		topo.setEmprunteur(null);

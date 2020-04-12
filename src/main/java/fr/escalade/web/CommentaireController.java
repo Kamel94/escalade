@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +41,8 @@ public class CommentaireController {
 
 	@Autowired
 	UtilisateurRepository utilisateurRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(CommentaireController.class);
 
 	@GetMapping(value="/user/ajoutCom/{id}")
 	public String ajoutCom(Model model, @PathVariable("id") int id, Principal principal) {
@@ -68,6 +72,7 @@ public class CommentaireController {
 
 	@GetMapping(value="/user/supprimerCom/{site}")
 	public String supprimerCom(Integer id) {
+		logger.info("Le commentaire " + id + " a été supprimé");
 		commentaireRepository.deleteById(id);
 		return "redirect:/siteDetail/{site}";
 	}
@@ -76,6 +81,7 @@ public class CommentaireController {
 	public String enregistrerCom(Model model, @Valid Commentaire commentaire, 
 			@PathVariable("id")int id, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
+			logger.warn("Erreur lors de l'ajout du commentaire : " + bindingResult.getFieldError());
 			return "ajoutCom";
 		}
 		Site site = siteRepository.getOne(id);

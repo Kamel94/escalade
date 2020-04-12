@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +37,8 @@ public class SecteurController {
 
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(SecteurController.class);
 
 	/*
 	 * Permet d'afficher la liste des secteurs pour un site.
@@ -95,6 +99,7 @@ public class SecteurController {
 
 	@GetMapping(value="/user/supprimerSecteur")
 	public String supprimerSecteur(int id) {
+		logger.info("Le secteur " + id + " a été supprimé");
 		secteurRepository.deleteById(id);
 		return "secteur";
 	}
@@ -102,6 +107,7 @@ public class SecteurController {
 	@RequestMapping(value="/user/enregistrerSecteur/{id}", method=RequestMethod.POST)
 	public String enregistrerSecteur(Model model,@PathVariable("id")int id, @Valid Secteur secteur, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
+			logger.warn("Erreur lors de l'ajout du secteur : " + bindingResult.getFieldError());
 			return "ajoutSecteur";
 		}
 

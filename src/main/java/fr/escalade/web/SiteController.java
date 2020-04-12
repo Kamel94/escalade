@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +48,8 @@ public class SiteController {
 
 	@Autowired
 	private TopoRepository topoRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(SiteController.class);
 
 	@GetMapping("/")
 	public String defaut() {
@@ -134,6 +138,8 @@ public class SiteController {
 	public String tag(Model model, @PathVariable("id")int id) {
 
 		Site site = siteRepository.getOne(id);
+		logger.info("Le site " + site.getNom() + " a été tagué.");
+		
 		model.addAttribute("site", site);
 
 		site.setTag(true);
@@ -149,6 +155,8 @@ public class SiteController {
 	public String enleverTag(Model model, @PathVariable("id")int id) {
 
 		Site site = siteRepository.getOne(id);
+		logger.info("Le site " + site.getNom() + " a perdu son tag.");
+		
 		model.addAttribute("site", site);
 
 		site.setTag(false);
@@ -182,6 +190,7 @@ public class SiteController {
 
 	@GetMapping(value="/user/supprimerSite")
 	public String supprimerSite(int id) {
+		logger.info("Le site " + id + " a été supprimé");
 		siteRepository.deleteById(id);
 		return "redirect:/accueil";
 	}
@@ -189,6 +198,7 @@ public class SiteController {
 	@RequestMapping(value="/user/enregistrerSite", method=RequestMethod.POST)
 	public String enregistrerSite(Model model, @Valid Site site, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
+			logger.warn("Erreur lors de l'ajout du site : " + bindingResult.getFieldError());
 			return "ajoutSite";
 		}
 		siteRepository.save(site);

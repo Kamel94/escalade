@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +42,8 @@ public class VoieController {
 
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(VoieController.class);
 
 	/*
 	 * Affiche la liste des voies d'un secteur.
@@ -108,6 +112,7 @@ public class VoieController {
 	@GetMapping(value="/supprimerVoie/{site}/{secteur}/{id}")
 	public String supprimerVoie(Model model, @PathVariable("id")int id, @PathVariable("site")int site) {
 		voieRepository.deleteById(id);
+		logger.info("La voie " + id + " a été supprimé.");
 		Site sit = siteRepository.findById(site).orElse(null);
 		model.addAttribute("site", sit);
 		return "redirect:/voie/{site}/{secteur}" ;
@@ -121,6 +126,7 @@ public class VoieController {
 		Secteur secteur = secteurRepository.findById(secteurId).orElse(null);
 
 		if(bindingResult.hasErrors()) { 
+			logger.warn("Erreur lors de l'ajout d'une voie " + bindingResult.getFieldError());
 			model.addAttribute("site", site);
 			model.addAttribute("localDate", LocalDateTime.now());
 			return "ajoutVoie"; 
