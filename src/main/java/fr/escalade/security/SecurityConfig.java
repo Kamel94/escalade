@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN");
 		http.authorizeRequests().antMatchers("/membre/*").hasAnyRole("ADMIN", "MEMBRE");
 		http.authorizeRequests().antMatchers("/user/*").hasAnyRole("ADMIN", "MEMBRE", "USER");
-		http.exceptionHandling().accessDeniedPage("/403");
 	}
 
 	@Bean(name = "bc")

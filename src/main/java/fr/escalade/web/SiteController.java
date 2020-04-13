@@ -81,7 +81,9 @@ public class SiteController {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
 			model.addAttribute("utilisateur", utilisateur);
 		} else {
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo("visiteur");
+			utilisateur.setStatut("VISITEUR");
 			model.addAttribute("utilisateur", utilisateur);
 		}
 
@@ -110,11 +112,10 @@ public class SiteController {
 		model.addAttribute("liste", commentaire);
 		int[] pages = new int[commentaire.getTotalPages()];
 
-		Utilisateur us = new Utilisateur();
-
 		if(principal == null){
-			us.setStatut("VISITEUR");
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(us.getStatut());
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo("visiteur");
+			utilisateur.setStatut("VISITEUR");
 			model.addAttribute("utilisateur", utilisateur);
 		} else if(principal != null) {
 			Utilisateur util = utilisateurRepository.findUtilisateurByPseudo(principal.getName());

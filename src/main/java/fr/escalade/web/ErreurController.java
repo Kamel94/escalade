@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ErreurController implements ErrorController  {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ErreurController.class);
 
 	@RequestMapping("/error")
 	public String handleError(HttpServletRequest request) {
@@ -22,11 +22,13 @@ public class ErreurController implements ErrorController  {
 		if (status != null) {
 			Integer statusCode = Integer.valueOf(status.toString());
 
-			if(statusCode == HttpStatus.NOT_FOUND.value()) {
+			if(statusCode == HttpStatus.FORBIDDEN.value()) {
+				logger.warn("Erreur 403 accès non autorisé " + HttpStatus.FORBIDDEN);
+				return "403";
+			} else if(statusCode == HttpStatus.NOT_FOUND.value()) {
 				logger.warn("Erreur 404 page non trouvée " + HttpStatus.NOT_FOUND);
 				return "404";
-			}
-			else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+			} else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 				logger.warn("Erreur 500 problème côté serveur " + HttpStatus.INTERNAL_SERVER_ERROR);
 				return "500";
 			}

@@ -63,11 +63,13 @@ public class UtilisateurController {
 		model.addAttribute("localDate", dateTime);
 
 		if(principal != null) {
-			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-			model.addAttribute("u", u);
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("u", utilisateur);
 		} else {
-			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo("visiteur");
-			model.addAttribute("u", u);
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo("visiteur");
+			utilisateur.setStatut("VISITEUR");
+			model.addAttribute("u", utilisateur);
 		}
 
 		return "inscription";

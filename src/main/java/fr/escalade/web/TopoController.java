@@ -59,7 +59,9 @@ public class TopoController {
 		int[] pages = new int[pageTopos.getTotalPages()];
 
 		if(principal == null) {
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo("visiteur");
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo("visiteur");
+			utilisateur.setStatut("VISITEUR");
 			model.addAttribute("utilisateur", utilisateur);
 		} else {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
@@ -151,11 +153,13 @@ public class TopoController {
 		Site site = siteRepository.findById(topo.getSite()).orElse(null);
 
 		if(principal == null) {
-			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo("visiteur");
-			model.addAttribute("u", u);
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo("visiteur");
+			utilisateur.setStatut("VISITEUR");
+			model.addAttribute("u", utilisateur);
 		} else {
-			Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-			model.addAttribute("u", u);
+			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
+			model.addAttribute("u", utilisateur);
 		}
 
 		if(topo.getEmprunteur() != null) {
@@ -326,10 +330,5 @@ public class TopoController {
 		topoRepository.save(topo);
 		return "redirect:/user/listeMesTopos";
 	}
-
-	@GetMapping("/403")
-	public String nonAutorise() {
-		return "403";
-	}
-
+	
 }

@@ -62,11 +62,10 @@ public class VoieController {
 		model.addAttribute("site", site);
 		model.addAttribute("secteur", secteur);
 
-		Utilisateur u = new Utilisateur();
-
 		if(principal == null){
-			u.setStatut("VISITEUR");
-			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByStatut(u.getStatut());
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setPseudo("visiteur");
+			utilisateur.setStatut("VISITEUR");
 			model.addAttribute("utilisateur", utilisateur);
 		} else if(principal != null) {
 			Utilisateur utilisateur = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
