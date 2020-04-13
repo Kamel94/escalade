@@ -8,7 +8,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.5.RELEASE</version>
 		<relativePath />
-	<!-- lookup parent from repository -->
+		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr</groupId>
 	<artifactId>escalade</artifactId>
@@ -91,6 +91,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>${artifactId}</finalName>
 	</build>
 
 </project>

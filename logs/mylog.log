@@ -352,3 +352,7 @@
 12/04/2020 22:25:09:622 INFO [restartedMain] org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
 12/04/2020 22:25:09:652 INFO [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
 12/04/2020 22:25:09:652 INFO [restartedMain] org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+12/04/2020 22:27:13:625 INFO [SpringContextShutdownHook] org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+12/04/2020 22:27:13:626 INFO [SpringContextShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+12/04/2020 22:27:13:627 INFO [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-34 - Shutdown initiated...
+12/04/2020 22:27:13:632 INFO [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-34 - Shutdown completed.
