@@ -94,7 +94,7 @@ public class TopoController {
 	public String modifier(Model model, int id, Principal principal) {
 		Topo t = topoRepository.findById(id).orElse(null);
 		Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(t.getProprietaire());
-		Site site = siteRepository.findSiteByNom(t.getNom());
+		Site site = siteRepository.findById(t.getSite()).orElse(null);
 		logger.info("Le topo" + t.getId() + " a été modifié par : " + utilisateur.getPseudo());
 
 		model.addAttribute("site", site);
