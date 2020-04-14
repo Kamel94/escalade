@@ -180,14 +180,14 @@ public class TopoController {
 	 * Permet de voir si il y a une demande d'emprunt sur un des topos de l'utilisateur connecté, 
 	 * de pouvoir accepter ou refuser la demande et de pouvoir rendre disponible le topo une fois l'emprunt terminé.
 	 */
-	@GetMapping(value = "/user/topo/{nom}")
-	public String topoId(Model model, Principal principal, @PathVariable("nom")String nom, 
+	@GetMapping(value = "/user/topo/{id}")
+	public String topoId(Model model, Principal principal, @PathVariable("id")int id, 
 			@RequestParam(name="page", defaultValue = "0") int p,
 			@RequestParam(name="size", defaultValue = "4") int s,
 			@RequestParam(name="motCle", defaultValue = "") String mc) {
 
 		Utilisateur u = utilisateurRepository.findUtilisateurByPseudo(principal.getName());
-		Topo topo = topoRepository.findTopoByNom(nom);
+		Topo topo = topoRepository.findById(id).orElse(null);
 
 		Page<Topo> topos = topoRepository.findByProprietaireOrderByNom(u.getId(), PageRequest.of(p, s));
 		model.addAttribute("topos", topos);

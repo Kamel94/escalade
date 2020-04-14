@@ -99,7 +99,7 @@
 								th:if="${utilisateur.pseudo} == ${c.auteur.pseudo} or ${utilisateur.statut} == 'MEMBRE' or ${utilisateur.statut} == 'ADMIN'"
 								th:href="@{/user/modifierCom/{site}(site=${c.site}, id=${c.id})}">Modifier</a></td>
 							<td><a class="btn btn-danger rond-lege"
-								th:if="${utilisateur.statut == 'ADMIN'} or (${utilisateur.pseudo} == ${c.auteur.pseudo}) "
+								th:if="${utilisateur.statut != 'USER'} or (${utilisateur.pseudo} == ${c.auteur.pseudo}) "
 								th:unless="${#httpServletRequest.remoteUser} == null "
 								onclick="return confirm('Êtes-vous sûr de vouloir supprimer ?')"
 								th:href="@{/user/supprimerCom/{site}(id=${c.id}, site=${c.site})}">Supprimer</a></td>

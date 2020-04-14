@@ -18,6 +18,9 @@
 						method="post">
 						<div class="form-group">
 							<div class="form-group">
+							<input  class="form-control-xs decaler" type="hidden" name="id"
+									th:value="${commentaire.id}"> <span class="red"
+									th:errors="${commentaire.id}"></span>
 								<label class="col-form-label">Auteur : </label> <input
 									class="form-control-xs decaler" type="hidden" name="auteur"
 									th:value="${utilisateur.id}">

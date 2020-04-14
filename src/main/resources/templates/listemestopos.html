@@ -38,7 +38,7 @@
 												th:text="${topo.disponibilite} == 'Redisponible'? 'Disponible' : ${topo.disponibilite}"
 												th:class="${topo.disponibilite} != 'Indisponible'? 'text-success' : 'text-danger'"></td>
 											<td><a class="btn btn-info rond-lege"
-												th:href="@{/user/topo/{nom}(nom=${topo.nom})}">Informations</a></td>
+												th:href="@{/user/topo/{id}(id=${topo.id})}">Informations</a></td>
 										</tr>
 									</tbody>
 								</table>
