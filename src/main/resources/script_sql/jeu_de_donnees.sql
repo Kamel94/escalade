@@ -16,10 +16,10 @@ VALUES
 TRUNCATE TABLE topo CASCADE;
 INSERT INTO topo
 values
-(1,'Gorges du Todgha', 'Vous trouverez dans les gorges du Todgha de nombreux secteurs de couennes de tous les niveaux (4b à 8c), des grandes voies équipées (jusqu’à 350m)', 'Maroc', '2020/03/19', 'Disponible', null, null, 1, 1, '2020/03/14', 1, '2020/03/14'),
-(2,'Marocaz', 'Voici un des sites phares de la région pour les voies dures. Idéal pour grimper en été. Les voies sont très belles et longues, d’un niveau relativement élevé.', 'France (Savoie)', '12/03/2019', 'Disponible', null, null, 2, 1, '2020/03/14', 1, '2020/03/14'),
-(3,'Picellu', 'Cette falaise hyper technique est la quintessence de l’escalade verticale en granit !', 'France (Corse)', '11/03/2019', 'Disponible', null, null, 3, 2, '2020/03/17', 2, '2020/03/17'),
-(4, 'Antalya', 'La vue d''en face mérite le détour : on travaille là dans la dentelle gracile...C''est un endroit fort remarquable, le Drac tout en bas, et des pointes si fines au-dessus, tout cela doté d''une approche simplissime.','France (Auvergne-Rhône-Alpes)', '2020/02/19', 'Disponible', null, null, 4, 3, '2020/03/22', 3, '2020/03/22');
+(1,'Aventures Verticales Maroc', 'Vous trouverez dans les gorges du Todgha de nombreux secteurs de couennes de tous les niveaux (4b à 8c), des grandes voies équipées (jusqu’à 350m)', 'Maroc', '2020/03/19', 'Disponible', null, null, 1, 1, '2020/03/14', 1, '2020/03/14'),
+(2,'Escalades autour du lac du Bourget', 'Voici un des sites phares de la région pour les voies dures. Idéal pour grimper en été. Les voies sont très belles et longues, d’un niveau relativement élevé.', 'France (Savoie)', '12/03/2019', 'Disponible', null, null, 2, 1, '2020/03/14', 1, '2020/03/14'),
+(3,'Falaises de Corse', 'Cette falaise hyper technique est la quintessence de l’escalade verticale en granit !', 'France (Corse)', '11/03/2019', 'Disponible', null, null, 3, 2, '2020/03/17', 2, '2020/03/17'),
+(4, 'A Rock Climbing Guidebook for Antalya', 'La vue d''en face mérite le détour : on travaille là dans la dentelle gracile...C''est un endroit fort remarquable, le Drac tout en bas, et des pointes si fines au-dessus, tout cela doté d''une approche simplissime.','France (Auvergne-Rhône-Alpes)', '2020/02/19', 'Disponible', null, null, 4, 3, '2020/03/22', 3, '2020/03/22');
 
 TRUNCATE TABLE secteur CASCADE;
 INSERT INTO secteur

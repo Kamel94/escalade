@@ -16,6 +16,9 @@
 				<div class="card-body">
 					<form th:action="@{/user/enregistrer/{id}(id=${id})}" method="post">
 						<div class="form-group">
+							<input class="form-control-xs" type="hidden" name="id"
+								th:value="${topo.id}"><span class="red"
+								th:errors="${topo.id}" th:inline="text"></span>
 							<label class="col-form-label">Propriétaire : </label> <input
 								class="form-control-xs" type="hidden" name="proprietaire"
 								th:value="${utilisateur.id}">
