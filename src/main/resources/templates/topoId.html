@@ -40,9 +40,8 @@
 											<td th:text="${topo.parution}"></td>
 											<td th:text="${topo.lieu}"></td>
 											<!-- <td th:text="${topo.proprietaire}"></td> -->
-											<td
-												th:text="${topo.disponibilite} == 'Redisponible'? 'Disponible' : ${topo.disponibilite}"
-												th:class="${topo.disponibilite} != 'Indisponible'? 'text-success' : 'text-danger'"></td>
+											<td th:text="${topo.disponibilite}"
+												th:class="${topo.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 											<th:block th:switch="${topo.disponibilite}">
 												<td th:case="Demande"
 													th:utext="${topo.emprunteur != null}? ${utilisateur.pseudo} : ''"></td>

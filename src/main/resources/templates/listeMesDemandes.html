@@ -37,6 +37,7 @@
 							th:href="@{/user/statutDemande/{id}(id=${topo.id})}"
 							th:if="${topo.emprunteur != topo.proprietaire} and ${utilisateur.id} != ${topo.proprietaire}"><i
 								class="far fa-question-circle"></i>Voir ma demande</a></td>
+								</tr>
 							</tbody>
 						</table>
 						<div class="container">

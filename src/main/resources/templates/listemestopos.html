@@ -35,8 +35,8 @@
 										<tr th:each="topo : ${topos}">
 											<td th:text="${topo.nom}"></td>
 											<td
-												th:text="${topo.disponibilite} == 'Redisponible'? 'Disponible' : ${topo.disponibilite}"
-												th:class="${topo.disponibilite} != 'Indisponible'? 'text-success' : 'text-danger'"></td>
+												th:text="${topo.disponibilite}"
+												th:class="${topo.disponibilite} == 'Disponible'? 'text-success' : 'text-danger'"></td>
 											<td><a class="btn btn-info rond-lege"
 												th:href="@{/user/topo/{id}(id=${topo.id})}">Informations</a></td>
 										</tr>

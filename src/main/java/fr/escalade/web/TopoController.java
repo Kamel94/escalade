@@ -108,7 +108,7 @@ public class TopoController {
 	public String supprimer(int id) {
 		logger.info("Le topo avec l'id : " + id + " a été supprimé");
 		topoRepository.deleteById(id);
-		return "redirect:/listeMesTopos";
+		return "redirect:/user/listeMesTopos";
 	}
 
 	@RequestMapping(value="/user/enregistrer/{id}", method=RequestMethod.POST)
